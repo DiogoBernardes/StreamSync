@@ -63,6 +63,7 @@ function getByEmail($email)
     return $PDOStatement->fetch();
 }
 
+
 function getAll()
 {
     $PDOStatement = $GLOBALS['pdo']->query('SELECT * FROM users;');
@@ -72,6 +73,18 @@ function getAll()
     }
     return $users;
 }
+
+function getAvatarById($id)
+{
+    $PDOStatement = $GLOBALS['pdo']->prepare('SELECT avatar FROM users WHERE id = ?;');
+    $PDOStatement->bindValue(1, $id, PDO::PARAM_INT);
+    $PDOStatement->execute();
+    $result = $PDOStatement->fetchColumn();
+
+    // Se o resultado for vazio, retorne um avatar padrão
+    return $result;
+}
+
 
 function updateUser($user)
 {

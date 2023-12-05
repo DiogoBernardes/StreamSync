@@ -50,7 +50,7 @@ function doLogin($data)
     setcookie("id", $data['id'], time() + (60 * 60 * 24 * 30), "/");
     setcookie("name", $data['first_name'], time() + (60 * 60 * 24 * 30), "/");
 
-    $home_url = 'http://' . $_SERVER['HTTP_HOST'] . '/StreamSync/src/views/secure';
+    $home_url = 'http://' . $_SERVER['HTTP_HOST'] . '/StreamSync/src/views/secure/user/Dashboard.php';
     header('Location: ' . $home_url);
 }
 
