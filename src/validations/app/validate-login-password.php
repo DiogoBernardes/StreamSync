@@ -7,11 +7,11 @@ function isLoginValid($req)
     }
 
     if (!filter_var($req['email'], FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = 'The Email field cannot be empty and must have the email format, for example: nome@example.com.';
+        $errors['email'] = 'O email deve ser válido. (name@example.com)';
     }
 
-    if (empty($req['password']) || strlen($req['password']) < 6) {
-        $errors['password'] = 'The Password field cannot be empty and must be at least 6 characters long.';
+    if (empty($req['password']) || strlen($req['password']) < 8) {
+        $errors['password'] = 'A password deve ter pelo menos 8 caracteres.';
     }
 
     if (isset($errors)) {
@@ -27,12 +27,8 @@ function isPasswordValid($req)
 
         $user = getByEmail($req['email']);
 
-        if (!$user) {
-            $errors['email'] = 'Wrong email or password.';
-        }
-
-        if (!password_verify($req['password'], $user['password'])) {
-            $errors['password'] = 'Wrong email or password.';
+        if (!$user || !password_verify($req['password'], $user['password'])) {
+            $errors['email'] = 'Email ou Password incorretos!';
         }
 
         if (isset($errors)) {

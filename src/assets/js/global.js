@@ -3,7 +3,7 @@ function hideAlerts() {
   alerts.forEach(function (alert) {
     setTimeout(function () {
       alert.style.display = "none";
-    }, 5000);
+    }, 3000);
   });
 }
 

@@ -45,10 +45,10 @@ function checkErrors($data, $req)
 function doLogin($data)
 {
     $_SESSION['id'] = $data['id'];
-    $_SESSION['name'] = $data['name'];
+    $_SESSION['name'] = $data['first_name'];
 
     setcookie("id", $data['id'], time() + (60 * 60 * 24 * 30), "/");
-    setcookie("name", $data['name'], time() + (60 * 60 * 24 * 30), "/");
+    setcookie("name", $data['first_name'], time() + (60 * 60 * 24 * 30), "/");
 
     $home_url = 'http://' . $_SERVER['HTTP_HOST'] . '/StreamSync/src/views/secure';
     header('Location: ' . $home_url);
@@ -67,7 +67,7 @@ function logout()
     }
 
     setcookie('id', '', time() - 3600, "/");
-    setcookie('name', '', time() - 3600, "/");
+    setcookie('first_name', '', time() - 3600, "/");
 
     $home_url = 'http://' . $_SERVER['HTTP_HOST'] . '/StreamSync';
     header('Location: ' . $home_url);

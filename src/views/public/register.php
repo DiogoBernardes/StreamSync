@@ -31,7 +31,7 @@ require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authent
                                       <div class="row mt-3">
                                         <div class="col-md-6 mb-3"> 
                                           <label class="form-label d-flex justify-content-start align-items-start" for="first_name">Primeiro Nome</label>
-                                          <input id="first_name" class="form-control form-control-lg" type="text" name="first_name" 
+                                          <input id="first_name" class="form-control" type="text" name="first_name" 
                                             value="<?= isset($_REQUEST['first_name']) ? $_REQUEST['first_name'] : null ?>"  required  />
                                           <?php
                                             if (isset($_SESSION['errors']['first_name'])) {
@@ -41,7 +41,7 @@ require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authent
                                         </div>
                                         <div class="col-md-6 mb-3"> 
                                           <label class="form-label d-flex justify-content-start align-items-start" for="last_name">Último Nome</label>
-                                          <input id="last_name" class="form-control form-control-lg" type="text" name="last_name" 
+                                          <input id="last_name" class="form-control" type="text" name="last_name" 
                                             value="<?= isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : null ?>" required />
                                           <?php
                                             if (isset($_SESSION['errors']['last_name'])) {
@@ -54,7 +54,7 @@ require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authent
                                       <div class="row">
                                         <div class="col-md-6 mb-3"> 
                                           <label class="form-label d-flex justify-content-start align-items-start" for="username">Username</label>
-                                          <input id="username" class="form-control form-control-lg" type="text" name="username" 
+                                          <input id="username" class="form-control " type="text" name="username" 
                                             value="<?= isset($_REQUEST['username']) ? $_REQUEST['username'] : null ?>" required  />
                                           <?php
                                             if (isset($_SESSION['errors']['username'])) {
@@ -64,7 +64,7 @@ require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authent
                                         </div>
                                         <div class="col-md-6 mb-3"> 
                                           <label class="form-label d-flex justify-content-start align-items-start" for="birthdate">Data de Nascimento</label>
-                                          <input id="birthdate" class="form-control form-control-lg" type="date" name="birthdate" 
+                                          <input id="birthdate" class="form-control " type="date" name="birthdate" 
                                             value="<?= isset($_REQUEST['birthdate']) ? $_REQUEST['birthdate'] : null ?>" required />
                                           <?php
                                             if (isset($_SESSION['errors']['birthdate'])) {
@@ -76,7 +76,7 @@ require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authent
 
                                       <div class="mb-3"> 
                                         <label class="form-label d-flex justify-content-start align-items-start" for="email">Email</label>
-                                        <input id="email" class="form-control form-control-lg" type="email" name="email"
+                                        <input id="email" class="form-control " type="email" name="email"
                                           value="<?= isset($_REQUEST['email']) ? $_REQUEST['email'] : null ?>"  required  />
                                         <?php
                                           if (isset($_SESSION['errors']['email'])) {
@@ -88,7 +88,7 @@ require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authent
                                       <div class="row mb-3">
                                         <div class="col-md-6 mb-3"> 
                                           <label class="form-label d-flex justify-content-start align-items-start" for="password">Password</label>
-                                          <input id="password" class="form-control form-control-lg" type="password" name="password" required />
+                                          <input id="password" class="form-control" type="password" name="password" required />
                                           <?php
                                             if (isset($_SESSION['errors']['password'])) {
                                                 echo '<p class="alert" style="color: red;">' . $_SESSION['errors']['password'] . '</p>';
@@ -97,7 +97,7 @@ require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authent
                                         </div>
                                         <div class="col-md-6 mb-3"> 
                                           <label class="form-label d-flex justify-content-start align-items-start" for="password_confirmation">Confirmar Password</label>
-                                          <input id="password_confirmation" class="form-control form-control-lg" type="password" name="password_confirmation" required />
+                                          <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required />
                                           <?php
                                             if (isset($_SESSION['errors']['password_confirmation'])) {
                                                 echo '<p class="alert" style="color: red;">' . $_SESSION['errors']['password_confirmation'] . '</p>';
