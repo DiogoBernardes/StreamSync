@@ -38,9 +38,8 @@ $user = user();
               </a>
             </li>
             <li>
-              <a href="/StreamSync/src/views/secure/user/profile.php" class="nav-link px-0 align-middle transition">
-                <i class="fs-4 bi-person text-white"></i> <span
-                  class="ms-1 d-none d-sm-inline text-white">Perfil</span>
+              <a href="javascript:void(0)" class="nav-link px-0 align-middle transition" onclick="loadContent('profile')">
+                <i class="fs-4 bi-person text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Perfil</span>
               </a>
             </li>
           </ul>
@@ -65,18 +64,8 @@ $user = user();
       </div>
 
       <!-- Content -->
-      <div class="col py-3">
-        <h3>Left Sidebar with Submenus</h3>
-        <p class="lead">
-          An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a
-          single
-          menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width
-          on smaller screens.</p>
-        <ul class="list-unstyled">
-          <li>
-            <h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile
-          </li>
-        </ul>
+      <div id="content" class="col py-3">
+        
       </div>
     </div>
   </div>

@@ -78,6 +78,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
     </form>
   </section>
 </main>
-<?php
-include_once __DIR__ . '../../../../templates/footer.php';
-?>
