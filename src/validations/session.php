@@ -24,6 +24,6 @@ function userId()
 function administrator()
 {
     $user = user();
-    return $user['Administrator'] ? true : false;
+    return $user['role_id']==1 ? true : false;
 }
 ?>

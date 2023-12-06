@@ -1,8 +1,7 @@
 <?php
-require_once __DIR__ . '/../../../infra/repositories/userRepository.php';
-require_once __DIR__ . '/../../../infra/middlewares/middleware-administrator.php';
+require_once __DIR__ . '/../../../repositories/userRepository.php';
+require_once __DIR__ . '/../../../infrastructure/middlewares/middleware-administrator.php';
 require_once __DIR__ . '/../../../templates/header.php'; 
-
 $users = getAll();
 $title = ' - Admin management';
 ?>
@@ -17,6 +16,9 @@ $title = ' - Admin management';
       <div class="d-flex justify-content">
         <a href="/StreamSync/pages/secure/"><button class="btn btn-secondary px-5 me-2">Back</button></a>
         <a href="./user.php"><button class="btn btn-success px-4 me-2">Create user</button></a>
+        <form action="/StreamSync/src/controllers/auth/login.php" method="post">
+            <button type="submit" name="user" value="logout" class="btn btn-danger">Sim, encerrar a sessão</button>
+        </form>
       </div>
     </section>
     <section>

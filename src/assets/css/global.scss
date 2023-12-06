@@ -1,0 +1,18 @@
+.bg-image {
+  background-image: url("../images/bg.png");
+}
+.bg-cover {
+  background-size: cover;
+}
+.bg-p-center {
+  background-position: center;
+}
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
+.transition {
+  transition: 0.4s all;
+}
+.transition:hover {
+  transform: scale(1.4);
+}

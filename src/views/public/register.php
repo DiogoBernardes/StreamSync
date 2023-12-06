@@ -1,25 +1,11 @@
 <?php
+$title = 'Criar conta | StreamSync';
 require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authenticated.php';
+require_once __DIR__ . '/../../templates/header.php'; 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <script src="../../assets/js/global.js"></script>
-    <link rel="stylesheet" href="../../assets/css/authentication.css">
-    
-    <title>Criar conta | StreamSync</title>
-</head>
-<body class="font-sans text-gray-900 antialiased">
   <div class="min-h-screen d-flex flex-column justify-content-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <section class="bg-image vh-100 position-relative">
+        <section class="bg-image bg-cover bg-p-center bg-no-repeat vh-100 position-relative">
             <div class="container py-3 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-12 col-md-8 col-lg-6 col-xl-5">

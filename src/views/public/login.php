@@ -1,29 +1,11 @@
 <?php
+$title = 'Login | StreamSync';
 require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authenticated.php';
+require_once __DIR__ . '/../../templates/header.php'; 
 ?>
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.bunny.net">
-  <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <script src="../../assets/js/global.js"></script>
-  <link rel="stylesheet" href="../../assets/css/authentication.css">
-  
-  <title>Login | StreamSync</title>
-</head>
-
-<body class="font-sans text-gray-900 ">
   <div class="min-h-screen d-flex flex-column justify-content-center items-center pt-6 sm:pt-0 bg-gray-100">
-    <section class="bg-image vh-100 position-relative">
+    <section class="bg-image bg-cover bg-p-center bg-no-repeat vh-100 position-relative">
       <div class="container py-3 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -31,7 +13,7 @@ require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authent
               <div class="card-body p-3 text-center">
 
                 <div class="mb-md-3 mt-md-2 pb-3">
-                  <a href="/StreamSync">
+                  <a href="/StreamSync/">
                     <img src="../../assets/images/logo.png" alt="StreamSync Logo" class="img-fluid">
                   </a>
 
@@ -63,11 +45,11 @@ require_once __DIR__ . '/../../infrastructure/middlewares/middleware-not-authent
                     ?>    
                     <button class="btn btn-outline-light btn-lg px-4 mt-3" type="submit" name="user" value="login">Login</button>
                     <div class="d-flex justify-content-center text-center mt-4 pt-1">
-                      <a href="https://github.com/DiogoBernardes/Movies-and-or-Series-Management" class="text-white"><i
+                      <a href="https://github.com/DiogoBernardes/Movies-and-or-Series-Management" class="text-white transition"><i
                           class="bi bi-github bi-4x"></i></a>
-                      <a href="https://www.instagram.com/streamsync_/" class="text-white mx-4 px-2"><i
+                      <a href="https://www.instagram.com/streamsync_/" class="text-white mx-4 px-2 transition"><i
                           class="bi bi-instagram"></i></a>
-                      <a href="https://twitter.com/SSync27157" class="text-white"><i class="bi bi-twitter"></i></a>
+                      <a href="https://twitter.com/SSync27157" class="text-white transition"><i class="bi bi-twitter"></i></a>
                     </div>
 
                     <div class="mt-2">

@@ -42,6 +42,11 @@ function checkErrors($data, $req)
     return true;
 }
 
+function isAdmin($userID){
+    $user = getById($userID);
+    return $user['role_id'] == 1 ? true : false;
+}
+
 function doLogin($data)
 {
     $_SESSION['id'] = $data['id'];
@@ -50,8 +55,15 @@ function doLogin($data)
     setcookie("id", $data['id'], time() + (60 * 60 * 24 * 30), "/");
     setcookie("name", $data['first_name'], time() + (60 * 60 * 24 * 30), "/");
 
-    $home_url = 'http://' . $_SERVER['HTTP_HOST'] . '/StreamSync/src/views/secure/user/Dashboard.php';
-    header('Location: ' . $home_url);
+    if(isAdmin($data['id'])){
+        $home_url = 'http://' . $_SERVER['HTTP_HOST'] . '/StreamSync/src/views/secure/admin/index.php';
+        header('Location: ' . $home_url);
+    }
+    else{
+        $home_url = 'http://' . $_SERVER['HTTP_HOST'] . '/StreamSync/src/views/secure/user/Dashboard.php';
+        header('Location: ' . $home_url);
+    }
+
 }
 
 function logout()

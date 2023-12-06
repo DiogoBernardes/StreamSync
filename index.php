@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!--Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-    <!--Bootstrap Fonts and icons-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap" rel="stylesheet">
-    <!--Bootstrap bundle js-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-    <script src="src/assets//js/home.js"></script>
+    <!-- Bootstrap-->
+    <link href="/StreamSync/vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" integrity="...">
+    <link rel="stylesheet" href="/StreamSync/vendor/twbs/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" integrity="...">
+    <script src="/StreamSync/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
     <link rel="stylesheet" href="src/assets/css/index.css">
 
      <title>StreamSync</title>
@@ -36,7 +28,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
-        <div class="custom-font position-relative d-flex flex-row justify-content-end align-items-start">
+        <div class=" position-relative d-flex flex-row justify-content-end align-items-start">
           <li class="nav-item mx-2">
             <a class="nav-link active fs-6" aria-current="page" href="#home">Home</a>
           </li>
@@ -54,7 +46,7 @@
 
       <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3 me-5 ">
         <a href="src/views/public/login.php"
-          class="btn-sign-up custom-font w-100 text-align-center text-white text-decoration-none px-3 py-1 rounded-4 ms-3">Login</a>
+          class="btn-sign-up  w-100 text-align-center text-white text-decoration-none px-3 py-1 rounded-4 ms-3">Login</a>
       </div>
     </div>
   </nav>
@@ -68,7 +60,7 @@
     </div>
     <div class="offcanvas-body d-flex flex-column p-4 p-lg-0 text-white ">
       <ul class="navbar-nav  align-items-center fs-5 flex-grow-1 pe-3 d-flex flex-column justify-content-center align-items-center">
-        <div class="custom-font position-relative d-flex flex-column align-items-center">
+        <div class=" position-relative d-flex flex-column align-items-center">
           <li class="nav-item mx-2">
             <a class="nav-link active" aria-current="page" href="#home">Home</a>
           </li>
@@ -88,7 +80,7 @@
 
       <div class="d-flex flex-column justify-content-center align-items-center gap-3 mb-5">
         <a href="src/views/public/login.php"
-          class="btn-sign-up custom-font w-50 text-center text-white text-decoration-none py-1 rounded-4">Login</a>
+          class="btn-sign-up  w-50 text-center text-white text-decoration-none py-1 rounded-4">Login</a>
       </div>
     </div>
   </div>
@@ -101,9 +93,9 @@
       <div class="hero-home__item position-absolute top-0 start-0 w-100 h-100 ">
         <div class="d-flex flex-column justify-content-center align-items-center h-100 text-white text-center">
           <img src="src/assets/images/logo.png" class="img-fluid mx-auto d-block mb-3 mt-5 " width="400" alt="Logo">
-          <h1 class="custom-font display-5 font-weight-bold mb-3">Explore, compartilhe e gerencie os seus
+          <h1 class=" display-5 font-weight-bold mb-3">Explore, compartilhe e gerencie os seus
             filmes e séries favoritos</h1>
-          <p class="custom-font lead mb-3">Faça parte da nossa comunidade de entusiastas do cinema
+          <p class=" lead mb-3">Faça parte da nossa comunidade de entusiastas do cinema
             e
             TV.<br>
             Organize e compartilhe a sua coleção, classifique, comente e conecte-se com outros amantes do
@@ -111,7 +103,7 @@
           </p>
           <div class="mt-5">
             <a class="btn btn-danger btn-lg btn-block" href="src/views/public/register.php" role="button">
-              <span class="custom-font">Comece Já</span>
+              <span class="">Comece Já</span>
             </a>
           </div>
         </div>
@@ -122,21 +114,21 @@
         <div class="d-flex align-items-center justify-content-center text-white">
           <div class="row mt-5">
             <div class="w-100 mx-auto mt-5">
-              <h1 class="custom-font text-center mb-3 display-10 fw-bold pb-2 border-bottom">
+              <h1 class=" text-center mb-3 display-10 fw-bold pb-2 border-bottom">
                 Recomendações</h1>
             </div>
-            <h2 class="custom-font">Movies</h2>
+            <h2 class="">Movies</h2>
 
             <div class="col-6 col-sm-6 col-md-4 col-lg-2">
               <div class="hero-list__movie position-relative">
                 <img src="src/assets/images/overlays/movies/interstellar.jpg" class="hero-list__img mt-3 rounded "
                   alt="interstellar" />
-                <button class="watch-button custom-font position-absolute top-50 ms-2 border-0 text-black rounded-4">
+                <button class="watch-button  position-absolute top-50 ms-2 border-0 text-black rounded-4">
                   Assistir Online
                 </button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">Interstellar</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">Interstellar</p>
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2014</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;8.7</i></span>
               </div>
@@ -149,10 +141,10 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">Five Nights
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">Five Nights
                 at
                 Freddy's</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2023</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;5.5</i></span>
               </div>
@@ -165,8 +157,8 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">The Godfather</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">The Godfather</p>
+              <div class=" w-75 d-flex justify-content-between">
                 <p>1972</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;9.2</i></span>
               </div>
@@ -179,9 +171,9 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">O Senhor dos Anéis
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">O Senhor dos Anéis
               </p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2003</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;7.3</i></span>
               </div>
@@ -193,8 +185,8 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">Shrek 2</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">Shrek 2</p>
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2004</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;7.3</i></span>
               </div>
@@ -208,8 +200,8 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">The Intouchable</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">The Intouchable</p>
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2011</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;8.5</i></span>
               </div>
@@ -221,7 +213,7 @@
 
         <div class="text-white">
           <div class="row mt-5 ">
-            <h2 class="custom-font">Series</h2>
+            <h2 class="">Series</h2>
 
             <div class="col-6 col-sm-6 col-md-4 col-lg-2">
               <div class="hero-list__movie position-relative">
@@ -229,8 +221,8 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">The 100</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">The 100</p>
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2014</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;7.6</i></span>
               </div>
@@ -242,8 +234,8 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">Vikings</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">Vikings</p>
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2013</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;8.5</i></span>
               </div>
@@ -256,8 +248,8 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">The Mandalorian</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">The Mandalorian</p>
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2019 </p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;8.7</i></span>
               </div>
@@ -269,8 +261,8 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">See</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">See</p>
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2019</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;7.6</i></span>
               </div>
@@ -283,8 +275,8 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">Vis a Vis</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">Vis a Vis</p>
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2015</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;8.1</i></span>
               </div>
@@ -297,8 +289,8 @@
                 <button class="watch-button position-absolute top-50 ms-2 border-0 text-black rounded-4">Assistir
                   Online</button>
               </div>
-              <p class="custom-font overflow-hidden text-nowrap d-inline-block text-truncate w-75">Peaky Blinders</p>
-              <div class="custom-font w-75 d-flex justify-content-between">
+              <p class=" overflow-hidden text-nowrap d-inline-block text-truncate w-75">Peaky Blinders</p>
+              <div class=" w-75 d-flex justify-content-between">
                 <p>2013</p>
                 <span><i class="imdb-icon fab fa-imdb"> &nbsp;8.8</i></span>
               </div>
@@ -312,7 +304,7 @@
       <div class="d-flex justify-content-center align-items-center text-white">
         <div class="container mt-5">
           <div class="w-100 mx-auto mt-5">
-            <h1 class="custom-font text-center mb-3 display-10 fw-bold pb-2 border-bottom">
+            <h1 class=" text-center mb-3 display-10 fw-bold pb-2 border-bottom">
               Serviços</h1>
           </div>
 
@@ -321,8 +313,8 @@
               <img src="src/assets/images/REVIEW MOCKUP.png" class="w-100 h-auto" alt="review and rating  " />
             </div>
             <div class="col-12 col-sm-6 col-md-8">
-              <h2 class="custom-font text-justify font-weight-bold">Compartilhe a sua paixão pelo cinema</h2>
-              <p class="custom-fonttext-justify ">As suas críticas e as suas avaliações ajudam a trazer a Magia do
+              <h2 class=" text-justify font-weight-bold">Compartilhe a sua paixão pelo cinema</h2>
+              <p class="text-justify ">As suas críticas e as suas avaliações ajudam a trazer a Magia do
                 Cinema à Vida!
                 Descubra o que os nossos utilizadores tem a dizer a cerca da sua próxima experiência cinematográfica
                 com
@@ -333,8 +325,8 @@
 
           <div class="row hero-features-row d-flex justify-content-center align-items-center border-top mt-4">
             <div class=" col-12 col-sm-6 col-md-8">
-              <h2 class="custom-font text-justify font-weight-bold">Faça a sua avaliação a qualquer hora e lugar</h2>
-              <p class="custom-font text-justify">Oferecemos lhe a possibilidade de realizar as suas críticas e as
+              <h2 class=" text-justify font-weight-bold">Faça a sua avaliação a qualquer hora e lugar</h2>
+              <p class=" text-justify">Oferecemos lhe a possibilidade de realizar as suas críticas e as
                 suas
                 avaliações a
                 qualquer momento
@@ -352,11 +344,11 @@
               <img src="src/assets/images/watch-after mockup.png" class="w-100 h-auto" alt="review and rating " />
             </div>
             <div class="col-12 col-sm-6 col-md-8">
-              <h2 class="custom-font text-justify font-weight-bold">Agende a data para ver o seu filme e deixe a
+              <h2 class=" text-justify font-weight-bold">Agende a data para ver o seu filme e deixe a
                 diversão
                 ser inesquecível!
               </h2>
-              <p class="custom-font text-justify">Não perca a chance de viver uma experiência cinematográfica
+              <p class=" text-justify">Não perca a chance de viver uma experiência cinematográfica
                 incrível.
                 Agende a data
                 para o seu filme e
@@ -377,10 +369,10 @@
           <div class="col-12 col-lg-6 col-xl-7">
             <div class="row justify-content-xl-center">
               <div class="col-12 col-xl-11 text-white">
-                <h2 class="custom-font h1 mb-3">Sobre Nós</h2>
-                <p class="custom-font lead fs-4 text-secondary mb-3 text-white">Simplificamos a gestão de filmes e séries,
+                <h2 class=" h1 mb-3">Sobre Nós</h2>
+                <p class=" lead fs-4 text-secondary mb-3 text-white">Simplificamos a gestão de filmes e séries,
                   oferecendo uma experiência envolvente e única.</p>
-                <p class="custom-font mb-5">A StreamSync é um projeto desenvolvido por dois estudantes de engenharia informática,
+                <p class=" mb-5">A StreamSync é um projeto desenvolvido por dois estudantes de engenharia informática,
                   que tem como objetivo simplificar a organização e a partilha das suas experiências cinematográficas.
                   Com a possibilidade de criar contas individuais, gerir perfis, categorizar e partilhar, oferecemos uma
                   abordagem colaborativa única. Facilitamos a busca por filmes e séries específicos, permitindo
@@ -397,8 +389,8 @@
                         </svg>
                       </div>
                       <div>
-                        <h4 class="custom-font mb-3">Versatilidade Cinematográfica</h4>
-                        <p class="custom-font text-secondary mb-0">Descomplicamos a gestão de filmes e séries, proporcionando uma
+                        <h4 class=" mb-3">Versatilidade Cinematográfica</h4>
+                        <p class=" text-secondary mb-0">Descomplicamos a gestão de filmes e séries, proporcionando uma
                           experiência versátil em qualquer dispositivo.</p>
                       </div>
                     </div>
@@ -413,8 +405,8 @@
                         </svg>
                       </div>
                       <div>
-                        <h4 class="custom-font mb-3">Plataforma Audiovisual</h4>
-                        <p class="custom-font text-secondary mb-0">Integramos a simplicidade com conceitos distintos, proporcionando
+                        <h4 class=" mb-3">Plataforma Audiovisual</h4>
+                        <p class=" text-secondary mb-0">Integramos a simplicidade com conceitos distintos, proporcionando
                           uma experiência singular na gestão de filmes e séries.
                         </p>
                       </div>
@@ -433,7 +425,7 @@
   <footer
     class="position-relative d-flex flex-column flex-sm-row justify-content-between align-items-center text-white w-100 h-100 p-4">
 
-    <p class="custom-font mb-3 mb-sm-0">2023 StreamSync &copy</p>
+    <p class=" mb-3 mb-sm-0">2023 StreamSync &copy</p>
 
     <a href="/" class="mb-3 mb-sm-0 link-dark text-decoration-none">
       <img src="src/assets/images/logo.png" alt="MovieBiz Logo" height="36" />
