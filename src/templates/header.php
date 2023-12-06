@@ -10,7 +10,7 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
   </script>
   
-  <link rel="stylesheet" href="../../assets/css/global.scss">
+  <link rel="stylesheet" href="/StreamSync/src/assets/css/global.scss">
   
   <title>
     <?= $title ?? NULL ?>

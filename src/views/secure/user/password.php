@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '../../../../infra/middlewares/middleware-user.php';
+require_once __DIR__ . '/../../../infrastructure/middlewares/middleware-user.php';
 include_once __DIR__ . '../../../../templates/header.php';
-@require_once __DIR__ . '/../../../helpers/session.php';
+@require_once __DIR__ . '/../../../validations/session.php';
 
 $title = ' - Change password';
 $user = user();
@@ -12,7 +12,7 @@ $user = user();
 </div>
 <main>
   <section class="py-4">
-    <a href="/StreamSync/pages/secure/user/profile.php"><button type="button" class="btn btn-secondary px-5">Back</button></a>
+    <a href="/StreamSync/src/views/secure/user/profile.php"><button type="button" class="btn btn-secondary px-5">Back</button></a>
   </section>
   <section>
     <?php

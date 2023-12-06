@@ -6,7 +6,6 @@ require_once __DIR__ . '/../../../infrastructure/middlewares/middleware-user.php
 require_once __DIR__ . '/../../../repositories/userRepository.php';
 require_once __DIR__ . '/../../../templates/header.php'; 
 $user = user();
-$userAvatar = getAvatarById($user['id']);
 ?>
 
   <div class="container-fluid">
@@ -49,8 +48,8 @@ $userAvatar = getAvatarById($user['id']);
             <hr>
             <div id="user" class="mt-auto mb-3 text-sm-start text-center d-flex justify-content-between align-items-center">
                 <div>
-                    <?php if ($userAvatar !== null) : ?>
-                        <img src="<?= $userAvatar ?>" alt="User Avatar" class="rounded-circle" style="width: 42px; height: 42px;">
+                    <?php if ($user['avatar'] !== null) : ?>
+                        <img src="data:image/png;base64,<?= base64_encode($user['avatar']) ?>" alt="User Avatar" class="rounded-circle " style="width: 42px; height: 42px;">
                     <?php else : ?>
                         <img src="https://cdn3.iconfinder.com/data/icons/network-communication-vol-3-1/48/111-512.png"
                             alt="Default Avatar" class="rounded-circle" style="width: 42px; height: 42px;">

@@ -74,20 +74,16 @@ function getAll()
     return $users;
 }
 
-function getAvatarById($id)
-{
-    $PDOStatement = $GLOBALS['pdo']->prepare('SELECT avatar FROM users WHERE id = ?;');
-    $PDOStatement->bindValue(1, $id, PDO::PARAM_INT);
-    $PDOStatement->execute();
-    $result = $PDOStatement->fetchColumn();
-
-    // Se o resultado for vazio, retorne um avatar padrão
-    return $result;
-}
-
-
 function updateUser($user)
 {
+    //Role Utilizador por default
+    $user['role_id'] = 2;
+    
+    if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+        // Faça o upload da imagem e obtenha o conteúdo (blob)
+        $user['avatar'] = uploadAvatar($_FILES['avatar']);
+    }
+
     if (isset($user['password']) && !empty($user['password'])) {
         $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
 
@@ -169,6 +165,32 @@ function deleteUser($id)
     $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM users WHERE id = ?;');
     $PDOStatement->bindValue(1, $id, PDO::PARAM_INT);
     return $PDOStatement->execute();
+}
+
+function uploadAvatar($file)
+{
+    $allowTypes = array('jpg', 'png', 'jpeg');
+    $statusMsg = '';
+
+    if ($file && $file['error'] === UPLOAD_ERR_OK) {
+        $fileName = basename($file["name"]);
+        $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+
+        if (in_array($fileType, $allowTypes)) {
+            $imgContent = file_get_contents($file["tmp_name"]);
+
+            if ($imgContent) {
+                $statusMsg = 'File uploaded successfully';
+
+                return $imgContent;
+            } else {
+                $statusMsg = 'Error reading file content.';
+            }
+        } else {
+            $statusMsg = 'Sorry, only JPG, JPEG, PNG files are allowed to upload.';
+        }
+    }
+    throw new Exception($statusMsg);
 }
 
 function createNewUser($user)
