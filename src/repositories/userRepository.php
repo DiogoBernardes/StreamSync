@@ -78,9 +78,8 @@ function updateUser($user)
 {
     //Role Utilizador por default
     $user['role_id'] = 2;
-    
+
     if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-        // Faça o upload da imagem e obtenha o conteúdo (blob)
         $user['avatar'] = uploadAvatar($_FILES['avatar']);
     }
 
@@ -167,6 +166,7 @@ function deleteUser($id)
     return $PDOStatement->execute();
 }
 
+
 function uploadAvatar($file)
 {
     $allowTypes = array('jpg', 'png', 'jpeg');
@@ -194,8 +194,8 @@ function uploadAvatar($file)
 }
 
 function createNewUser($user)
-{  
-     $user['role_id'] = 2;
+{
+    $user['role_id'] = 2;
 
     $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
     $sqlCreate = "INSERT INTO 
@@ -237,4 +237,3 @@ function createNewUser($user)
     }
     return $success;
 }
-

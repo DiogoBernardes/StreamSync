@@ -97,9 +97,9 @@ function updateProfile($req)
     if (isset($data['invalid'])) {
         $_SESSION['errors'] = $data['invalid'];
         $params = '?' . http_build_query($req);
-        header('location: /StreamSync/src/views/secure/user/profile.php' . $params);
-        } else {
-        $user = user(); 
+        header('location: /StreamSync/src/views/secure/user/Dashboard.php' . $params);
+    } else {
+        $user = user();
         $data['id'] = $user['id'];
         $data['administrator'] = $user['administrator'];
 
@@ -109,7 +109,7 @@ function updateProfile($req)
             $_SESSION['success'] = 'User successfully changed!';
             $_SESSION['action'] = 'update';
             $params = '?' . http_build_query($data);
-            header('location: /StreamSync/src/views/secure/user/profile.php' . $params);
+            header('location: /StreamSync/src/views/secure/user/Dashboard.php' . $params);
         }
     }
 }

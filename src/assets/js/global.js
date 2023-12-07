@@ -1,3 +1,4 @@
+//Esconder os alertas dos erros ao fim de 3s
 function hideAlerts() {
   var alerts = document.querySelectorAll(".alert");
   alerts.forEach(function (alert) {
@@ -13,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //Adicionar o conteúdo na mesma página
 function loadContent(page) {
-  console.log("Tentando carregar a página:", page);
   $.ajax({
     url: `/StreamSync/src/views/secure/user/${page}.php`,
     method: "GET",
@@ -24,4 +24,10 @@ function loadContent(page) {
       console.error("Erro ao carregar a página");
     },
   });
+}
+//Update no texto do botão de upload da imagem
+function updateFileName(input) {
+  const fileName = input.files[0].name;
+  const selectedFileName = document.getElementById("selectedFileName");
+  selectedFileName.innerText = fileName;
 }
