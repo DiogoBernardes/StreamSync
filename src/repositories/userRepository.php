@@ -180,14 +180,14 @@ function uploadAvatar($file)
             $imgContent = file_get_contents($file["tmp_name"]);
 
             if ($imgContent) {
-                $statusMsg = 'File uploaded successfully';
+                $statusMsg = 'Ficheiro carregado com sucesso!';
 
                 return $imgContent;
             } else {
-                $statusMsg = 'Error reading file content.';
+                $statusMsg = 'Erro ao tentar ler o ficheiro!';
             }
         } else {
-            $statusMsg = 'Sorry, only JPG, JPEG, PNG files are allowed to upload.';
+            $statusMsg = 'Desculpe, apenas são suportados ficheiros JPG, JPEG, PNG.';
         }
     }
     throw new Exception($statusMsg);

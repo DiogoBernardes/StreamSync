@@ -14,7 +14,7 @@ CREATE TABLE users (
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   username VARCHAR(255) NOT NULL,
-  avatar TEXT,
+  avatar LONGBLOB,
   role_id INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -48,7 +48,7 @@ CREATE TABLE content (
   number_seasons INT,
   synopsis TEXT,
   category_id INT NOT NULL,
-  poster TEXT,
+  poster LONGBLOB,
   trailer TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -133,3 +133,35 @@ INSERT INTO content_type (name)
 VALUES ('Talk Show');
 INSERT INTO content_type (name) 
 VALUES ('Curta-Metragem');
+
+
+INSERT INTO category_type (name) 
+VALUES ('Comédia');
+INSERT INTO category_type (name) 
+VALUES ('Policial');
+INSERT INTO category_type (name) 
+VALUES ('Guerra');
+INSERT INTO category_type (name) 
+VALUES ('Mistério');
+INSERT INTO category_type (name) 
+VALUES ('Familía');
+INSERT INTO category_type (name) 
+VALUES ('Animação');
+INSERT INTO category_type (name) 
+VALUES ('Ação');
+INSERT INTO category_type (name) 
+VALUES ('Drama');
+INSERT INTO category_type (name) 
+VALUES ('Aventura');
+INSERT INTO category_type (name) 
+VALUES ('Romance');
+INSERT INTO category_type (name) 
+VALUES ('Terror');
+INSERT INTO category_type (name) 
+VALUES ('Documentário');
+INSERT INTO category_type (name) 
+VALUES ('Suspense');
+INSERT INTO category_type (name) 
+VALUES ('Musical');
+INSERT INTO category_type (name) 
+VALUES ('Ficção Científica');

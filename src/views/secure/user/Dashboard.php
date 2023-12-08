@@ -28,7 +28,6 @@ $user = user();
             <li>
               <a href="#submenu1" class="nav-link px-0 align-middle transition">
                 <i class="fs-4 bi-list text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Listas</span>
-
               </a>
             </li>
             <li>
