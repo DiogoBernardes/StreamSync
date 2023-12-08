@@ -91,7 +91,7 @@ function update($req)
 }
 
 function updateProfile($req)
-{
+{    
     $data = validatedUser($req);
 
     if (isset($data['invalid'])) {
@@ -114,20 +114,24 @@ function updateProfile($req)
     }
 }
 
-function changePassword($req)
+function changePassword($req) 
 {
-    $data = passwordIsValid($req);
-    if (isset($data['invalid'])) {
-        $_SESSION['errors'] = $data['invalid'];
-        $params = '?' . http_build_query($req);
-        header('location: /crud/pages/secure/user/password.php' . $params);
+    $validationResult = validatePasswordChange($req);
+    if (isset($validationResult['invalid'])) {
+        $_SESSION['errors'] = $validationResult['invalid'];
+        header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+        exit;
     } else {
-        $data['id'] = userId();
-        $success = updatePassword($data);
+        $req['id'] = userId();
+        $success = updatePassword($req);
         if ($success) {
             $_SESSION['success'] = 'Password successfully changed!';
-            header('location: /StreamSync/src/views/secure//user/password.php');
+            header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+        } else {
+            $_SESSION['errors'] = ['Failed to update password.'];
+            header('location: /StreamSync/src/views/secure/user/Dashboard.php');
         }
+        exit;
     }
 }
 

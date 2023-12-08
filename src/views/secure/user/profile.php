@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="fullName">Ultimo Nome</label>
-                      <input type="text" class="form-control" name="last_name" placeholder="Last Name" maxlength="100" size="100" value="<?= isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : $user['last_name'] ?>" required>
+                      <input type="text" class="form-control" name="last_name" placeholder="Last Name" maxlength="100" size="100" value="<?= isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : $user['last_name'] ?>" required>       
                     </div>
                   </div>
                 </div>
@@ -82,14 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
                       <input type="text" class="form-control" name="username" placeholder="Username" maxlength="100" size="100" value="<?= isset($_REQUEST['username']) ? $_REQUEST['username'] : $user['username'] ?>" required>
                     </div>
                   </div>
-
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="website">Data de Nascimento</label>
                       <input type="date" class="form-control" name="birthdate" value="<?= isset($_REQUEST['birthdate']) ? $_REQUEST['birthdate'] : $user['birthdate'] ?>" required>
                     </div>
                   </div>
-
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 d-flex justify-content-end">
                     <div class="text-right">
                       <button type="submit" id="submit" name="user" value="profile" class="btn btn-primary">Atualizar</button>
@@ -98,27 +96,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
                 </div>
               </form>
 
-
-              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <h6 class=" mb-2 text-primary">Alterar Password</h6>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                <div class="form-group">
-                  <label for="Street">Password</label>
-                  <input type="name" class="form-control" id="Street" placeholder="Password">
+              <form enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/user.php" method="post" class="form-control py-3 border-0">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <h6 class=" mb-2 text-primary">Alterar Password</h6>
                 </div>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                <div class="form-group">
-                  <label for="ciTy">Confirmar Password</label>
-                  <input type="name" class="form-control" id="ciTy" placeholder="Confirmar Password">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                  </div>
                 </div>
-              </div>
-              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 d-flex justify-content-end">
-                <div class="text-right">
-                  <button type="button" id="submit" name="submit" class="btn btn-primary">Atualizar</button>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label for="confirmPassword">Confirmar Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirm_password" placeholder="Confirmar Password">
+                  </div>
                 </div>
-              </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 d-flex justify-content-end">
+                  <div class="text-right">
+                    <button type="submit" id="submit2" name="user" value="password" class="btn btn-primary">Atualizar</button>
+                  </div>
+                </div>
+              </form>
 
             </div>
           </div>

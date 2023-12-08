@@ -138,25 +138,17 @@ function updateUser($user)
     ]);
 }
 
-function updatePassword($user)
+function updatePassword($req)
 {
-    if (isset($user['password']) && !empty($user['password'])) {
-        $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+    $hashedPassword = password_hash($req['password'], PASSWORD_DEFAULT);
 
-        $sqlUpdate = "UPDATE  
-        users SET
-            first_name = :first_name, 
-            password = :password
-        WHERE id = :id;";
+    $sqlUpdate = "UPDATE users SET password = :password WHERE id = :id;";
+    $PDOStatement = $GLOBALS['pdo']->prepare($sqlUpdate);
 
-        $PDOStatement = $GLOBALS['pdo']->prepare($sqlUpdate);
-
-        return $PDOStatement->execute([
-            ':id' => $user['id'],
-            ':first_name' => $user['first_name'],
-            ':password' => $user['password']
-        ]);
-    }
+    return $PDOStatement->execute([
+        ':id' => $req['id'],
+        ':password' => $hashedPassword
+    ]);
 }
 
 function deleteUser($id)

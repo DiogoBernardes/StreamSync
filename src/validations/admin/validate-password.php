@@ -1,28 +1,24 @@
 <?php
+function validatePasswordChange($req) {
+    $errors = [];
 
-function passwordIsValid($req)
-{
-    foreach ($req as $key => $value) {
-        $req[$key] = trim($req[$key]);
+    if (!empty($req['password'])) {
+        if (strlen($req['password']) < 8) {
+            $errors['password'] = 'O campo deve ter pelo menos 8 caracteres.';
+        } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $req['password'])) {
+            $errors['password'] = 'Deve incluir pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.';
+        }
+
+        if ($req['confirm_password'] !== $req['password']) {
+            $errors['confirm_password'] = 'As passwords não coincidem.';
+        }
+    } else {
+        $errors['password'] = 'O campo de senha é obrigatório.';
     }
 
-    if (empty($req['name']) || strlen($req['name']) < 3 || strlen($req['name']) > 255) {
-        $errors['name'] = 'The Name field cannot be empty and must be between 3 and 255 characters';
-    }
-
-    if (!empty($req['password']) && strlen($req['password']) < 6) {
-        $errors['password'] = 'The Password field cannot be empty and must be at least 6 characters long.';
-    }
-
-    if (!empty($req['confirm_password']) && ($req['confirm_password']) != $req['password']) {
-        $errors['confirm_password'] = 'The Confirm Password field must not be empty and must be the same as the Password field.';
-    }
-
-    if (isset($errors)) {
+    if (!empty($errors)) {
         return ['invalid' => $errors];
     }
-
     return $req;
 }
-
 ?>
