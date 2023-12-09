@@ -26,8 +26,11 @@ function isPasswordValid($req)
     if (!isset($_SESSION['id'])) {
 
         $user = getByEmail($req['email']);
+        if ($user && $user['deleted_at'] !== null) {
+            $errors['account_deleted'] = 'A conta associada a este email foi eliminada.';
+        }
 
-        if (!$user || !password_verify($req['password'], $user['password'])) {
+        if (!$user || isset($errors) || !password_verify($req['password'], $user['password'])) {
             $errors['email'] = 'Email ou Password incorretos!';
         }
 

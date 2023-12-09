@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once __DIR__ . '/../../repositories/userRepository.php';
 require_once __DIR__ . '/../../validations/admin/validate-user.php';
 require_once __DIR__ . '/../../validations/admin/validate-password.php';
@@ -21,6 +23,9 @@ if (isset($_POST['user'])) {
     if ($_POST['user'] == 'password') {
         changePassword($_POST);
     }
+    if ($_POST['user'] == 'delete') {
+        delete_user($_POST);
+    }
 }
 
 if (isset($_GET['user'])) {
@@ -29,22 +34,6 @@ if (isset($_GET['user'])) {
         $user['action'] = 'update';
         $params = '?' . http_build_query($user);
         header('location: /StreamSync/src/views/secure/admin/user.php' . $params);
-    }
-
-    if ($_GET['user'] == 'delete') {
-        $user = getById($_GET['id']);
-        if ($user['administrator']) {
-            $_SESSION['errors'] = ['This user cannot be deleted!'];
-            header('location: /StreamSync/src/views/secure/admin/');
-            return false;
-        }
-
-        $success = delete_user($user);
-
-        if ($success) {
-            $_SESSION['success'] = 'User deleted successfully!';
-            header('location: /StreamSync/src/views/secure/admin/');
-        }
     }
 }
 
@@ -91,7 +80,7 @@ function update($req)
 }
 
 function updateProfile($req)
-{    
+{
     $data = validatedUser($req);
 
     if (isset($data['invalid'])) {
@@ -114,7 +103,7 @@ function updateProfile($req)
     }
 }
 
-function changePassword($req) 
+function changePassword($req)
 {
     $validationResult = validatePasswordChange($req);
     if (isset($validationResult['invalid'])) {
@@ -134,9 +123,24 @@ function changePassword($req)
         exit;
     }
 }
-
-function delete_user($user)
+function delete_user()
 {
-    $data = deleteUser($user['id']);
-    return $data;
+    $user = [
+        'id' => $_SESSION['id']
+    ];
+
+    $data = softDeleteUser($user['id']);
+
+    if ($data) {
+        $_SESSION['success'] = 'User deleted successfully!';
+        session_unset();
+        session_destroy();
+        setcookie('id', '', time() - 3600, "/");
+        setcookie('first_name', '', time() - 3600, "/");
+
+        header('location: /StreamSync/');
+        exit();
+    } else {
+        $_SESSION['errors'] = ['Failed to delete user.'];
+    }
 }

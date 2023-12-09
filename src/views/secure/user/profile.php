@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="fullName">Ultimo Nome</label>
-                      <input type="text" class="form-control" name="last_name" placeholder="Last Name" maxlength="100" size="100" value="<?= isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : $user['last_name'] ?>" required>       
+                      <input type="text" class="form-control" name="last_name" placeholder="Last Name" maxlength="100" size="100" value="<?= isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : $user['last_name'] ?>" required>
                     </div>
                   </div>
                 </div>
@@ -96,28 +96,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
                 </div>
               </form>
 
-              <form enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/user.php" method="post" class="form-control py-3 border-0">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                  <h6 class=" mb-2 text-primary">Alterar Password</h6>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h6 class="text-primary" data-toggle="collapse" type="button" data-target="#passwordForm">
+                  Alterar Password<i class="bi bi-caret-down ms-1 "></i>
+                </h6>
+              </div>
+              <form id="passwordForm" enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/user.php" method="post" class="form-control py-3 border-0 collapse">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                    </div>
                   </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                  <div class="form-group">
-                    <label for="confirmPassword">Confirmar Password</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirm_password" placeholder="Confirmar Password">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="confirmPassword">Confirmar Password</label>
+                      <input type="password" class="form-control" id="confirmPassword" name="confirm_password" placeholder="Confirmar Password">
+                    </div>
                   </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 d-flex justify-content-end">
                   <div class="text-right">
                     <button type="submit" id="submit2" name="user" value="password" class="btn btn-primary">Atualizar</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeCollapse()">Fechar</button>
                   </div>
                 </div>
               </form>
+
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h6 class="text-primary" data-toggle="collapse" type="button" data-target="#deleteForm">
+                  Eliminar Conta<i class="bi bi-caret-down ms-1 "></i>
+                </h6>
+              </div>
+              <div id="deleteForm" class="collapse">
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 d-flex justify-content-end">
+                    <div class="text-right">
+                      <button type="submit" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-primary">Eliminar</button>
+                      <button type="button" class="btn btn-secondary" onclick="closeCollapse()">Fechar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -125,3 +146,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
       </div>
     </div>
   </div>
+
+  <!-- Modal de confirmação de delete -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="logoutModalLabel">Eliminar Conta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Tem certeza de que deseja eliminar a sua conta?
+          <br>
+          Não poderá recuperar a mesma posteriormente.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <form enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/user.php" method="post">
+            <button type="submit" name="user" value="delete" class="btn btn-danger">Sim, encerrar a sessão</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

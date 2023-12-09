@@ -3,7 +3,7 @@ require_once __DIR__ . '/../infrastructure/db/connection.php';
 
 function createUser($user)
 {
-    //Role Utilizador por default
+    // Role Utilizador por default
     $user['role_id'] = 2;
 
     $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
@@ -49,7 +49,7 @@ function createUser($user)
 
 function getById($id)
 {
-    $PDOStatement = $GLOBALS['pdo']->prepare('SELECT * FROM users WHERE id = ?;');
+    $PDOStatement = $GLOBALS['pdo']->prepare('SELECT * FROM users WHERE id = ? AND deleted_at IS NULL;');
     $PDOStatement->bindValue(1, $id, PDO::PARAM_INT);
     $PDOStatement->execute();
     return $PDOStatement->fetch();
@@ -57,16 +57,15 @@ function getById($id)
 
 function getByEmail($email)
 {
-    $PDOStatement = $GLOBALS['pdo']->prepare('SELECT * FROM users WHERE email = ? LIMIT 1;');
+    $PDOStatement = $GLOBALS['pdo']->prepare('SELECT * FROM users WHERE email = ? AND deleted_at IS NULL LIMIT 1;');
     $PDOStatement->bindValue(1, $email);
     $PDOStatement->execute();
     return $PDOStatement->fetch();
 }
 
-
 function getAll()
 {
-    $PDOStatement = $GLOBALS['pdo']->query('SELECT * FROM users;');
+    $PDOStatement = $GLOBALS['pdo']->query('SELECT * FROM users WHERE deleted_at IS NULL;');
     $users = [];
     while ($listOfusers = $PDOStatement->fetch()) {
         $users[] = $listOfusers;
@@ -76,7 +75,7 @@ function getAll()
 
 function updateUser($user)
 {
-    //Role Utilizador por default
+    // Role Utilizador por default
     $user['role_id'] = 2;
 
     if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
@@ -96,33 +95,19 @@ function updateUser($user)
             username = :username, 
             avatar = :avatar, 
             role_id = :role_id
-        WHERE id = :id;";
-
-        $PDOStatement = $GLOBALS['pdo']->prepare($sqlUpdate);
-
-        return $PDOStatement->execute([
-            ':id' => $user['id'],
-            ':first_name' => $user['first_name'],
-            ':last_name' => $user['last_name'],
-            ':birthdate' => $user['birthdate'],
-            ':email' => $user['email'],
-            ':password' => $user['password'],
-            ':username' => $user['username'],
-            ':avatar' => $user['avatar'],
-            ':role_id' => $user['role_id']
-        ]);
+        WHERE id = :id AND deleted_at IS NULL;";
+    } else {
+        $sqlUpdate = "UPDATE  
+        users SET
+            first_name = :first_name, 
+            last_name = :last_name, 
+            birthdate = :birthdate, 
+            email = :email,
+            username = :username, 
+            avatar = :avatar,
+            role_id = :role_id
+        WHERE id = :id AND deleted_at IS NULL;";
     }
-
-    $sqlUpdate = "UPDATE  
-    users SET
-        first_name = :first_name, 
-        last_name = :last_name, 
-        birthdate = :birthdate, 
-        email = :email,
-        username = :username, 
-        avatar = :avatar,
-        role_id = :role_id
-    WHERE id = :id;";
 
     $PDOStatement = $GLOBALS['pdo']->prepare($sqlUpdate);
 
@@ -132,6 +117,7 @@ function updateUser($user)
         ':last_name' => $user['last_name'],
         ':birthdate' => $user['birthdate'],
         ':email' => $user['email'],
+        ':password' => $user['password'],
         ':username' => $user['username'],
         ':avatar' => $user['avatar'],
         ':role_id' => $user['role_id']
@@ -142,7 +128,7 @@ function updatePassword($req)
 {
     $hashedPassword = password_hash($req['password'], PASSWORD_DEFAULT);
 
-    $sqlUpdate = "UPDATE users SET password = :password WHERE id = :id;";
+    $sqlUpdate = "UPDATE users SET password = :password WHERE id = :id AND deleted_at IS NULL;";
     $PDOStatement = $GLOBALS['pdo']->prepare($sqlUpdate);
 
     return $PDOStatement->execute([
@@ -151,13 +137,15 @@ function updatePassword($req)
     ]);
 }
 
-function deleteUser($id)
+function softDeleteUser($id)
 {
-    $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM users WHERE id = ?;');
-    $PDOStatement->bindValue(1, $id, PDO::PARAM_INT);
-    return $PDOStatement->execute();
-}
+    $sqlSoftDelete = "UPDATE users SET deleted_at = CURRENT_TIMESTAMP WHERE id = :id AND deleted_at IS NULL;";
+    $PDOStatement = $GLOBALS['pdo']->prepare($sqlSoftDelete);
 
+    return $PDOStatement->execute([
+        ':id' => $id,
+    ]);
+}
 
 function uploadAvatar($file)
 {

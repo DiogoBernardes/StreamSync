@@ -31,3 +31,9 @@ function updateFileName(input) {
   const selectedFileName = document.getElementById("selectedFileName");
   selectedFileName.innerText = fileName;
 }
+
+// function updateFileName(input) {
+//   const fileName = input.files[0].name;
+//   const selectedFileName = document.getElementById("selectedFileName");
+//   selectedFileName.innerText = fileName;
+// }
