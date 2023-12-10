@@ -21,7 +21,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
       <hr class="my-4 border-primary">
     </div>
 
-    <div class=" me-5 text-end">
+    <div class="me-5 text-end">
       <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#contentModal">
         <span class="d-flex align-items-end">Nova Lista</span>
       </button>
@@ -37,14 +37,12 @@ $totalPages = ceil($totalItems / $itemsPerPage);
                 <div class="col-md-4 d-flex justify-content-center">
                   <div class="card h-50 w-75 rounded border-dark">
                     <img src="https://motoxpert.pt/sh_website_category_page/static/src/img/default.png" class="card-img-top h-75" alt="Imagem da Lista">
-                    <div class="card-body  d-inline-flex justify-content-between align-items-center p-1">
-                      <h5 href="view-list.php?id=<?= $list['id']; ?>" class="card-title">
-                        <?= $list['name']; ?>
-                      </h5>
+                    <div class="card-body d-inline-flex justify-content-between align-items-center p-1">
+                      <a href="listContent.php?list_id=<?= $list['id']; ?>" class="text-decoration-none text-dark fw-bold"><?= $list['name']; ?></a>
                       <div>
-                        <i class="bi bi-pen" data-toggle="modal" data-target="#updateModal<?= $list['id']; ?>" style="cursor: pointer;"></i>
-                        <i class="bi bi-trash delete-icon ms-2" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $list['id']; ?>" style="cursor: pointer;"></i>
-                        <i class="bi bi-share text-end ms-2"></i>
+                        <i class="bi bi-pen pointer" data-toggle="modal" data-target="#updateModal<?= $list['id']; ?>"></i>
+                        <i class="bi bi-trash delete-icon ms-2 pointer" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $list['id']; ?>"></i>
+                        <i class="bi bi-share text-end ms-2 pointer"></i>
                       </div>
                     </div>
                   </div>
@@ -56,7 +54,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
       </div>
     </div>
 
-    <nav aria-label="Page navigation" class=" d-flex justify-content-center">
+    <nav aria-label="Page navigation" class="d-flex justify-content-center">
       <ul class="pagination">
         <li class="page-item">
           <a class="page-link" href="#listCarousel" role="button" data-slide="prev" aria-label="Previous">

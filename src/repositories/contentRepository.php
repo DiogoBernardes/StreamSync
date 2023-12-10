@@ -17,7 +17,8 @@ function createContent($content)
         synopsis,
         category_id,
         poster,
-        trailer
+        trailer,
+        watched_date
     ) 
     VALUES (
         :type_id, 
@@ -28,7 +29,8 @@ function createContent($content)
         :synopsis,
         :category_id,
         :poster,
-        :trailer
+        :trailer,
+        :watched_date
     )";
 
   $PDOStatement = $GLOBALS['pdo']->prepare($sqlCreate);
@@ -42,7 +44,9 @@ function createContent($content)
     ':synopsis' => $content['synopsis'],
     ':category_id' => $content['category_id'],
     ':poster' => $content['poster'],
-    ':trailer' => $content['trailer']
+    ':trailer' => $content['trailer'],
+    ':watched_date' => $content['watched_date']
+
   ]);
 }
 
@@ -79,7 +83,8 @@ function updateContent($content)
         synopsis = :synopsis,
         category_id = :category_id,
         poster = :poster,
-        trailer = :trailer
+        trailer = :trailer,
+        watched_date = :watched_date
     WHERE id = :id;";
 
   $PDOStatement = $GLOBALS['pdo']->prepare($sqlUpdate);
@@ -94,7 +99,8 @@ function updateContent($content)
     ':synopsis' => $content['synopsis'],
     ':category_id' => $content['category_id'],
     ':poster' => $content['poster'],
-    ':trailer' => $content['trailer']
+    ':trailer' => $content['trailer'],
+    ':watched_date' => $content['watched_date']
   ]);
 }
 

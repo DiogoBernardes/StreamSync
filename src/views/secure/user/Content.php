@@ -1,13 +1,14 @@
 <?php
 $title = 'Inserir';
+require_once '../../../repositories/contentTypeRepository.php';
+require_once '../../../repositories/categoryRepository.php';
 require_once __DIR__ . '../../../../infrastructure/middlewares/middleware-user.php';
 include_once __DIR__ . '../../../../templates/header.php';
 @require_once __DIR__ . '/../../../validations/session.php';
 $user = user();
+$contentTypes = getAllContentTypes();
+$categories = getAllCategories();
 ?>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contentModal">
-  Abrir Modal
-</button>
 
 <!-- Modal -->
 <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="contentModalLabel" aria-hidden="true">
@@ -50,9 +51,11 @@ $user = user();
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
               <label for="content-type">Tipo de Conteúdo</label>
               <select class="form-select" aria-label="Default select example" name="type_id" required>
-                <option value=" 1">1</option>
-                <option value="2">Série</option>
-                <option value="3">Documentario</option>
+                <?php
+                foreach ($contentTypes as $contentType) {
+                  echo "<option value='{$contentType['id']}'>{$contentType['name']}</option>";
+                }
+                ?>
               </select>
             </div>
           </div>
@@ -60,9 +63,11 @@ $user = user();
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
               <label for="categories">Categorias</label>
               <select class="form-select" aria-label="Default select example" name="category_id" required>
-                <option value="1">1</option>
-                <option value="2">Guerra</option>
-                <option value="3">Acção</option>
+                <?php
+                foreach ($categories as $category) {
+                  echo "<option value='{$category['id']}'>{$category['name']}</option>";
+                }
+                ?>
               </select>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -83,6 +88,20 @@ $user = user();
               <div class="form-group">
                 <label for="end_date">Data de Término</label>
                 <input type="date" class="form-control" name="end_date">
+              </div>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label for="watched_date">Assistido/Assistir</label>
+                <input type="date" class="form-control" name="watched_date" placeholder="Assistido/Assistir" required>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label for="season">Link Trailer</label>
+                <input type="text" class="form-control" name="number_seasons" placeholder="Link" maxlength="100" size="100">
               </div>
             </div>
           </div>
