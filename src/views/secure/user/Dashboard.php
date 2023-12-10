@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../../templates/header.php';
 $user = user();
 ?>
 
-<body class="overflow-hidden">
+<body>
   <div class="container-fluid">
     <div class="row flex-nowrap ">
       <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar-color">

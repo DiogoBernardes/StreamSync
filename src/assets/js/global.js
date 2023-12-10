@@ -31,3 +31,7 @@ function updateFileName(input) {
   const selectedFileName = document.getElementById("selectedFileName");
   selectedFileName.innerText = fileName;
 }
+//fechar os colapses
+function closeCollapse() {
+  $(".collapse").collapse("hide");
+}

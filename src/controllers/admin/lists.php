@@ -55,14 +55,6 @@ function update_list($req, $userId)
 {
   $data = validateList($req);
 
-  if (isset($data['invalid'])) {
-    $_SESSION['errors'] = $data['invalid'];
-    $_SESSION['action'] = 'update';
-    $params = '?' . http_build_query($req);
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php' . $params);
-    return false;
-  }
-
   $success = updateList($data, $userId);
 
   if ($success) {
@@ -70,8 +62,13 @@ function update_list($req, $userId)
     $data['action'] = 'update';
     $params = '?' . http_build_query($data);
     header('location: /StreamSync/src/views/secure/user/Dashboard.php' . $params);
+  } else {
+    $_SESSION['errors'] = 'Failed to update list.';
+    header('location: /StreamSync/src/views/secure/user/Dashboard.php');
   }
 }
+
+
 
 function delete_list($listId, $userId)
 {

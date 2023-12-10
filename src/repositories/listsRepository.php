@@ -44,20 +44,34 @@ function getAllLists($userId)
 
 function updateList($list, $userId)
 {
-  $sqlUpdate = "UPDATE  
-    lists SET
-        name = :name,
-        user_id = :user_id
-    WHERE id = :id AND user_id = :user_id;";
+  try {
+    $GLOBALS['pdo']->beginTransaction();
 
-  $PDOStatement = $GLOBALS['pdo']->prepare($sqlUpdate);
+    $sqlUpdate = "UPDATE lists SET name = :name WHERE id = :id AND user_id = :user_id;";
 
-  return $PDOStatement->execute([
-    ':id' => $list['id'],
-    ':name' => $list['name'],
-    ':user_id' => $userId
-  ]);
+    $PDOStatement = $GLOBALS['pdo']->prepare($sqlUpdate);
+
+    $success = $PDOStatement->execute([
+      ':id' => isset($list['id']) ? $list['id'] : null,
+      ':name' => $list['name'],
+      ':user_id' => $userId
+    ]);
+
+    if (!$success) {
+      throw new Exception("Erro ao executar a consulta de atualização.");
+    }
+
+    $GLOBALS['pdo']->commit();
+
+    return true;
+  } catch (Exception $e) {
+    $GLOBALS['pdo']->rollBack();
+    echo "Erro: " . $e->getMessage();
+    return false;
+  }
 }
+
+
 
 function deleteList($id, $userId)
 {

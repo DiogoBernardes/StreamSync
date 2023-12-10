@@ -91,6 +91,13 @@ function updateProfile($req)
         $user = user();
         $data['id'] = $user['id'];
         $data['administrator'] = $user['administrator'];
+        // // Verifique se um novo arquivo foi enviado antes de processar o avatar
+        // if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+        //     $data['avatar'] = uploadAvatar($_FILES['avatar']);
+        // } else {
+        //     // Se nenhum novo arquivo foi enviado, mantenha o avatar existente
+        //     $data['avatar'] = $user['avatar'];
+        // }
 
         $success = updateUser($data);
 

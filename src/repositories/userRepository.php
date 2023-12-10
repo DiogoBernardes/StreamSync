@@ -91,7 +91,6 @@ function updateUser($user)
             last_name = :last_name, 
             birthdate = :birthdate, 
             email = :email,
-            password = :password,
             username = :username, 
             avatar = :avatar, 
             role_id = :role_id
@@ -117,7 +116,6 @@ function updateUser($user)
         ':last_name' => $user['last_name'],
         ':birthdate' => $user['birthdate'],
         ':email' => $user['email'],
-        ':password' => $user['password'],
         ':username' => $user['username'],
         ':avatar' => $user['avatar'],
         ':role_id' => $user['role_id']

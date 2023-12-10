@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
         <div class="card">
           <div class="card-body">
             <div class="row gutters">
-              <form enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/user.php" method="post" class="form-control py-3 border-0">
+              <form id="profileForm" enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/user.php" method="post" class="form-control py-3 border-0">
                 <div class="d-flex justify-content-center align-items-center">
                   <div class="w-35 h-35">
                     <div class="d-flex justify-content-center">
@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <form enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/user.php" method="post">
+          <form id="deleteForm" enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/user.php" method="post">
             <button type="submit" name="user" value="delete" class="btn btn-danger">Sim, encerrar a sessão</button>
           </form>
         </div>
