@@ -1,8 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../repositories/userRepository.php';
 require_once __DIR__ . '/../../validations/app/validate-login-password.php';
-
+require_once __DIR__ . '/../../validations/session.php';
 if (isset($_POST['user'])) {
     if ($_POST['user'] == 'login') {
         login($_POST);
@@ -42,7 +41,8 @@ function checkErrors($data, $req)
     return true;
 }
 
-function isAdmin($userID){
+function isAdmin($userID)
+{
     $user = getById($userID);
     return $user['role_id'] == 1 ? true : false;
 }
@@ -55,15 +55,13 @@ function doLogin($data)
     setcookie("id", $data['id'], time() + (60 * 60 * 24 * 30), "/");
     setcookie("name", $data['first_name'], time() + (60 * 60 * 24 * 30), "/");
 
-    if(isAdmin($data['id'])){
+    if (isAdmin($data['id'])) {
         $home_url = 'http://' . $_SERVER['HTTP_HOST'] . '/StreamSync/src/views/secure/admin/index.php';
         header('Location: ' . $home_url);
-    }
-    else{
+    } else {
         $home_url = 'http://' . $_SERVER['HTTP_HOST'] . '/StreamSync/src/views/secure/user/Dashboard.php';
         header('Location: ' . $home_url);
     }
-
 }
 
 function logout()

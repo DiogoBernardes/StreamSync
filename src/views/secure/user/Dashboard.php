@@ -8,11 +8,11 @@ require_once __DIR__ . '/../../../templates/header.php';
 $user = user();
 ?>
 
-<body>
+<body class="overflow-hidden">
   <div class="container-fluid">
     <div class="row flex-nowrap ">
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-        <div class="d-flex flex-column p-4  min-vh-100">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar-color">
+        <div class="d-flex flex-column p-4 min-vh-100">
 
           <div class="d-flex justify-content-center align-items-center mt-4">
             <a href="/StreamSync/" class="mx-auto">
@@ -26,7 +26,7 @@ $user = user();
               </a>
             </li>
             <li>
-              <a href="#submenu1" class="nav-link px-0 align-middle transition">
+              <a href="javascript:void(0)" class="nav-link px-0 align-middle transition" onclick="loadContent('Lists')">
                 <i class="fs-4 bi-list text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Listas</span>
               </a>
             </li>
@@ -43,7 +43,7 @@ $user = user();
             </li>
           </ul>
 
-          <hr>
+
           <div id="user" class="mt-auto mb-3 text-sm-start text-center d-flex justify-content-between align-items-center">
             <div>
               <?php if ($user['avatar'] !== null) : ?>
@@ -51,7 +51,7 @@ $user = user();
               <?php else : ?>
                 <img src="https://cdn3.iconfinder.com/data/icons/network-communication-vol-3-1/48/111-512.png" alt="Default Avatar" class="rounded-circle" style="width: 42px; height: 42px;">
               <?php endif; ?>
-              <span class="d-none d-sm-inline mx-1 text-white"><?= $user['first_name'] ?? null ?> <?= $user['last_name'] ?? null ?></span>
+              <span class="d-none d-sm-inline mx-1 text-white"><?= $user['first_name'] ?? null ?></span>
             </div>
             <button type="button" class="btn btn-link transition" style="color: white;" data-bs-toggle="modal" data-bs-target="#logoutModal">
               <i class="bi bi-box-arrow-right"></i>
@@ -61,7 +61,7 @@ $user = user();
       </div>
 
       <!-- Content -->
-      <div id="content" class="col py-3">
+      <div id="content" class="col py-3 d-flex flex-column justify-content-center align-items-center bg-color">
 
       </div>
     </div>

@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
 ?>
 
 <body>
-  <div class="container ">
+  <div class="container">
     <div class="row gutters">
       <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 w-100">
         <div class="card">
@@ -51,46 +51,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
                 </div>
 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                  <h6 class="mb-2 text-primary">Dados Pessoais</h6>
+                  <h6 class="mb-2 text-primary" data-toggle="collapse" type="button" data-target="#dataForm">Dados Pessoais<i class="bi bi-caret-down ms-1 "></i></h6>
                 </div>
-                <div class="row">
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="fullName">Primeiro Nome</label>
-                      <input type="text" class="form-control" name="first_name" placeholder="First Name" maxlength="100" size="100" value="<?= isset($_REQUEST['first_name']) ? $_REQUEST['first_name'] : $user['first_name'] ?>" required>
+                <div id="dataForm" class="collapse show">
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="fullName">Primeiro Nome</label>
+                        <input type="text" class="form-control" name="first_name" placeholder="First Name" maxlength="100" size="100" value="<?= isset($_REQUEST['first_name']) ? $_REQUEST['first_name'] : $user['first_name'] ?>" required>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="fullName">Ultimo Nome</label>
+                        <input type="text" class="form-control" name="last_name" placeholder="Last Name" maxlength="100" size="100" value="<?= isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : $user['last_name'] ?>" required>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="fullName">Ultimo Nome</label>
-                      <input type="text" class="form-control" name="last_name" placeholder="Last Name" maxlength="100" size="100" value="<?= isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : $user['last_name'] ?>" required>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                  <div class="row">
                     <div class="form-group">
                       <label for="eMail">Email</label>
                       <input type="email" class="form-control" name="email" maxlength="255" value="<?= isset($_REQUEST['email']) ? $_REQUEST['email'] : $user['email'] ?>" required>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="phone">Username</label>
-                      <input type="text" class="form-control" name="username" placeholder="Username" maxlength="100" size="100" value="<?= isset($_REQUEST['username']) ? $_REQUEST['username'] : $user['username'] ?>" required>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="phone">Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="Username" maxlength="100" size="100" value="<?= isset($_REQUEST['username']) ? $_REQUEST['username'] : $user['username'] ?>" required>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="website">Data de Nascimento</label>
-                      <input type="date" class="form-control" name="birthdate" value="<?= isset($_REQUEST['birthdate']) ? $_REQUEST['birthdate'] : $user['birthdate'] ?>" required>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="website">Data de Nascimento</label>
+                        <input type="date" class="form-control" name="birthdate" value="<?= isset($_REQUEST['birthdate']) ? $_REQUEST['birthdate'] : $user['birthdate'] ?>" required>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 d-flex justify-content-end">
-                    <div class="text-right">
-                      <button type="submit" id="submit" name="user" value="profile" class="btn btn-primary">Atualizar</button>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 d-flex justify-content-end">
+                      <div class="text-right">
+                        <button type="submit" id="submit" name="user" value="profile" class="btn btn-primary">Atualizar</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeCollapse()">Fechar</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -133,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
                 <div class="row">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 d-flex justify-content-end">
                     <div class="text-right">
-                      <button type="submit" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-primary">Eliminar</button>
+                      <button type="submit" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-danger">Eliminar</button>
                       <button type="button" class="btn btn-secondary" onclick="closeCollapse()">Fechar</button>
                     </div>
                   </div>
@@ -169,4 +170,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
       </div>
     </div>
   </div>
+  <script>
+    // Adicione este script para fechar o collapse ao clicar no botão "Fechar"
+    document.addEventListener("DOMContentLoaded", function() {
+      var dataFormCollapse = new bootstrap.Collapse(document.getElementById('dataForm'), {
+        toggle: false
+      });
+
+      function closeCollapse() {
+        dataFormCollapse.hide();
+      }
+
+      document.getElementById('closeButton').addEventListener('click', closeCollapse);
+    });
+  </script>
+
 </body>
