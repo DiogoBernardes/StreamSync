@@ -24,11 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['list'])) {
   }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['lit'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['list'])) {
   $action = $_GET['list'];
 
   if ($action == 'delete') {
-    delete_list($_GET['id'], $userId);
+    delete_list($_GET['list_id'], $userId);
   }
 }
 

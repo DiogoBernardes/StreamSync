@@ -170,19 +170,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
       </div>
     </div>
   </div>
-  <script>
-    // Adicione este script para fechar o collapse ao clicar no botão "Fechar"
-    document.addEventListener("DOMContentLoaded", function() {
-      var dataFormCollapse = new bootstrap.Collapse(document.getElementById('dataForm'), {
-        toggle: false
-      });
-
-      function closeCollapse() {
-        dataFormCollapse.hide();
-      }
-
-      document.getElementById('closeButton').addEventListener('click', closeCollapse);
-    });
-  </script>
 
 </body>

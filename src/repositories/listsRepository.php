@@ -64,5 +64,8 @@ function deleteList($id, $userId)
   $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM lists WHERE id = ? AND user_id = ?;');
   $PDOStatement->bindValue(1, $id, PDO::PARAM_INT);
   $PDOStatement->bindValue(2, $userId, PDO::PARAM_INT);
-  return $PDOStatement->execute();
+
+  $success = $PDOStatement->execute();
+
+  return $success;
 }

@@ -27,7 +27,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
       </button>
     </div>
 
-    <div id="listCarousel" class="carousel slide mt-3 " data-interval="false">
+    <div id="listCarousel" class="carousel slide mt-3" data-interval="false">
       <div class="carousel-inner">
         <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
           <div class="carousel-item <?= ($i == 1) ? 'active' : ''; ?>">
@@ -37,11 +37,14 @@ $totalPages = ceil($totalItems / $itemsPerPage);
                 <div class="col-md-4 d-flex justify-content-center">
                   <div class="card h-50 w-75 rounded border-dark">
                     <img src="https://motoxpert.pt/sh_website_category_page/static/src/img/default.png" class="card-img-top h-75" alt="Imagem da Lista">
-                    <div class="card-body bg-color d-inline-flex justify-content-between p-1">
+                    <div class="card-body bg-color d-inline-flex justify-content-between align-items-center p-1">
                       <h5 href="view-list.php?id=<?= $list['id']; ?>" class="card-title">
                         <?= $list['name']; ?>
                       </h5>
-                      <i class="bi bi-share text-end"></i>
+                      <div>
+                        <i class="bi bi-trash delete-icon" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $list['id']; ?>" style="cursor: pointer;"></i>
+                        <i class="bi bi-share text-end ms-2"></i>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -51,6 +54,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
         <?php endfor; ?>
       </div>
     </div>
+
     <nav aria-label="Page navigation" class=" d-flex justify-content-center">
       <ul class="pagination">
         <li class="page-item">
@@ -67,6 +71,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
     </nav>
   </div>
 
+  <!-- Modal Criar nova lista -->
   <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="contentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -94,4 +99,36 @@ $totalPages = ceil($totalItems / $itemsPerPage);
       </div>
     </div>
   </div>
+
+  <!-- Modal Eliminar lista -->
+  <?php foreach ($lists as $list) : ?>
+    <div class="modal fade" id="deleteModal<?= $list['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $list['id']; ?>" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel<?= $list['id']; ?>">Eliminar lista</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="card-title">
+              Tem certeza de que deseja eliminar a lista <?= $list['name']; ?>?
+            </p>
+            <br>
+            <p>Não poderá recuperar a mesma posteriormente.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <!-- Formulário de exclusão -->
+            <form action="/StreamSync/src/controllers/admin/lists.php" method="get">
+              <input type="hidden" name="list_id" value="<?= $list['id'] ?>">
+              <input type="hidden" name="list" value="delete">
+              <button type="submit" class="btn btn-danger">Sim, eliminar a lista</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endforeach; ?>
+
 </body>
