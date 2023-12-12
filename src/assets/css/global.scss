@@ -19,6 +19,12 @@
 .w-35 {
   width: 35%;
 }
+.w-90 {
+  width: 90%;
+}
+.w-15 {
+  width: 15%;
+}
 .h-35 {
   height: 35% !important;
 }
@@ -36,4 +42,40 @@
 }
 .pointer {
   cursor: pointer;
+}
+
+#pageHeaderTitle {
+}
+
+/* Cards */
+.postcard {
+  flex-wrap: wrap;
+  display: flex;
+  box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  color: #ffffff;
+
+  .postcard__img_link {
+    display: contents;
+  }
+  .postcard__text {
+    padding: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .postcard {
+    flex-wrap: inherit;
+    .postcard__img {
+      max-width: 300px;
+    }
+    &:nth-child(2n + 1) {
+      flex-direction: row;
+    }
+    &:nth-child(2n + 0) {
+      flex-direction: row-reverse;
+    }
+  }
 }

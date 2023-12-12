@@ -72,8 +72,8 @@ $categories = getAllCategories();
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
               <div class="form-group">
-                <label for="season">Nº Temporadas</label>
-                <input type="text" class="form-control" name="number_seasons" placeholder="Número temporadas" maxlength="100" size="100">
+                <label for="watched_date">Assistido/Assistir</label>
+                <input type="date" class="form-control" name="watched_date" placeholder="Assistido/Assistir" required>
               </div>
             </div>
           </div>
@@ -94,15 +94,21 @@ $categories = getAllCategories();
           <div class="row mt-1">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
               <div class="form-group">
-                <label for="watched_date">Assistido/Assistir</label>
-                <input type="date" class="form-control" name="watched_date" placeholder="Assistido/Assistir" required>
+                <label for="season">Duração</label>
+                <input type="text" class="form-control" name="duration" placeholder="Duração" maxlength="100" size="100">
               </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
               <div class="form-group">
-                <label for="season">Link Trailer</label>
-                <input type="text" class="form-control" name="number_seasons" placeholder="Link" maxlength="100" size="100">
+                <label for="season">Nº Temporadas</label>
+                <input type="text" class="form-control" name="number_seasons" placeholder="Número temporadas" maxlength="100" size="100">
               </div>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="form-group">
+              <label for="season">Link Trailer</label>
+              <input type="text" class="form-control" name="trailer" placeholder="Link" maxlength="100" size="100">
             </div>
           </div>
           <div class="row mt-1">

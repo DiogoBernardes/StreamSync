@@ -29,7 +29,8 @@
   background-color: rgba(42, 40, 40, 0.9);
 }
 .hero-list__img {
-  width: 135px;
+  width: 100%;
+  object-fit: contain;
   height: 220px;
   transition: filter 0.5s;
 }

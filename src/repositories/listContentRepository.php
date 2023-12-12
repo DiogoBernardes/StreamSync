@@ -29,15 +29,30 @@ function getListContentById($id)
   return $PDOStatement->fetch();
 }
 
-function getAllListContent()
+function getAllListContent($listId = null)
 {
-  $PDOStatement = $GLOBALS['pdo']->query('SELECT * FROM listContent;');
+  $sql = 'SELECT * FROM listContent';
+
+  if ($listId !== null) {
+    $sql .= ' WHERE list_id = :list_id';
+  }
+
+  $PDOStatement = $GLOBALS['pdo']->prepare($sql);
+
+  if ($listId !== null) {
+    $PDOStatement->bindValue(':list_id', $listId, PDO::PARAM_INT);
+  }
+
+  $PDOStatement->execute();
   $listContentList = [];
+
   while ($listContent = $PDOStatement->fetch()) {
     $listContentList[] = $listContent;
   }
+
   return $listContentList;
 }
+
 
 function updateListContent($listContent)
 {

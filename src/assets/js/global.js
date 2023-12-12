@@ -35,3 +35,18 @@ function updateFileName(input) {
 function closeCollapse() {
   $(".collapse").collapse("hide");
 }
+
+// Adicionar listerner para parar o trailer quando o modal é fechado
+document.addEventListener("DOMContentLoaded", function () {
+  var modals = document.querySelectorAll(".modal");
+
+  modals.forEach(function (modal) {
+    modal.addEventListener("hidden.bs.modal", function () {
+      var iframe = modal.querySelector("iframe");
+
+      if (iframe) {
+        iframe.setAttribute("src", iframe.getAttribute("src"));
+      }
+    });
+  });
+});

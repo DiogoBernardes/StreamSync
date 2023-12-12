@@ -8,10 +8,10 @@ require_once __DIR__ . '/../../../templates/header.php';
 $user = user();
 ?>
 
-<body>
-  <div class="container-fluid">
-    <div class="row flex-nowrap ">
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar-color">
+<body class="vh-100">
+  <div class="container-fluid h-100">
+    <div class="row flex-nowrap h-100">
+      <div id="sidebar" class="col-3 px-0 sidebar-color w-15">
         <div class="d-flex flex-column p-4 min-vh-100">
 
           <div class="d-flex justify-content-center align-items-center mt-4">
@@ -61,7 +61,7 @@ $user = user();
       </div>
 
       <!-- Content -->
-      <div id="content" class="col py-3 d-flex flex-column justify-content-center align-items-center bg-color">
+      <div id="content" class="col d-flex flex-column justify-content-center align-items-center bg-color overflow-auto h-100 py-3">
 
       </div>
     </div>

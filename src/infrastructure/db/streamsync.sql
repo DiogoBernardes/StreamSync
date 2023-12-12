@@ -46,6 +46,7 @@ CREATE TABLE content (
   release_date DATE NOT NULL,
   end_date DATE,
   number_seasons INT,
+  duration INT,
   synopsis TEXT,
   category_id INT NOT NULL,
   poster LONGBLOB,

@@ -31,7 +31,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
       <div class="carousel-inner">
         <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
           <div class="carousel-item <?= ($i == 1) ? 'active' : ''; ?>">
-            <div class="row card-container">
+            <div class="row">
               <?php $startIndex = ($i - 1) * $itemsPerPage; ?>
               <?php foreach (array_slice($lists, $startIndex, $itemsPerPage) as $list) : ?>
                 <div class="col-md-4 d-flex justify-content-center">
