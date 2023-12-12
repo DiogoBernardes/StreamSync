@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../validations/session.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['content'])) {
     if ($_POST['content'] == 'create') {
-      create_content($_POST);
+      create_content($_POST, $_POST['list_id']);
     }
 
     if ($_POST['content'] == 'update') {
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   }
 }
 
-function create_content($req)
+function create_content($req, $listId)
 {
   $data = validateContent($req);
 
@@ -48,13 +48,19 @@ function create_content($req)
     return false;
   }
 
-  $success = createContent($data);
+  $success = createContent($data, $listId);
 
   if ($success) {
     $_SESSION['success'] = 'Content created successfully!';
     header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+    return true;
   }
+
+  $_SESSION['errors'] = 'Failed to create content.';
+  header('location: /StreamSync/src/views/secure/user/Content.php');
+  return false;
 }
+
 
 function update_content($req)
 {

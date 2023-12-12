@@ -41,7 +41,7 @@ function getYoutubeVideoId($url)
     </div>
 
     <div class="me-5 mt-3 text-end">
-      <a href="#contentModal" class="btn btn-outline-info" data-toggle="modal">
+      <a href="#contentModal" class="btn btn-outline-info" data-toggle="modal" data-list-id="<?= $list['id']; ?>">
         <span class="d-flex align-items-end">Inserir Conteúdo</span>
       </a>
     </div>
@@ -62,7 +62,7 @@ function getYoutubeVideoId($url)
             <div class="postcard__text position-relative d-flex flex-column w-100" style="text-align: left;">
               <h4 class=""><?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?></h4>
               <div class="overflow-hidden text-justify h-100 mt-2"><?= isset($contentDetails['synopsis']) ? $contentDetails['synopsis'] : 'Write a Synopsis..'; ?></div>
-              <ul class="d-flex p-0  flex-row flex-wrap">
+              <ul class="d-flex p-0  flex-row flex-wrap mt-4">
                 <li class="bg-secondary d-inline-block rounded-3 ms-1 me-1 p-1 pointer">
                   <i class="fas fa-tag mr-2"></i><?= isset($typeDetails['name']) ? $typeDetails['name'] : 'Type Not Available'; ?>
                 </li>

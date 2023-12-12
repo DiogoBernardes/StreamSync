@@ -2,12 +2,15 @@
 $title = 'Inserir';
 require_once '../../../repositories/contentTypeRepository.php';
 require_once '../../../repositories/categoryRepository.php';
+require_once '../../../controllers/admin/content.php';
 require_once __DIR__ . '../../../../infrastructure/middlewares/middleware-user.php';
 include_once __DIR__ . '../../../../templates/header.php';
 @require_once __DIR__ . '/../../../validations/session.php';
 $user = user();
 $contentTypes = getAllContentTypes();
 $categories = getAllCategories();
+$listId = isset($_GET['list_id']) ? $_GET['list_id'] : null;
+
 ?>
 
 <!-- Modal -->
@@ -117,11 +120,13 @@ $categories = getAllCategories();
               <textarea type="text" class="form-control" name="synopsis"></textarea>
             </div>
           </div>
+          <input type="hidden" name="list_id" value="<?= $listId; ?>">
+
           <div class="row">
             <div class="text-right">
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button ype="submit" id="submit" name="content" value="create" class="btn btn-primary">Guardar</button>
+                <button type="submit" id="submit" name="content" value="create" class="btn btn-primary">Guardar</button>
               </div>
             </div>
           </div>

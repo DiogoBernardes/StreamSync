@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/../infrastructure/db/connection.php';
+require_once 'listContentRepository.php';
 
-function createContent($content)
+function createContent($content, $listId)
 {
   if (isset($_FILES['poster']) && $_FILES['poster']['error'] === UPLOAD_ERR_OK) {
     $content['poster'] = uploadPoster($_FILES['poster']);
@@ -35,7 +36,7 @@ function createContent($content)
 
   $PDOStatement = $GLOBALS['pdo']->prepare($sqlCreate);
 
-  return $PDOStatement->execute([
+  $success = $PDOStatement->execute([
     ':type_id' => $content['type_id'],
     ':title' => $content['title'],
     ':release_date' => $content['release_date'],
@@ -46,8 +47,17 @@ function createContent($content)
     ':poster' => $content['poster'],
     ':trailer' => $content['trailer'],
     ':watched_date' => $content['watched_date']
-
   ]);
+
+  if ($success) {
+    $contentId = $GLOBALS['pdo']->lastInsertId();
+    createListContent(['list_id' => $listId, 'content_id' => $contentId]);
+
+    return $success;
+  }
+
+
+  return $success;
 }
 
 function getContentById($id)
