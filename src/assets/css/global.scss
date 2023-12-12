@@ -16,8 +16,14 @@
 .transition:hover {
   transform: scale(1.4);
 }
+.mt-less40 {
+  margin-top: -40px;
+}
 .w-35 {
   width: 35%;
+}
+.w-80 {
+  width: 80%;
 }
 .w-90 {
   width: 90%;
@@ -27,6 +33,10 @@
 }
 .h-35 {
   height: 35% !important;
+}
+
+.h-200px {
+  height: 200px;
 }
 .title-color {
   color: #34495e;
@@ -39,6 +49,9 @@
 }
 .substitution-color {
   background: #8dc6ff;
+}
+.card-color {
+  background: #e4edf2;
 }
 .pointer {
   cursor: pointer;

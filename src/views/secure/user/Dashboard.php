@@ -11,7 +11,7 @@ $user = user();
 <body class="vh-100">
   <div class="container-fluid h-100">
     <div class="row flex-nowrap h-100">
-      <div id="sidebar" class="col-3 px-0 sidebar-color w-15">
+      <div id="sidebar" class="col-3 col-sm-2 px-0 sidebar-color ">
         <div class="d-flex flex-column p-4 min-vh-100">
 
           <div class="d-flex justify-content-center align-items-center mt-4">

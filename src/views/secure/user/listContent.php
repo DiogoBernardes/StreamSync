@@ -30,7 +30,7 @@ function getYoutubeVideoId($url)
 }
 ?>
 
-<body>
+<body class="bg-color">
   <div class="w-90 min-vh-100 m-auto">
     <div class="row mt-2">
       <div class="col-md-12 d-flex justify-content-between align-items-center">
