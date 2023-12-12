@@ -135,3 +135,22 @@ function uploadPoster($file)
   }
   throw new Exception($statusMsg);
 }
+
+function getWatchedDatesForCalendar()
+{
+  $contentList = getAllContent();
+  $events = [];
+
+  foreach ($contentList as $content) {
+    if (!empty($content['watched_date'])) {
+      $start = date('Y-m-d', strtotime($content['watched_date']));
+
+      $events[] = [
+        'title' => $content['title'],
+        'start' => $start,
+      ];
+    }
+  }
+
+  return $events;
+}

@@ -11,7 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
 ?>
 
 <body>
-  <div class="container">
+  <div class="container  min-vh-100">
+    <div class="mt-5">
+      <h2 class="title-color">Perfil</h2>
+      <hr class="my-4 border-primary">
+    </div>
     <div class="row gutters">
       <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 w-100">
         <div class="card">

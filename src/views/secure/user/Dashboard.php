@@ -4,8 +4,11 @@ require_once __DIR__ .  '/../../../../vendor/autoload.php';
 require_once __DIR__ . '/../../../infrastructure/middlewares/middleware-user.php';
 @require_once __DIR__ . '/../../../validations/session.php';
 require_once __DIR__ . '/../../../repositories/userRepository.php';
+require_once __DIR__ . '/../../../repositories/contentRepository.php';
 require_once __DIR__ . '/../../../templates/header.php';
+
 $user = user();
+$watchedEvents = getWatchedDatesForCalendar();
 ?>
 
 <body class="vh-100">
@@ -21,7 +24,7 @@ $user = user();
           </div>
           <ul class="nav nav-pills d-flex flex-column mb-sm-auto mb-0 align-items-sm-start align-items-center mt-5" id="menu">
             <li class="nav-item">
-              <a href="/" class="nav-link align-middle px-0 transition">
+              <a href="/StreamSync/src/views/secure/user/Dashboard.php" class="nav-link align-middle px-0 transition">
                 <i class="fs-4 bi-house text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Home</span>
               </a>
             </li>
@@ -32,8 +35,8 @@ $user = user();
             </li>
             <li>
               <a href="/StreamSync/src/views/secure/user/test.php" class="nav-link px-0 align-middle transition">
-                <i class="fs-4 bi-calendar text-white"></i>
-                <span class="ms-1 d-none d-sm-inline text-white">Calendarização</span>
+                <i class="fs-5 bi bi-share text-white"></i>
+                <span class="ms-1 d-none d-sm-inline text-white">Listas Partilhadas</span>
               </a>
             </li>
             <li>
@@ -60,34 +63,56 @@ $user = user();
         </div>
       </div>
 
+
+
       <!-- Content -->
       <div id="content" class="col d-flex flex-column justify-content-center align-items-center bg-color overflow-auto h-100 py-3">
+        <div id='calendar' class="col-12 col-md-10 col-lg-8 p-3 mx-auto mt-3 mt-md-0 bg-light">
+        </div>
 
       </div>
-    </div>
-  </div>
 
-  <!-- Modal de confirmação de logout -->
-  <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="logoutModalLabel">Terminar Sessão</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Tem certeza de que deseja encerrar a sessão?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <form action="/StreamSync/src/controllers/auth/login.php" method="post">
-            <button type="submit" name="user" value="logout" class="btn btn-danger">Sim, encerrar a sessão</button>
-          </form>
+    </div>
+
+    <!-- Modal de confirmação de logout -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="logoutModalLabel">Terminar Sessão</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Tem certeza de que deseja encerrar a sessão?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <form action="/StreamSync/src/controllers/auth/login.php" method="post">
+              <button type="submit" name="user" value="logout" class="btn btn-danger">Sim, encerrar a sessão</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
 
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          events: <?php echo json_encode($watchedEvents); ?>,
+          eventColor: '#f95959',
+          headerToolbar: {
+            left: 'title',
+            center: '',
+            right: 'prev,next today'
+          },
+          themeSystem: 'bootstrap', // Usar o tema Bootstrap
+        });
+
+        calendar.render();
+      });
+    </script>
 </body>
 
 </html>
