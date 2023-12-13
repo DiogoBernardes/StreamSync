@@ -21,6 +21,11 @@ $totalPages = ceil($totalItems / $itemsPerPage);
       <h2 class="title-color">Listas</h2>
       <hr class="my-4 border-primary">
     </div>
+    <div class="d-flex justify-content-end mt-2">
+      <button type="button" class="btn btn-outline-info me-5" data-toggle="modal" data-target="#contentModal">
+        <span class="d-flex align-items-end">Nova Lista</span>
+      </button>
+    </div>
     <?php if ($totalItems > 0) : ?>
       <div class="d-flex justify-content-between mt-2">
         <nav aria-label="Page navigation" class="d-flex justify-content-center ms-5">
@@ -37,9 +42,6 @@ $totalPages = ceil($totalItems / $itemsPerPage);
             </li>
           </ul>
         </nav>
-        <button type="button" class="btn btn-outline-info me-5" data-toggle="modal" data-target="#contentModal">
-          <span class="d-flex align-items-end">Nova Lista</span>
-        </button>
       </div>
 
 
@@ -98,7 +100,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
       </div>
 
     <?php else : ?>
-      <div class="d-flex justify-content-center align-items-center vh-100">
+      <div class="d-flex justify-content-center align-items-start" style="height: 80vh; padding-top: 30vh;">
         <p class="text-center">Ainda não possui nenhuma lista.</p>
       </div>
     <?php endif; ?>
