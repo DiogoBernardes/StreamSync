@@ -55,14 +55,16 @@ function getYoutubeVideoId($url)
           $typeDetails = getContentTypeById($contentDetails['type_id']);
           $categoryDetails = getCategoryById($contentDetails['category_id']);
           ?>
-          <article class="postcard sidebar-color">
+          <article class="postcard sidebar-color h-auto mt-1">
             <a class="postcard__img_link text-decoration-none" href="#">
-              <img class="postcard__img w-100 object-fit-cover position-relative" src="data:image/jpeg;base64,<?= base64_encode($contentDetails['poster']); ?>" alt="<?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?>" />
+              <img class="postcard__img w-100 position-relative" src="data:image/jpeg;base64,<?= base64_encode($contentDetails['poster']); ?>" alt="<?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?>" />
             </a>
-            <div class="postcard__text position-relative d-flex flex-column w-100" style="text-align: left;">
+            <div class="postcard__text position-relative d-flex flex-column w-100 text-left">
               <h4 class=""><?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?></h4>
-              <div class="overflow-hidden text-justify h-100 mt-2"><?= isset($contentDetails['synopsis']) ? $contentDetails['synopsis'] : 'Write a Synopsis..'; ?></div>
-              <ul class="d-flex p-0  flex-row flex-wrap mt-4">
+              <div class="overflow-hidden h-100 mt-2" style="max-height: 100px;">
+                <?= isset($contentDetails['synopsis']) ? ($contentDetails['synopsis']) : 'Write a Synopsis..'; ?>
+              </div>
+              <ul class="d-flex p-0 flex-row flex-wrap mt-2">
                 <li class="bg-secondary d-inline-block rounded-3 ms-1 me-1 p-1 pointer">
                   <i class="fas fa-tag mr-2"></i><?= isset($typeDetails['name']) ? $typeDetails['name'] : 'Type Not Available'; ?>
                 </li>
@@ -75,6 +77,7 @@ function getYoutubeVideoId($url)
               </ul>
             </div>
           </article>
+
 
           <!-- Trailer Modal -->
           <div class="modal fade" id="trailerModal<?= $content['content_id']; ?>" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">

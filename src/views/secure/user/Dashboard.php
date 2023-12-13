@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../../repositories/contentRepository.php';
 require_once __DIR__ . '/../../../templates/header.php';
 
 $user = user();
-$watchedEvents = getWatchedDatesForCalendar();
+$watchedEvents = getWatchedDatesForCalendar($user['id']);
 ?>
 
 <body class="vh-100">
@@ -107,7 +107,7 @@ $watchedEvents = getWatchedDatesForCalendar();
             center: '',
             right: 'prev,next today'
           },
-          themeSystem: 'bootstrap', // Usar o tema Bootstrap
+          themeSystem: 'bootstrap',
         });
 
         calendar.render();

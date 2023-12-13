@@ -81,7 +81,7 @@
   .postcard {
     flex-wrap: inherit;
     .postcard__img {
-      max-width: 300px;
+      max-width: 180px;
     }
     &:nth-child(2n + 1) {
       flex-direction: row;

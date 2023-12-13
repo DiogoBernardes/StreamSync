@@ -145,21 +145,27 @@ function uploadPoster($file)
   }
   throw new Exception($statusMsg);
 }
-
-function getWatchedDatesForCalendar()
+function getWatchedDatesForCalendar($userId)
 {
-  $contentList = getAllContent();
+  $sql = "SELECT c.title, c.watched_date
+          FROM content c
+          JOIN listContent lc ON c.id = lc.content_id
+          JOIN lists l ON lc.list_id = l.id
+          WHERE l.user_id = :user_id AND c.watched_date IS NOT NULL";
+
+  $PDOStatement = $GLOBALS['pdo']->prepare($sql);
+  $PDOStatement->bindParam(':user_id', $userId, PDO::PARAM_INT);
+  $PDOStatement->execute();
+
   $events = [];
 
-  foreach ($contentList as $content) {
-    if (!empty($content['watched_date'])) {
-      $start = date('Y-m-d', strtotime($content['watched_date']));
+  while ($content = $PDOStatement->fetch()) {
+    $start = date('Y-m-d', strtotime($content['watched_date']));
 
-      $events[] = [
-        'title' => $content['title'],
-        'start' => $start,
-      ];
-    }
+    $events[] = [
+      'title' => $content['title'],
+      'start' => $start,
+    ];
   }
 
   return $events;

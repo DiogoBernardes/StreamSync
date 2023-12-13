@@ -21,29 +21,27 @@ $totalPages = ceil($totalItems / $itemsPerPage);
       <h2 class="title-color">Listas</h2>
       <hr class="my-4 border-primary">
     </div>
-    <div class="d-flex justify-content-end mt-2">
+    <div class="d-flex justify-content-between mt-2">
+      <nav aria-label="Page navigation" class="d-flex justify-content-center ms-5">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#listCarousel" role="button" data-slide="prev" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#listCarousel" role="button" data-slide="next" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
       <button type="button" class="btn btn-outline-info me-5" data-toggle="modal" data-target="#contentModal">
         <span class="d-flex align-items-end">Nova Lista</span>
       </button>
     </div>
-    <?php if ($totalItems > 0) : ?>
-      <div class="d-flex justify-content-between mt-2">
-        <nav aria-label="Page navigation" class="d-flex justify-content-center ms-5">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#listCarousel" role="button" data-slide="prev" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#listCarousel" role="button" data-slide="next" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
 
+    <?php if ($totalItems > 0) : ?>
 
       <div id="listCarousel" class="carousel slide mt-4" data-interval="false">
         <div class="carousel-inner">
@@ -100,8 +98,8 @@ $totalPages = ceil($totalItems / $itemsPerPage);
       </div>
 
     <?php else : ?>
-      <div class="d-flex justify-content-center align-items-start" style="height: 80vh; padding-top: 30vh;">
-        <p class="text-center">Ainda não possui nenhuma lista.</p>
+      <div class="d-flex justify-content-center align-items-center h-50">
+        <h3 class="text-center">Ainda não possui nenhuma lista.</h3>
       </div>
     <?php endif; ?>
 
@@ -186,7 +184,6 @@ $totalPages = ceil($totalItems / $itemsPerPage);
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <!-- Formulário de exclusão -->
               <form action="/StreamSync/src/controllers/admin/lists.php" method="get">
                 <input type="hidden" name="list_id" value="<?= $list['id'] ?>">
                 <input type="hidden" name="list" value="delete">

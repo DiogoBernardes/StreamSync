@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
 
 <body>
   <div class="container  min-vh-100">
-    <div class="mt-5">
+    <div class="mt-1">
       <h2 class="title-color">Perfil</h2>
       <hr class="my-4 border-primary">
     </div>
