@@ -55,28 +55,33 @@ function getYoutubeVideoId($url)
           $typeDetails = getContentTypeById($contentDetails['type_id']);
           $categoryDetails = getCategoryById($contentDetails['category_id']);
           ?>
-          <article class="postcard sidebar-color h-auto mt-1">
-            <a class="postcard__img_link text-decoration-none" href="#">
-              <img class="postcard__img w-100 position-relative" src="data:image/jpeg;base64,<?= base64_encode($contentDetails['poster']); ?>" alt="<?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?>" />
-            </a>
-            <div class="postcard__text position-relative d-flex flex-column w-100 text-left">
-              <h4 class=""><?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?></h4>
-              <div class="overflow-hidden h-100 mt-2" style="max-height: 100px;">
-                <?= isset($contentDetails['synopsis']) ? ($contentDetails['synopsis']) : 'Write a Synopsis..'; ?>
+          <a href="infoContent.php?content_id=<?= $content['content_id']; ?>" class="text-decoration-none">
+            <article class="postcard sidebar-color h-auto mt-1">
+              <div class="postcard__img_link">
+                <img class="postcard__img w-100 position-relative" src="data:image/jpeg;base64,<?= base64_encode($contentDetails['poster']); ?>" alt="<?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?>" />
               </div>
-              <ul class="d-flex p-0 flex-row flex-wrap mt-2">
-                <li class="bg-secondary d-inline-block rounded-3 ms-1 me-1 p-1 pointer">
-                  <i class="fas fa-tag mr-2"></i><?= isset($typeDetails['name']) ? $typeDetails['name'] : 'Type Not Available'; ?>
-                </li>
-                <li class="bg-secondary d-inline-block rounded-3 ms-1 me-1 p-1 pointer">
-                  <i class="fas fa-list mr-2"></i><?= isset($categoryDetails['name']) ? $categoryDetails['name'] : 'Category Not Available'; ?>
-                </li>
-                <li class="bg-secondary d-inline-block rounded-3 ms-1 me-1 p-1 pointer" data-bs-toggle="modal" data-bs-target="#trailerModal<?= $content['content_id']; ?>">
-                  <i class="bi bi-play-btn-fill me-2"> Trailer</i>
-                </li>
-              </ul>
-            </div>
-          </article>
+              <div class="postcard__text position-relative d-flex flex-column w-100 text-left">
+                <h4 class="">
+                  <?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?>
+                </h4>
+                <div class="overflow-hidden h-100 mt-2" style="max-height: 100px;">
+                  <?= isset($contentDetails['synopsis']) ? ($contentDetails['synopsis']) : 'Write a Synopsis..'; ?>
+                </div>
+                <ul class="d-flex p-0 flex-row flex-wrap mt-2">
+                  <li class="bg-secondary d-inline-block rounded-3 ms-1 me-1 p-1">
+                    <i class="fas fa-tag mr-2"></i><?= isset($typeDetails['name']) ? $typeDetails['name'] : 'Type Not Available'; ?>
+                  </li>
+                  <li class="bg-secondary d-inline-block rounded-3 ms-1 me-1 p-1">
+                    <i class="fas fa-list mr-2"></i><?= isset($categoryDetails['name']) ? $categoryDetails['name'] : 'Category Not Available'; ?>
+                  </li>
+                  <li class="bg-secondary d-inline-block rounded-3 ms-1 me-1 p-1" data-bs-toggle="modal" data-bs-target="#trailerModal<?= $content['content_id']; ?>">
+                    <i class="bi bi-play-btn-fill me-2"> Trailer</i>
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </a>
+
 
 
           <!-- Trailer Modal -->
