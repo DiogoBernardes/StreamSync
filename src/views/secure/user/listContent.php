@@ -74,39 +74,11 @@ function getYoutubeVideoId($url)
                   <li class="bg-secondary d-inline-block rounded-3 ms-1 me-1 p-1">
                     <i class="fas fa-list mr-2"></i><?= isset($categoryDetails['name']) ? $categoryDetails['name'] : 'Category Not Available'; ?>
                   </li>
-                  <li class="bg-secondary d-inline-block rounded-3 ms-1 me-1 p-1" data-bs-toggle="modal" data-bs-target="#trailerModal<?= $content['content_id']; ?>">
-                    <i class="bi bi-play-btn-fill me-2"> Trailer</i>
-                  </li>
                 </ul>
               </div>
             </article>
           </a>
 
-
-
-          <!-- Trailer Modal -->
-          <div class="modal fade" id="trailerModal<?= $content['content_id']; ?>" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="trailerModalLabel">Trailer</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <?php if (isset($contentDetails['trailer']) && !empty($contentDetails['trailer'])) : ?>
-                    <?php
-                    $videoLink = $contentDetails['trailer'];
-                    $videoId = getYoutubeVideoId($videoLink);
-                    $embedCode = "https://www.youtube.com/embed/$videoId";
-                    ?>
-                    <iframe width="100%" height="315" src="<?= $embedCode; ?>" frameborder="0" allowfullscreen></iframe>
-                  <?php else : ?>
-                    <p>Trailer not available.</p>
-                  <?php endif; ?>
-                </div>
-              </div>
-            </div>
-          </div>
         <?php endforeach; ?>
       </div>
     </section>

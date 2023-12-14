@@ -86,7 +86,7 @@ CREATE TABLE reviews (
   content_id INT NOT NULL,
   rating INT NOT NULL,
   comment TEXT NOT NULL,
-  review_date DATE NOT NULL,
+  review_date TIMESTAMP NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_id, content_id),

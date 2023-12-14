@@ -10,6 +10,12 @@
 .bg-no-repeat {
   background-repeat: no-repeat;
 }
+.bg-center {
+  background-position: center;
+}
+.bg-fixed {
+  background-attachment: fixed;
+}
 .transition {
   transition: 0.4s all;
 }
@@ -18,6 +24,9 @@
 }
 .mt-less40 {
   margin-top: -40px;
+}
+.w-12 {
+  width: 12%;
 }
 .w-35 {
   width: 35%;
@@ -40,6 +49,9 @@
 .title-color {
   color: #34495e;
 }
+.title-color-v2 {
+  color: #8dc6ff;
+}
 .bg-color {
   background: #e4f1fe;
 }
@@ -55,11 +67,17 @@
 .pointer {
   cursor: pointer;
 }
+.overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
 
-#pageHeaderTitle {
+.text-size-10 {
+  font-size: 10px;
 }
 
 /* Cards */
+#pageHeaderTitle {
+}
 .postcard {
   flex-wrap: wrap;
   display: flex;
@@ -76,7 +94,6 @@
     padding: 1.5rem;
   }
 }
-
 @media screen and (min-width: 769px) {
   .postcard {
     flex-wrap: inherit;
@@ -90,4 +107,9 @@
       flex-direction: row-reverse;
     }
   }
+}
+/*infoContent*/
+.movie-details-img img {
+  width: 280px;
+  height: 370px;
 }
