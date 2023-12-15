@@ -78,11 +78,17 @@ function getAllContent()
   return $contentList;
 }
 
+
 function updateContent($content)
 {
+  // Verifica se um novo arquivo de imagem foi enviado
   if (isset($_FILES['poster']) && $_FILES['poster']['error'] === UPLOAD_ERR_OK) {
     $content['poster'] = uploadPoster($_FILES['poster']);
+  } else {
+    $existingContent = getContentById($content['id']);
+    $content['poster'] = $existingContent['poster'];
   }
+
   $sqlUpdate = "UPDATE  
     content SET
         type_id = :type_id, 
@@ -113,6 +119,8 @@ function updateContent($content)
     ':watched_date' => $content['watched_date']
   ]);
 }
+
+
 
 function deleteContent($id)
 {

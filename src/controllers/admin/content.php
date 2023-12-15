@@ -11,10 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($_POST['content'] == 'update') {
-      update($_POST);
+      update_content($_POST);
     }
   }
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   if (isset($_GET['content'])) {

@@ -7,13 +7,15 @@ require_once __DIR__ . '../../../../infrastructure/middlewares/middleware-user.p
 include_once __DIR__ . '../../../../templates/header.php';
 @require_once __DIR__ . '/../../../validations/session.php';
 $user = user();
+
+
 $contentTypes = getAllContentTypes();
 $categories = getAllCategories();
 $listId = isset($_GET['list_id']) ? $_GET['list_id'] : null;
 
 ?>
 
-<!-- Modal -->
+<!-- Modal Inserir Conteúdo -->
 <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="contentModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

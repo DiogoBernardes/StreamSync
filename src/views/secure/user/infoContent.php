@@ -32,7 +32,7 @@ function getYoutubeVideoId($url)
 
 
 <body class="bg-center bg-fixed bg-cover d-flex flex-column align-items-center m-0 p-0 position-relative text-white " style="background-image: url('data:image/jpeg;base64,<?= base64_encode($contentDetails['poster']); ?>" alt="<?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?>')">
-  <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
+  <div class="overlay position-fixed top-0 start-0 w-100 h-100"></div>
   <div class="container">
     <div class="row mt-2 position-relative">
       <div class="col-md-12 d-flex justify-content-between align-items-center">

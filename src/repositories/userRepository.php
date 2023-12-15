@@ -80,6 +80,9 @@ function updateUser($user)
 
     if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
         $user['avatar'] = uploadAvatar($_FILES['avatar']);
+    } else {
+        $existingUser = getById($user['id']);
+        $user['avatar'] = $existingUser['avatar'];
     }
 
     if (isset($user['password']) && !empty($user['password'])) {

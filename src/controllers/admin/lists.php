@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../../repositories/listsRepository.php';
 require_once __DIR__ . '/../../validations/admin/validate-list.php';
 require_once __DIR__ . '/../../validations/session.php';
+require_once __DIR__ . '/../../repositories/listContentRepository.php';
 
 if (!isset($_SESSION['id'])) {
   exit('User not logged in');
@@ -61,7 +62,7 @@ function update_list($req, $userId)
     $_SESSION['success'] = 'List successfully updated!';
     $data['action'] = 'update';
     $params = '?' . http_build_query($data);
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php' . $params);
+    header('location: /StreamSync/src/views/secure/user/Dashboard.php#Lists' . $params);
   } else {
     $_SESSION['errors'] = 'Failed to update list.';
     header('location: /StreamSync/src/views/secure/user/Dashboard.php');
@@ -75,10 +76,18 @@ function delete_list($listId, $userId)
   $list = getListById($listId, $userId);
 
   if ($list) {
+    $listContents = getAllListContent($listId);
+    foreach ($listContents as $content) {
+      deleteListContent($content['id']);
+    }
+
     $success = deleteList($listId, $userId);
 
     if ($success) {
       $_SESSION['success'] = 'List deleted successfully!';
+      header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+    } else {
+      $_SESSION['errors'] = 'Error deleting list.';
       header('location: /StreamSync/src/views/secure/user/Dashboard.php');
     }
   } else {

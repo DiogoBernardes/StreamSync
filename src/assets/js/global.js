@@ -1,7 +1,7 @@
 //Esconder os alertas dos erros ao fim de 3s
 function hideAlerts() {
   var alerts = document.querySelectorAll(".alert");
-  alerts.forEach(function (alert) {
+  alerts?.forEach(function (alert) {
     setTimeout(function () {
       $(alert).fadeOut();
     }, 3000);
@@ -19,6 +19,7 @@ function loadContent(page) {
     method: "GET",
     success: function (data) {
       $("#content").html(data);
+      window.location.hash = page;
     },
     error: function () {
       console.error("Erro ao carregar a página");
@@ -35,9 +36,8 @@ function updateFileName(input) {
 function closeCollapse() {
   $(".collapse").collapse("hide");
 }
-
 // Adicionar listerner para parar o trailer quando o modal é fechado
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded ", function () {
   var modals = document.querySelectorAll(".modal");
 
   modals.forEach(function (modal) {
