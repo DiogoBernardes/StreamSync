@@ -28,16 +28,22 @@ $isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
       <hr class="my-2 border-primary">
     </div>
 
-    <div class="me-5 mt-3 text-end">
-      <?php
-      $origin_user = getShareByOriginUserId($user['id']);
-      if ($isListOwner) :
-      ?>
+    <div class="me-5 mt-3 ms-5 d-flex justify-content-between">
+      <div class="w-12">
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="text" id="searchInput" placeholder="Search by title" aria-label="Search">
+        </form>
+      </div>
+      <div>
+        <?php
+        $origin_user = getShareByOriginUserId($user['id']);
+        if ($isListOwner || $isListSharedWithUser) :
+        ?>
           <a href="#contentModal" class="btn btn-outline-info" data-toggle="modal" data-list-id="<?= $list['id']; ?>">
             <span class="d-flex align-items-end">Inserir Conteúdo</span>
           </a>
-      <?php endif; ?>
-
+        <?php endif; ?>
+      </div>
     </div>
 
     <section class="d-flex justify-content-center">
@@ -49,6 +55,7 @@ $isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
           $typeDetails = getContentTypeById($contentDetails['type_id']);
           $categoryDetails = getCategoryById($contentDetails['category_id']);
           ?>
+
           <article class="postcard sidebar-color h-auto mt-1">
 
             <div class="postcard__img_link">
@@ -80,7 +87,7 @@ $isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
                 <div class="w-25 d-flex justify-content-end">
                   <?php
                   $origin_user = getShareByOriginUserId($user['id']);
-                  if ($isListOwner) :
+                  if ($origin_user) :
                   ?>
                     <button type="button" class="btn btn-outline-info ms-2" data-toggle="modal" data-target="#updateContentModal<?= $content['content_id']; ?>">
                       <i class="bi bi-pen pointer transition">Atualizar</i>
@@ -261,5 +268,21 @@ $isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
     </section>
 
   </div>
+  <script>
+    $(document).ready(function() {
+      $("#searchInput").on("input", function() {
+        var searchQuery = $(this).val().toLowerCase();
 
+        $(".postcard").each(function() {
+          var contentTitle = $(this).find("h4").text().toLowerCase();
+
+          if (contentTitle.includes(searchQuery)) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
+    });
+  </script>
 </body>
