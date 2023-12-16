@@ -124,3 +124,15 @@ function deleteSharesByListId($listId) {
   $PDOStatement->bindValue(1, $listId, PDO::PARAM_INT);
   $PDOStatement->execute();
 }
+
+function deleteSharesByUserId($userId) {
+  $sqlDeleteOrigin = "DELETE FROM shares WHERE origin_user_id = :user_id;";
+  $PDOStatement = $GLOBALS['pdo']->prepare($sqlDeleteOrigin);
+  $PDOStatement->bindValue(':user_id', $userId, PDO::PARAM_INT);
+  $PDOStatement->execute();
+
+  $sqlDeleteDestination = "DELETE FROM shares WHERE destination_user_id = :user_id;";
+  $PDOStatement = $GLOBALS['pdo']->prepare($sqlDeleteDestination);
+  $PDOStatement->bindValue(':user_id', $userId, PDO::PARAM_INT);
+  $PDOStatement->execute();
+}

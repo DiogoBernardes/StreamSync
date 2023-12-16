@@ -108,3 +108,10 @@ function deleteReviewsByContentId($contentId)
   $PDOStatement->bindValue(1, $contentId, PDO::PARAM_INT);
   $PDOStatement->execute();
 }
+
+function deleteReviewsByUserId($userId) {
+  $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM reviews WHERE user_id = ?;');
+  $PDOStatement->bindValue(1, $userId, PDO::PARAM_INT);
+
+  return $PDOStatement->execute();
+}

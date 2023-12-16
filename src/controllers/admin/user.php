@@ -6,6 +6,10 @@ require_once __DIR__ . '/../../repositories/userRepository.php';
 require_once __DIR__ . '/../../validations/admin/validate-user.php';
 require_once __DIR__ . '/../../validations/admin/validate-password.php';
 require_once __DIR__ . '/../../validations/session.php';
+require_once __DIR__ . '/../../repositories/shareRepository.php';
+require_once __DIR__ . '/../../repositories/listsRepository.php';
+require_once __DIR__ . '/../../repositories/reviewsRepository.php';
+require_once __DIR__ . '/lists.php';
 
 if (isset($_POST['user'])) {
     if ($_POST['user'] == 'create') {
@@ -130,21 +134,26 @@ function changePassword($req)
         exit;
     }
 }
-function delete_user()
-{
-    $user = [
-        'id' => $_SESSION['id']
-    ];
+function delete_user() {
+    $userId = $_SESSION['id'];
 
-    $data = softDeleteUser($user['id']);
+    deleteSharesByUserId($userId);
 
-    if ($data) {
+    $userLists = getAllLists($userId);
+    foreach ($userLists as $list) {
+        delete_list($list['id'], $userId);
+    }
+
+    deleteReviewsByUserId($userId);
+
+    $success = softDeleteUser($userId);
+
+    if ($success) {
         $_SESSION['success'] = 'User deleted successfully!';
         session_unset();
         session_destroy();
         setcookie('id', '', time() - 3600, "/");
         setcookie('first_name', '', time() - 3600, "/");
-
         header('location: /StreamSync/');
         exit();
     } else {
