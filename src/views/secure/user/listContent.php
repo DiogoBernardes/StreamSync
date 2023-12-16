@@ -31,7 +31,7 @@ $isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
     <div class="me-5 mt-3 text-end">
       <?php
       $origin_user = getShareByOriginUserId($user['id']);
-      if ($isListOwner || $isListSharedWithUser) :
+      if ($isListOwner) :
       ?>
           <a href="#contentModal" class="btn btn-outline-info" data-toggle="modal" data-list-id="<?= $list['id']; ?>">
             <span class="d-flex align-items-end">Inserir Conteúdo</span>
@@ -80,7 +80,7 @@ $isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
                 <div class="w-25 d-flex justify-content-end">
                   <?php
                   $origin_user = getShareByOriginUserId($user['id']);
-                  if ($isListOwner || $isListSharedWithUser) :
+                  if ($isListOwner) :
                   ?>
                     <button type="button" class="btn btn-outline-info ms-2" data-toggle="modal" data-target="#updateContentModal<?= $content['content_id']; ?>">
                       <i class="bi bi-pen pointer transition">Atualizar</i>
