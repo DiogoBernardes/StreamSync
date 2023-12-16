@@ -118,3 +118,9 @@ function deleteShare($list_id, $user_id)
     return false;
   }
 }
+
+function deleteSharesByListId($listId) {
+  $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM shares WHERE list_id = ?;');
+  $PDOStatement->bindValue(1, $listId, PDO::PARAM_INT);
+  $PDOStatement->execute();
+}

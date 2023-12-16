@@ -4,6 +4,7 @@ require_once __DIR__ . '/../../repositories/listsRepository.php';
 require_once __DIR__ . '/../../validations/admin/validate-list.php';
 require_once __DIR__ . '/../../validations/session.php';
 require_once __DIR__ . '/../../repositories/listContentRepository.php';
+require_once __DIR__ . '/../../repositories/shareRepository.php';
 
 if (!isset($_SESSION['id'])) {
   exit('User not logged in');
@@ -76,6 +77,7 @@ function delete_list($listId, $userId)
   $list = getListById($listId, $userId);
 
   if ($list) {
+    deleteSharesByListId($listId);
     $listContents = getAllListContent($listId);
     foreach ($listContents as $content) {
       deleteListContent($content['id']);
