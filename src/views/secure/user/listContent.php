@@ -80,7 +80,7 @@ $isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
                 <div class="w-25 d-flex justify-content-end">
                   <?php
                   $origin_user = getShareByOriginUserId($user['id']);
-                  if ($origin_user) :
+                  if ($isListOwner || $isListSharedWithUser) :
                   ?>
                     <button type="button" class="btn btn-outline-info ms-2" data-toggle="modal" data-target="#updateContentModal<?= $content['content_id']; ?>">
                       <i class="bi bi-pen pointer transition">Atualizar</i>
