@@ -34,7 +34,7 @@ $watchedEvents = getWatchedDatesForCalendar($user['id']);
               </a>
             </li>
             <li>
-              <a href="/StreamSync/src/views/secure/user/test.php" class="nav-link px-0 align-middle transition">
+              <a href="javascript:void(0)" class="nav-link px-0 align-middle transition" onclick="loadContent('sharedLists')">
                 <i class="fs-5 bi bi-share text-white"></i>
                 <span class="ms-1 d-none d-sm-inline text-white">Listas Partilhadas</span>
               </a>

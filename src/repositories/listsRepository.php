@@ -72,7 +72,6 @@ function updateList($list, $userId)
 }
 
 
-
 function deleteList($id, $userId)
 {
   $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM lists WHERE id = ? AND user_id = ?;');
@@ -82,4 +81,22 @@ function deleteList($id, $userId)
   $success = $PDOStatement->execute();
 
   return $success;
+}
+
+function getSharedListsByUserId($userId)
+{
+  $sql = "SELECT l.* 
+            FROM lists l
+            INNER JOIN shares s ON l.id = s.list_id
+            WHERE s.destination_user_id = :user_id";
+
+  $PDOStatement = $GLOBALS['pdo']->prepare($sql);
+  $PDOStatement->execute([':user_id' => $userId]);
+
+  $lists = [];
+  while ($list = $PDOStatement->fetch()) {
+    $lists[] = $list;
+  }
+
+  return $lists;
 }

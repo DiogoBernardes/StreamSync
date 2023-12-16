@@ -6,6 +6,7 @@ require_once __DIR__ . '../../../../repositories/listContentRepository.php';
 require_once __DIR__ . '../../../../repositories/contentRepository.php';
 require_once __DIR__ . '../../../../repositories/categoryRepository.php';
 require_once __DIR__ . '../../../../repositories/contentTypeRepository.php';
+require_once __DIR__ . '../../../../repositories/shareRepository.php';
 include_once __DIR__ . '../../../../templates/header.php';
 @require_once __DIR__ . '/../../../validations/session.php';
 require_once __DIR__ . '/Content.php';
@@ -35,15 +36,19 @@ function getYoutubeVideoId($url)
     <div class="row mt-2">
       <div class="col-md-12 d-flex justify-content-between align-items-center">
         <a class="bi bi-arrow-bar-left pointer fs-3 transition title-color" href="Dashboard.php"></i></a>
-        <h2 class="title-color mb-0 me-5"><?= $list['name']; ?></h2>
       </div>
       <hr class="my-2 border-primary">
     </div>
 
     <div class="me-5 mt-3 text-end">
-      <a href="#contentModal" class="btn btn-outline-info" data-toggle="modal" data-list-id="<?= $list['id']; ?>">
-        <span class="d-flex align-items-end">Inserir Conteúdo</span>
-      </a>
+      <?php
+      $origin_user = getShareByOriginUserId($user['id']);
+      if ($origin_user) :
+      ?>
+        <a href="#contentModal" class="btn btn-outline-info" data-toggle="modal" data-list-id="<?= $list['id']; ?>">
+          <span class="d-flex align-items-end">Inserir Conteúdo</span>
+        </a>
+      <?php endif; ?>
     </div>
 
     <section class="d-flex justify-content-center">
@@ -84,13 +89,17 @@ function getYoutubeVideoId($url)
                   </div>
                 </a>
                 <div class="w-25 d-flex justify-content-end">
-                  <button type="button" class="btn btn-outline-info ms-2" data-toggle="modal" data-target="#updateContentModal<?= $content['content_id']; ?>">
-                    <i class="bi bi-pen pointer transition">Atualizar</i>
-                  </button>
-
-                  <button type="button" class="btn btn-outline-danger ms-2" data-toggle="modal" data-target="#deleteContentModal<?= $content['content_id']; ?>">
-                    <i class="bi bi-trash delete-icon ms-2 pointer transition">Remover</i>
-                  </button>
+                  <?php
+                  $origin_user = getShareByOriginUserId($user['id']);
+                  if ($origin_user) :
+                  ?>
+                    <button type="button" class="btn btn-outline-info ms-2" data-toggle="modal" data-target="#updateContentModal<?= $content['content_id']; ?>">
+                      <i class="bi bi-pen pointer transition">Atualizar</i>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger ms-2" data-toggle="modal" data-target="#deleteContentModal<?= $content['content_id']; ?>">
+                      <i class="bi bi-trash delete-icon ms-2 pointer transition">Remover</i>
+                    </button>
+                  <?php endif; ?>
                 </div>
               </ul>
             </div>

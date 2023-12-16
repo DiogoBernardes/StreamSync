@@ -96,26 +96,18 @@ CREATE TABLE reviews (
 
 CREATE TABLE shares (
   id INT NOT NULL AUTO_INCREMENT,
-  share_date DATE NOT NULL,
+  share_date TIMESTAMP NOT NULL,
   origin_user_id INT NOT NULL,
   destination_user_id INT NOT NULL,
+  list_id INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY(id),
   FOREIGN KEY (origin_user_id) REFERENCES users(id),
   FOREIGN KEY (destination_user_id) REFERENCES users(id)
+  FOREIGN KEY (list_id) REFERENCES lists(id)
 );
 
-CREATE TABLE listShares (
-  id INT NOT NULL AUTO_INCREMENT,
-  share_id INT NOT NULL,
-  content_id INT NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY(id),
-  FOREIGN KEY (share_id) REFERENCES shares(id),
-  FOREIGN KEY (content_id) REFERENCES content(id)
-);
 
 INSERT INTO roles (roleName) 
 VALUES ('Administrador');

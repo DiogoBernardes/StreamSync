@@ -7,8 +7,7 @@ require_once __DIR__ . '../../../../repositories/contentRepository.php';
 include_once __DIR__ . '../../../../templates/header.php';
 @require_once __DIR__ . '/../../../validations/session.php';
 $user = user();
-
-$lists = getAllLists($user['id']);
+$lists = getSharedListsByUserId($user['id']);
 $itemsPerPage = 6;
 $totalItems = count($lists);
 $totalPages = ceil($totalItems / $itemsPerPage);
@@ -18,7 +17,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
 <body>
   <div class="container min-vh-100">
     <div class="mt-3">
-      <h2 class="title-color">Listas</h2>
+      <h2 class="title-color">Listas Partilhadas</h2>
       <hr class="my-4 border-primary">
     </div>
     <div class="d-flex justify-content-between mt-2">
@@ -36,9 +35,6 @@ $totalPages = ceil($totalItems / $itemsPerPage);
           </li>
         </ul>
       </nav>
-      <button type="button" class="btn btn-outline-info me-5" data-toggle="modal" data-target="#contentModal">
-        <span class="d-flex align-items-end">Nova Lista</span>
-      </button>
     </div>
 
     <?php if ($totalItems > 0) : ?>
@@ -76,9 +72,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
                         <div class="d-flex justify-content-between">
                           <h5 class="mb-0 "><a href="listContent.php?list_id=<?= $list['id']; ?>" class="text-decoration-none text-dark fw-bold"><?= $list['name']; ?></a></h5>
                           <div>
-                            <i class="bi bi-pen pointer" data-toggle="modal" data-target="#updateModal<?= $list['id']; ?>"></i>
                             <i class="bi bi-trash delete-icon ms-2 pointer" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $list['id']; ?>"></i>
-                            <i class="bi bi-share text-end ms-2 pointer share-icon" data-bs-toggle="modal" data-bs-target="#shareModal<?= $list['id']; ?>"></i>
                           </div>
                         </div>
                         <hr class="dark horizontal">
@@ -103,77 +97,14 @@ $totalPages = ceil($totalItems / $itemsPerPage);
       </div>
     <?php endif; ?>
 
-    <!-- Modal Criar nova lista -->
-    <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="contentModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title text-primary" id="contentModalLabel">Criar Lista</h3>
-          </div>
-          <div class="modal-body">
-            <form enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/lists.php" method="post" class="form-control py-3 border-0">
-              <div class="row mt-2 mb-4">
-                <div class="form-group">
-                  <label for="title">Nome</label>
-                  <input type="text" class="form-control" name="name" placeholder="Nome" maxlength="100" size="100" required>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-right">
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button ype="submit" id="submit" name="list" value="create" class="btn btn-primary">Guardar</button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
 
-
-
-    <!-- Modal Atualizar Lista -->
-    <?php foreach ($lists as $list) : ?>
-      <div class="modal fade" id="updateModal<?= $list['id']; ?>" tabindex="-1" aria-labelledby="updateModalLabel<?= $list['id']; ?>" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="updateModalLabel<?= $list['id']; ?>">Atualizar lista</h5>
-            </div>
-            <div class="modal-body">
-              <form enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/lists.php" method="post" class="form-control py-3 border-0">
-                <div class="row mt-2 mb-4">
-                  <div class="form-group">
-                    <label for="title">Nome</label>
-                    <input type="text" class="form-control" name="name" value="<?= $list['name']; ?>" maxlength="100" size="100" required>
-                  </div>
-                </div>
-                <input type="hidden" name="id" value="<?= $list['id']; ?>">
-                <div class="row">
-                  <div class="text-right">
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                      <button type="submit" id="submit" name="list" value="update" class="btn btn-primary">Guardar</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    <?php endforeach; ?>
-
-
-    <!-- Modal Eliminar lista -->
+    <!-- Modal Eliminar Partilha -->
     <?php foreach ($lists as $list) : ?>
       <div class="modal fade" id="deleteModal<?= $list['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $list['id']; ?>" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel<?= $list['id']; ?>">Eliminar lista</h5>
+              <h5 class="modal-title" id="deleteModalLabel<?= $list['id']; ?>">Eliminar partilha</h5>
             </div>
             <div class="modal-body">
               <p class="card-title">
@@ -184,44 +115,11 @@ $totalPages = ceil($totalItems / $itemsPerPage);
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <form action="/StreamSync/src/controllers/admin/lists.php" method="get">
-                <input type="hidden" name="list_id" value="<?= $list['id'] ?>">
-                <input type="hidden" name="list" value="delete">
-                <button type="submit" class="btn btn-danger">Sim, eliminar a lista</button>
-              </form>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    <?php endforeach; ?>
-
-
-    <!-- Modal partilhar Lista -->
-    <?php foreach ($lists as $list) : ?>
-      <div class="modal fade" id="shareModal<?= $list['id']; ?>" tabindex="-1" aria-labelledby="shareModalLabel<?= $list['id']; ?>" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="shareModalLabel<?= $list['id']; ?>">Partilhar lista</h5>
-            </div>
-            <div class="modal-body">
-              <form enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/shared.php" method="post" class="form-control py-3 border-0">
-                <div class="row mt-2 mb-4">
-                  <div class="form-group">
-                    <label for="email">Email do destinatário:</label>
-                    <input type="email" class="form-control" name="email" placeholder="Email do destinatário" required>
-                  </div>
-                </div>
+              <form action="/StreamSync/src/controllers/admin/shared.php" method="get">
                 <input type="hidden" name="list_id" value="<?= $list['id']; ?>">
-                <div class="row">
-                  <div class="text-right">
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                      <button type="submit" id="submit" name="share" value="create" class="btn btn-primary">Partilhar</button>
-                    </div>
-                  </div>
-                </div>
+                <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                <input type="hidden" name="share" value="delete">
+                <button type="submit" class="btn btn-danger">Sim, eliminar a lista</button>
               </form>
             </div>
           </div>
