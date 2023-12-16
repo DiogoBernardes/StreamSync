@@ -63,6 +63,16 @@ function getAllReviews()
   return $reviewList;
 }
 
+function checkIfListIsSharedWithUser($listId, $userId)
+{
+  $PDOStatement = $GLOBALS['pdo']->prepare('SELECT * FROM shares WHERE list_id = :list_id AND destination_user_id = :user_id;');
+  $PDOStatement->bindParam(':list_id', $listId, PDO::PARAM_INT);
+  $PDOStatement->bindParam(':user_id', $userId, PDO::PARAM_INT);
+  $PDOStatement->execute();
+
+  return $PDOStatement->fetch() ? true : false;
+}
+
 function updateReview($review)
 {
   $sqlUpdate = "UPDATE  

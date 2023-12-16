@@ -15,6 +15,8 @@ $user = user();
 $listId = isset($_GET['list_id']) ? $_GET['list_id'] : null;
 $list = getListById($listId, $user['id']);
 $listContent = getAllListContent($listId);
+$isListOwner = is_array($list) && $list['user_id'] == $user['id'];
+$isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
 ?>
 
 <body class="bg-color">
@@ -29,11 +31,11 @@ $listContent = getAllListContent($listId);
     <div class="me-5 mt-3 text-end">
       <?php
       $origin_user = getShareByOriginUserId($user['id']);
-      if ($origin_user) :
+      if ($isListOwner || $isListSharedWithUser) :
       ?>
-        <a href="#contentModal" class="btn btn-outline-info" data-toggle="modal" data-list-id="<?= $list['id']; ?>">
-          <span class="d-flex align-items-end">Inserir Conteúdo</span>
-        </a>
+          <a href="#contentModal" class="btn btn-outline-info" data-toggle="modal" data-list-id="<?= $list['id']; ?>">
+            <span class="d-flex align-items-end">Inserir Conteúdo</span>
+          </a>
       <?php endif; ?>
 
     </div>
