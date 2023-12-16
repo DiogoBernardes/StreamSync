@@ -15,20 +15,6 @@ $user = user();
 $listId = isset($_GET['list_id']) ? $_GET['list_id'] : null;
 $list = getListById($listId, $user['id']);
 $listContent = getAllListContent($listId);
-
-function getYoutubeVideoId($url)
-{
-  $videoId = "";
-  $pattern = '/(?:youtube\.com\/(?:[^\/\ns]+\/S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/';
-
-  preg_match($pattern, $url, $matches);
-
-  if (!empty($matches[1])) {
-    $videoId = $matches[1];
-  }
-
-  return $videoId;
-}
 ?>
 
 <body class="bg-color">
@@ -49,6 +35,7 @@ function getYoutubeVideoId($url)
           <span class="d-flex align-items-end">Inserir Conteúdo</span>
         </a>
       <?php endif; ?>
+
     </div>
 
     <section class="d-flex justify-content-center">

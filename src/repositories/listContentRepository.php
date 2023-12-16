@@ -77,3 +77,10 @@ function deleteListContent($id)
   $PDOStatement->bindValue(1, $id, PDO::PARAM_INT);
   return $PDOStatement->execute();
 }
+
+function deleteListContentAssociations($contentId)
+{
+  $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM listContent WHERE content_id = ?;');
+  $PDOStatement->bindValue(1, $contentId, PDO::PARAM_INT);
+  $PDOStatement->execute();
+}

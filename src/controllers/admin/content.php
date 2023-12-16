@@ -1,6 +1,8 @@
 <?php
 
 require_once __DIR__ . '/../../repositories/contentRepository.php';
+require_once __DIR__ . '/../../repositories/reviewsRepository.php';
+require_once __DIR__ . '/../../repositories/listContentRepository.php';
 require_once __DIR__ . '/../../validations/admin/validate-content.php';
 require_once __DIR__ . '/../../validations/session.php';
 
@@ -84,8 +86,19 @@ function update_content($req)
     header('location: /StreamSync/src/views/secure/user/Dashboard.php' . $params);
   }
 }
-function delete_content($content)
+
+function delete_content($contentId)
 {
-  $data = deleteContent($content['id']);
-  return $data;
+  deleteListContentAssociations($contentId);
+  deleteReviewsByContentId($contentId);
+
+  $success = deleteContent($contentId);
+
+  if ($success) {
+    $_SESSION['success'] = 'Content deleted successfully!';
+    header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+  } else {
+    $_SESSION['errors'] = 'Error deleting content.';
+    header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+  }
 }
