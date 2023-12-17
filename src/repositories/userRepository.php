@@ -246,3 +246,13 @@ function getDeletedUsersCountByMonth()
 
     return array_values($result);
 }
+
+
+function calculateAverageAge()
+{
+    $sql = "SELECT AVG(YEAR(CURDATE()) - YEAR(birthdate)) AS average_age FROM users WHERE deleted_at IS NULL;";
+    $stmt = $GLOBALS['pdo']->query($sql);
+    $result = $stmt->fetch();
+
+    return $result['average_age'];
+}

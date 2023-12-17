@@ -2,12 +2,16 @@
 require_once __DIR__ .  '/../../../../vendor/autoload.php';
 require_once __DIR__ . '/../../../repositories/userRepository.php';
 require_once __DIR__ . '/../../../repositories/contentRepository.php';
+require_once __DIR__ . '/../../../repositories/reviewsRepository.php';
+require_once __DIR__ . '/../../../repositories/shareRepository.php';
 require_once __DIR__ . '/../../../infrastructure/middlewares/middleware-administrator.php';
 require_once __DIR__ . '/../../../templates/header.php';
 $user = user();
 $userCountsByMonth = getUsersCountByMonth();
 $deletedUsersCountByMonth = getDeletedUsersCountByMonth();
 $contentCountByCategory = getContentCountByCategory();
+$contentCountByType = getContentCountByType();
+$rating = getRatingStatistics();
 $title = 'Admin management';
 ?>
 
@@ -61,15 +65,85 @@ $title = 'Admin management';
 
       <!-- Content -->
       <div id="content" class="col d-flex flex-column justify-content-center align-items-center bg-color overflow-auto h-100 py-3">
-
-        <div class="row w-100 d-flex justify-content-center align-items-center">
+        <div class="row w-100 d-flex justify-content-center align-items-center mb-5 mt-5">
+          <div class="col-3 mb-3">
+            <div class="card text-white bg-primary">
+              <div class="card-body">
+                <h5 class="card-title">Média de Idades</h5>
+                <p class="card-text">
+                  <?php
+                  $averageAge = calculateAverageAge();
+                  echo "A média de idades dos utilizadores é: " . number_format($averageAge, 2) . " anos";
+                  ?>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-3 mb-3">
+            <div class="card text-white bg-secondary">
+              <div class="card-body">
+                <h5 class="card-title">Média de Conteúdos Diários</h5>
+                <p class="card-text">
+                  <?php
+                  $averageContentPerDay = calculateAverageContentPerDay();
+                  echo "A média de conteúdos inseridos diariamente é: " . number_format($averageContentPerDay, 2);
+                  ?>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-3 mb-3">
+            <div class="card text-white bg-success">
+              <div class="card-body">
+                <h5 class="card-title">Média de Compartilhamentos Diários</h5>
+                <p class="card-text">
+                  <?php
+                  $averageSharesPerDay = calculateAverageSharesPerDay();
+                  if ($averageSharesPerDay !== false) {
+                    echo "A média de compartilhamentos diários é: " . number_format($averageSharesPerDay, 2);
+                  } else {
+                    echo "Erro ao calcular a média de compartilhamentos diários.";
+                  }
+                  ?>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-3 mb-3">
+            <div class="card text-white bg-warning">
+              <div class="card-body">
+                <h5 class="card-title">Média de Avaliações Diárias</h5>
+                <p class="card-text">
+                  <?php
+                  $averageReviewsPerDay = calculateAverageReviewsPerDay();
+                  if ($averageReviewsPerDay !== false) {
+                    echo "A média de avaliações diárias é: " . number_format($averageReviewsPerDay, 2);
+                  } else {
+                    echo "Erro ao calcular a média de avaliações diárias.";
+                  }
+                  ?>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row w-100 d-flex justify-content-center align-items-center mb-5">
           <div class="col-6 ">
-            <canvas id="myChart"></canvas>
+            <canvas id="lineChart"></canvas>
           </div>
           <div class="col-6">
             <canvas id="doughnutChart"></canvas>
           </div>
         </div>
+        <div class="row w-100 d-flex justify-content-center align-items-center mt-5">
+          <div class="col-6 ">
+            <canvas id="barChart"></canvas>
+          </div>
+          <div class="col-6">
+            <canvas id="polarAreaChart"></canvas>
+          </div>
+        </div>
+
 
       </div>
 
@@ -99,26 +173,28 @@ $title = 'Admin management';
   </div>
 
   <script>
-    // Chart
-    const ctx = document.getElementById('myChart');
+    //Line Chart
+    const ctx = document.getElementById('lineChart');
     const userCountsByMonth = <?php echo json_encode($userCountsByMonth); ?>;
-    const deletedUsersCountByMonth = <?php echo json_encode($deletedUsersCountByMonth); ?>; // Certifique-se de ter essa variável
+    const deletedUsersCountByMonth = <?php echo json_encode($deletedUsersCountByMonth); ?>;
 
     new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
         datasets: [{
             label: 'Número de utilizadores registados',
             data: userCountsByMonth,
-            backgroundColor: 'rgba(75, 192, 192, 0.8)',
-            borderWidth: 1
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            fill: false
           },
           {
             label: 'Número de utilizadores eliminados',
             data: deletedUsersCountByMonth,
-            backgroundColor: 'rgba(255, 99, 132, 0.8)',
-            borderWidth: 1
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            fill: false
           }
         ]
       },
@@ -165,12 +241,76 @@ $title = 'Admin management';
         },
       },
     });
+    //barChart
+    const contentTypeCtx = document.getElementById('barChart');
+    const contentCountByType = <?php echo json_encode($contentCountByType); ?>;
+    const typeColors = Object.keys(contentCountByType).map(() => generateRandomColor());
+
+    new Chart(barChart, {
+      type: 'bar',
+      data: {
+        labels: Object.keys(contentCountByType),
+        datasets: [{
+          data: Object.values(contentCountByType),
+          backgroundColor: typeColors,
+          borderWidth: 1,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: true,
+            text: 'Conteúdo por Tipo',
+            position: 'top',
+          },
+        },
+      },
+    });
+
+    // Polar Area Chart
+    const polarAreaCtx = document.getElementById('polarAreaChart');
+    const ratingStatistics = <?php echo json_encode(getRatingStatistics()); ?>;
+    const ratingLabels = Object.keys(ratingStatistics);
+    const ratingData = Object.values(ratingStatistics);
+
+    new Chart(polarAreaCtx, {
+      type: 'polarArea',
+      data: {
+        labels: ratingLabels,
+        datasets: [{
+          data: ratingData,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+            'rgba(255, 205, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+          ],
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Distribuição da Pontuação de Ratings',
+            position: 'top',
+          },
+        },
+      },
+    });
   </script>
-
-
-
-
-
 </body>
 
 </html>

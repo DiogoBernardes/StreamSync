@@ -132,3 +132,18 @@ function deleteSharesByUserId($userId)
   $PDOStatement->bindValue(':user_id', $userId, PDO::PARAM_INT);
   $PDOStatement->execute();
 }
+
+
+function calculateAverageSharesPerDay()
+{
+  try {
+    $sql = "SELECT COUNT(id) / COUNT(DISTINCT DATE(share_date)) AS avg_shares_per_day FROM shares;";
+    $PDOStatement = $GLOBALS['pdo']->query($sql);
+    $result = $PDOStatement->fetch(PDO::FETCH_ASSOC);
+
+    return $result['avg_shares_per_day'];
+  } catch (Exception $e) {
+    error_log("Erro: " . $e->getMessage());
+    return false;
+  }
+}

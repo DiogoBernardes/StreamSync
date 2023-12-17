@@ -195,3 +195,33 @@ function getContentCountByCategory()
 
   return $contentCountByCategory;
 }
+
+function getContentCountByType()
+{
+  $sql = "SELECT ct.name AS content_type, COUNT(c.id) AS content_count
+            FROM content c
+            JOIN content_type ct ON c.type_id = ct.id
+            GROUP BY ct.name";
+
+  $PDOStatement = $GLOBALS['pdo']->query($sql);
+
+  $contentCountByType = [];
+  while ($row = $PDOStatement->fetch()) {
+    $contentCountByType[$row['content_type']] = $row['content_count'];
+  }
+
+  return $contentCountByType;
+}
+
+function calculateAverageContentPerDay()
+{
+  $sql = "SELECT AVG(content_count) AS average_content_per_day FROM (
+                SELECT COUNT(*) AS content_count, DATE(created_at) AS creation_date
+                FROM content
+                GROUP BY DATE(created_at)
+            ) AS daily_counts";
+  $stmt = $GLOBALS['pdo']->query($sql);
+  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  return $result['average_content_per_day'];
+}

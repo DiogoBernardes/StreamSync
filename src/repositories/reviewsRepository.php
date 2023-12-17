@@ -109,9 +109,35 @@ function deleteReviewsByContentId($contentId)
   $PDOStatement->execute();
 }
 
-function deleteReviewsByUserId($userId) {
+function deleteReviewsByUserId($userId)
+{
   $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM reviews WHERE user_id = ?;');
   $PDOStatement->bindValue(1, $userId, PDO::PARAM_INT);
 
   return $PDOStatement->execute();
+}
+
+
+function getRatingStatistics()
+{
+  $PDOStatement = $GLOBALS['pdo']->query('SELECT rating, COUNT(*) as count FROM reviews GROUP BY rating;');
+  $ratingStatistics = [];
+  while ($row = $PDOStatement->fetch()) {
+    $ratingStatistics[$row['rating']] = $row['count'];
+  }
+  return $ratingStatistics;
+}
+
+function calculateAverageReviewsPerDay()
+{
+  try {
+    $sql = "SELECT COUNT(content_id) / COUNT(DISTINCT DATE(review_date)) AS avg_reviews_per_day FROM reviews;";
+    $PDOStatement = $GLOBALS['pdo']->query($sql);
+    $result = $PDOStatement->fetch(PDO::FETCH_ASSOC);
+
+    return $result['avg_reviews_per_day'];
+  } catch (Exception $e) {
+    error_log("Erro na função calculateAverageReviewsPerDay: " . $e->getMessage());
+    return false;
+  }
 }
