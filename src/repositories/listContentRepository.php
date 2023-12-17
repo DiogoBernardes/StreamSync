@@ -53,6 +53,25 @@ function getAllListContent($listId = null)
   return $listContentList;
 }
 
+function getFilteredContentByCategory($listId, $categoryFilter = null) {
+  $sql = 'SELECT lc.*, c.* FROM listContent lc INNER JOIN content c ON lc.content_id = c.id WHERE lc.list_id = :list_id';
+
+  if ($categoryFilter) {
+      $sql .= ' AND c.category_id = :category_id';
+  }
+
+  $PDOStatement = $GLOBALS['pdo']->prepare($sql);
+  $PDOStatement->bindValue(':list_id', $listId, PDO::PARAM_INT);
+
+  if ($categoryFilter) {
+      $PDOStatement->bindValue(':category_id', $categoryFilter, PDO::PARAM_INT);
+  }
+
+  $PDOStatement->execute();
+  return $PDOStatement->fetchAll();
+}
+
+
 
 function updateListContent($listContent)
 {

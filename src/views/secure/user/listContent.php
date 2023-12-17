@@ -13,10 +13,13 @@ require_once __DIR__ . '/Content.php';
 $user = user();
 
 $listId = isset($_GET['list_id']) ? $_GET['list_id'] : null;
+error_log("listId definido como: $listId");
 $list = getListById($listId, $user['id']);
 $listContent = getAllListContent($listId);
 $isListOwner = is_array($list) && $list['user_id'] == $user['id'];
 $isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
+$categoryFilter = isset($_GET['category']) ? $_GET['category'] : null;
+$listContent = getFilteredContentByCategory($listId, $categoryFilter);
 ?>
 
 <body class="bg-color">
@@ -29,9 +32,23 @@ $isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
     </div>
 
     <div class="me-5 mt-3 ms-5 d-flex justify-content-between">
-      <div class="w-12">
-        <form class="form-inline">
+      <div class="w-35">
+        <form class="form-inline d-flex gap-3" method="get">
+          <input type="hidden" name="list_id" value="<?= $listId ?>">
           <input class="form-control mr-sm-2" type="text" id="searchInput" placeholder="Search by title" aria-label="Search">
+          <select name="category" class="form-select" onchange="this.form.submit()">
+            <option value="">Todas as Categorias</option>
+            <?php
+            $categories = getAllCategories();
+            foreach ($categories as $category) {
+                echo "<option value='" . htmlspecialchars($category['id']) . "'";
+                if (isset($_GET['category']) && $_GET['category'] == $category['id']) {
+                    echo " selected";
+                }
+                echo ">" . htmlspecialchars($category['name']) . "</option>";
+            }
+            ?>  
+        </select>
         </form>
       </div>
       <div>
