@@ -88,10 +88,7 @@ function updateShare($share)
 function deleteShare($list_id, $user_id)
 {
   try {
-    error_log("List ID: " . $list_id);
-    error_log("User ID: " . $user_id);
 
-    // Verifica se há uma partilha associada à lista e ao usuário logado
     $PDOStatement = $GLOBALS['pdo']->prepare('SELECT id FROM shares WHERE list_id = ? AND destination_user_id = ?;');
     $PDOStatement->bindValue(1, $list_id, PDO::PARAM_INT);
     $PDOStatement->bindValue(2, $user_id, PDO::PARAM_INT);
@@ -99,9 +96,6 @@ function deleteShare($list_id, $user_id)
 
     $share_id = $PDOStatement->fetchColumn();
 
-    // Log adicional para verificar se a entrada existe
-    $exists = $share_id ? 'Existe' : 'Não existe';
-    error_log("Entrada na tabela shares: " . $exists);
 
     if (!$share_id) {
       throw new Exception("Partilha não encontrada para a lista {$list_id} e usuário {$user_id}");
@@ -119,13 +113,15 @@ function deleteShare($list_id, $user_id)
   }
 }
 
-function deleteSharesByListId($listId) {
+function deleteSharesByListId($listId)
+{
   $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM shares WHERE list_id = ?;');
   $PDOStatement->bindValue(1, $listId, PDO::PARAM_INT);
   $PDOStatement->execute();
 }
 
-function deleteSharesByUserId($userId) {
+function deleteSharesByUserId($userId)
+{
   $sqlDeleteOrigin = "DELETE FROM shares WHERE origin_user_id = :user_id;";
   $PDOStatement = $GLOBALS['pdo']->prepare($sqlDeleteOrigin);
   $PDOStatement->bindValue(':user_id', $userId, PDO::PARAM_INT);

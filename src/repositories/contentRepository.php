@@ -178,3 +178,20 @@ function getWatchedDatesForCalendar($userId)
 
   return $events;
 }
+
+function getContentCountByCategory()
+{
+  $sql = "SELECT c.category_id, COUNT(c.id) AS content_count, ct.name AS category_name
+          FROM content c
+          JOIN category_type ct ON c.category_id = ct.id
+          GROUP BY c.category_id";
+
+  $PDOStatement = $GLOBALS['pdo']->query($sql);
+
+  $contentCountByCategory = [];
+  while ($row = $PDOStatement->fetch()) {
+    $contentCountByCategory[$row['category_name']] = $row['content_count'];
+  }
+
+  return $contentCountByCategory;
+}

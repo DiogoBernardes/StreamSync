@@ -218,3 +218,31 @@ function createNewUser($user)
     }
     return $success;
 }
+function getUsersCountByMonth()
+{
+    $sql = "SELECT MONTH(created_at) AS month, COUNT(*) AS user_count FROM users GROUP BY month";
+
+    $stmt = $GLOBALS['pdo']->query($sql);
+    $result = array_fill(1, 12, 0);
+
+    while ($row = $stmt->fetch()) {
+        $result[$row['month']] = $row['user_count'];
+    }
+
+    return array_values($result);
+}
+
+function getDeletedUsersCountByMonth()
+{
+    $sql = "SELECT MONTH(deleted_at) AS month, COUNT(*) AS user_count FROM users GROUP BY month";
+
+    $stmt = $GLOBALS['pdo']->query($sql);
+
+    $result = array_fill(1, 12, 0);
+
+    while ($row = $stmt->fetch()) {
+        $result[$row['month']] = $row['user_count'];
+    }
+
+    return array_values($result);
+}
