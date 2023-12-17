@@ -83,19 +83,20 @@ function deleteList($id, $userId)
   return $success;
 }
 
-function getSharedListsByUserId($userId)
-{
-  $sql = "SELECT l.* 
-            FROM lists l
-            INNER JOIN shares s ON l.id = s.list_id
-            WHERE s.destination_user_id = :user_id";
+function getSharedListsWithSharedBy($userId) {
+  $sql = "SELECT l.*, u.username as shared_by 
+          FROM lists l
+          INNER JOIN shares s ON l.id = s.list_id
+          INNER JOIN users u ON s.origin_user_id = u.id
+          WHERE s.destination_user_id = :user_id";
 
   $PDOStatement = $GLOBALS['pdo']->prepare($sql);
-  $PDOStatement->execute([':user_id' => $userId]);
+  $PDOStatement->bindValue(':user_id', $userId, PDO::PARAM_INT);
+  $PDOStatement->execute();
 
   $lists = [];
   while ($list = $PDOStatement->fetch()) {
-    $lists[] = $list;
+      $lists[] = $list;
   }
 
   return $lists;

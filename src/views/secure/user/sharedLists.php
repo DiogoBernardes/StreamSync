@@ -7,7 +7,7 @@ require_once __DIR__ . '../../../../repositories/contentRepository.php';
 include_once __DIR__ . '../../../../templates/header.php';
 @require_once __DIR__ . '/../../../validations/session.php';
 $user = user();
-$lists = getSharedListsByUserId($user['id']);
+$lists = getSharedListsWithSharedBy($user['id']);
 $itemsPerPage = 6;
 $totalItems = count($lists);
 $totalPages = ceil($totalItems / $itemsPerPage);
@@ -70,7 +70,11 @@ $totalPages = ceil($totalItems / $itemsPerPage);
                       </div>
                       <div class="card-body ">
                         <div class="d-flex justify-content-between">
-                          <h5 class="mb-0 "><a href="listContent.php?list_id=<?= $list['id']; ?>" class="text-decoration-none text-dark fw-bold"><?= $list['name']; ?></a></h5>
+                          <h5 class="mb-0 ">
+                            <a href="listContent.php?list_id=<?= $list['id']; ?>" class="text-decoration-none text-dark fw-bold">
+                              <?= $list['name']; ?>
+                            </a>
+                          </h5>
                           <div>
                             <i class="bi bi-trash delete-icon ms-2 pointer" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $list['id']; ?>"></i>
                           </div>
@@ -80,7 +84,10 @@ $totalPages = ceil($totalItems / $itemsPerPage);
                           <i class="material-icons text-sm me-1">Atualizado:</i>
                           <p class="mb-0 small"><?= date('d/m/Y', strtotime($list['updated_at'])); ?></p>
                         </div>
-
+                        <div class="d-flex align-items-center">
+                          <i class="material-icons text-sm me-1">Partilhado por:</i>
+                          <p class="mb-0 small"><?= htmlspecialchars($list['shared_by']); ?></p>
+                        </div>
                       </div>
                     </div>
                   </div>
