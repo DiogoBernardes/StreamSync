@@ -28,7 +28,19 @@ if (isset($_POST['user'])) {
         changePassword($_POST);
     }
     if ($_POST['user'] == 'delete') {
-        delete_user($_POST);
+        $user = getById($_GET['id']);
+        if ($user['role_id'] == 1) {
+            $_SESSION['errors'] = ['This user cannot be deleted!'];
+            header('location: /StreamSync/src/views/secure/admin/management.php');
+            return false;
+        }
+
+        $success = delete_user($user);
+
+        if ($success) {
+            $_SESSION['success'] = 'User deleted successfully!';
+            header('location: /StreamSync/src/views/secure/admin/management.php');
+        }
     }
 }
 
@@ -48,13 +60,16 @@ function create($req)
     if (isset($data['invalid'])) {
         $_SESSION['errors'] = $data['invalid'];
         $params = '?' . http_build_query($req);
-        header('location: /StreamSync/src/views/secure/admin/user.php' . $params);
+        header('location: /StreamSync/src/views/secure/admin/management.php' . $params);
         return false;
     }
 
     $success = createUser($data);
 
-    if ($success) {
+    if ($success && administrator()) {
+        $_SESSION['success'] = 'User created successfully!';
+        header('location: /StreamSync/src/views/secure/admin/management.php');
+    } else {
         $_SESSION['success'] = 'User created successfully!';
         header('location: /StreamSync/src/views/secure/admin/');
     }
@@ -134,7 +149,8 @@ function changePassword($req)
         exit;
     }
 }
-function delete_user() {
+function delete_user()
+{
     $userId = $_SESSION['id'];
 
     deleteSharesByUserId($userId);

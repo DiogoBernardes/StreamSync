@@ -4,7 +4,7 @@ require_once __DIR__ . '/../infrastructure/db/connection.php';
 function createUser($user)
 {
     // Role Utilizador por default
-    $user['role_id'] = 2;
+    $user['role_id'] = isset($user['role_id']) ? $user['role_id'] : 2;
 
     $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
     $sqlCreate = "INSERT INTO 
@@ -255,4 +255,14 @@ function calculateAverageAge()
     $result = $stmt->fetch();
 
     return $result['average_age'];
+}
+
+function getAllRoles()
+{
+    $PDOStatement = $GLOBALS['pdo']->query('SELECT * FROM roles;');
+    $role = [];
+    while ($listOfRoles = $PDOStatement->fetch()) {
+        $role[] = $listOfRoles;
+    }
+    return $role;
 }

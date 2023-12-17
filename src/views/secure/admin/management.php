@@ -1,11 +1,15 @@
 <?php
 require_once __DIR__ . '/../../../infrastructure/middlewares/middleware-administrator.php';
+require_once __DIR__ . '/../../../repositories/contentRepository.php';
+require_once __DIR__ . '/../../../repositories/userRepository.php';
 require_once __DIR__ . '/../../../templates/header.php';
 @require_once __DIR__ . '/../../../validations/session.php';
 
 $user = user();
 $users = getAll();
+$roles = getAllRoles();
 $title = ' - user';
+
 ?>
 
 <body class="vh-100">
@@ -26,7 +30,7 @@ $title = ' - user';
               </a>
             </li>
             <li>
-              <a href="javascript:void(0)" class="nav-link px-0 align-middle transition" onclick="loadContent('Lists')">
+              <a href="/StreamSync/src/views/secure/admin/management.php" class="nav-link px-0 align-middle transition">
                 <i class="fs-4 bi-person-fill-gear text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Gestão</span>
               </a>
             </li>
@@ -72,7 +76,7 @@ $title = ' - user';
                   <label for="newCategory" class="form-label">Nova Categoria</label>
                   <input type="text" class="form-control" id="newCategory" name="name" required>
                 </div>
-                <button type="submit" id="submit" name="category" value="create" class="btn btn-outline-info btn-sm">Adicionar</button>
+                <button type="submit" id="submitCategory" name="category" value="create" class="btn btn-outline-info btn-sm">Adicionar</button>
               </form>
             </div>
             <div class="col-md-6 col-sm-12 mb-3">
@@ -81,15 +85,18 @@ $title = ' - user';
                   <label for="newContentType" class="form-label">Novo Tipo Conteúdo</label>
                   <input type="text" class="form-control" id="newContentType" name="name" required>
                 </div>
-                <button type="submit" id="submit" name="contentType" value="create" class="btn btn-outline-info btn-sm">Adicionar</button>
+                <button type="submit" id="submitContentType" name="contentType" value="create" class="btn btn-outline-info btn-sm">Adicionar</button>
               </form>
             </div>
           </div>
         </section>
         <section>
-          <div class="table-responsive mt-5">
+          <div class="d-flex justify-content-end">
+            <button type=" button" class="btn btn-outline-info" data-toggle="modal" data-target="#userModal">Adicionar Utilizador</button>
+          </div>
+          <div class="table-responsive mt-3">
             <table class="table">
-              <thead class="table-secondary">
+              <thead class="table-secondary text-center">
                 <tr>
                   <th scope="col"><i class="bi bi-person"></i></th>
                   <th scope="col">Name</th>
@@ -105,7 +112,7 @@ $title = ' - user';
                 <?php
                 foreach ($users as $user) {
                 ?>
-                  <tr>
+                  <tr class="text-center">
                     <td>
                       <?php if ($user['avatar'] !== null) : ?>
                         <img src="data:image/png;base64,<?= base64_encode($user['avatar']) ?>" alt="User Avatar" class="rounded-circle " style="width: 42px; height: 42px;">
@@ -129,31 +136,14 @@ $title = ' - user';
                       <?= $user['username'] ?>
                     </td>
                     <td>
-                      <?= $user['role_id'] == '1' ? 'Yes' : 'No' ?>
+                      <?= $user['role_id'] == '1' ? 'Sim' : 'Não' ?>
                     </td>
                     <td>
-                      <div class="d-flex justify-content">
-                        <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#delete<?= $user['id'] ?>">delete</button>
+                      <div class="d-flex justify-content-center gap-2">
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $user['id']; ?>">Apagar</button>
                       </div>
                     </td>
                   </tr>
-                  <div class="modal fade" id="delete<?= $user['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete user</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          Are you sure you want to delete this user?
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <a href="/crud/controllers/admin/user.php?<?= 'user=delete&id=' . $user['id'] ?>"><button type="button" class="btn btn-danger">Confirm</button></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 <?php
                 }
                 ?>
@@ -164,6 +154,140 @@ $title = ' - user';
       </div>
 
     </div>
+
+
+    <!-- Modal Inserir User -->
+    <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title text-primary" id="contentModalLabel">Inserir Conteúdo</h3>
+          </div>
+          <div class="modal-body">
+
+            <form action="/StreamSync/src/controllers/admin/user.php" method="post" class="p-4">
+              <div class="row mt-3">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label d-flex justify-content-start align-items-start" for="first_name">Primeiro Nome</label>
+                  <input id="first_name" class="form-control" type="text" name="first_name" value="<?= isset($_REQUEST['first_name']) ? $_REQUEST['first_name'] : null ?>" required />
+                  <?php
+                  if (isset($_SESSION['errors']['first_name'])) {
+                    echo '<p class="alert" style="color: red;">' . $_SESSION['errors']['first_name'] . '</p>';
+                  }
+                  ?>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label d-flex justify-content-start align-items-start" for="last_name">Último Nome</label>
+                  <input id="last_name" class="form-control" type="text" name="last_name" value="<?= isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : null ?>" required />
+                  <?php
+                  if (isset($_SESSION['errors']['last_name'])) {
+                    echo '<p class="alert" style="color: red;">' . $_SESSION['errors']['last_name'] . '</p>';
+                  }
+                  ?>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label d-flex justify-content-start align-items-start" for="username">Username</label>
+                  <input id="username" class="form-control " type="text" name="username" value="<?= isset($_REQUEST['username']) ? $_REQUEST['username'] : null ?>" required />
+                  <?php
+                  if (isset($_SESSION['errors']['username'])) {
+                    echo '<p class="alert" style="color: red;">' . $_SESSION['errors']['username'] . '</p>';
+                  }
+                  ?>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label d-flex justify-content-start align-items-start" for="birthdate">Data de Nascimento</label>
+                  <input id="birthdate" class="form-control " type="date" name="birthdate" value="<?= isset($_REQUEST['birthdate']) ? $_REQUEST['birthdate'] : null ?>" required />
+                  <?php
+                  if (isset($_SESSION['errors']['birthdate'])) {
+                    echo '<p class="alert" style="color: red;">' . $_SESSION['errors']['birthdate'] . '</p>';
+                  }
+                  ?>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label d-flex justify-content-start align-items-start" for="email">Email</label>
+                  <input id="email" class="form-control " type="email" name="email" value="<?= isset($_REQUEST['email']) ? $_REQUEST['email'] : null ?>" required />
+                  <?php
+                  if (isset($_SESSION['errors']['email'])) {
+                    echo '<p class="alert" style="color: red;">' . $_SESSION['errors']['email'] . '</p>';
+                  }
+                  ?>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label d-flex justify-content-start align-items-start">Roles</label>
+                  <select class="form-select" aria-label="Default select example" name="role_id" required style="color: black;">
+                    <?php
+                    foreach ($roles as $role) {
+                      echo "<option value='{$role['id']}'>{$role['roleName']}</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
+
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label d-flex justify-content-start align-items-start" for="password">Password</label>
+                  <input id="password" class="form-control" type="password" name="password" required />
+                  <?php
+                  if (isset($_SESSION['errors']['password'])) {
+                    echo '<p class="alert" style="color: red;">' . $_SESSION['errors']['password'] . '</p>';
+                  }
+                  ?>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label d-flex justify-content-start align-items-start" for="password_confirmation">Confirmar Password</label>
+                  <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required />
+                  <?php
+                  if (isset($_SESSION['errors']['password_confirmation'])) {
+                    echo '<p class="alert" style="color: red;">' . $_SESSION['errors']['password_confirmation'] . '</p>';
+                  }
+                  ?>
+                </div>
+              </div>
+
+              <button class="btn btn-outline-success btn-lg px-4 mt-3" type="submit" name="user" value="create">Registar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de confirmação de delete -->
+    <?php foreach ($users as $user) : ?>
+      <div class="modal fade" id="deleteModal<?= $user['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $user['id']; ?>" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel<?= $user['id']; ?>">Eliminar utilizador</h5>
+            </div>
+            <div class="modal-body">
+              <p class="card-title">
+                Tem certeza de que deseja eliminar o utilizador <?= $user['username']; ?>?
+              </p>
+              <br>
+              <p>Não poderá recuperar a mesma posteriormente.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <form action="/StreamSync/src/controllers/admin/user.php" method="post">
+                <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                <input type="hidden" name="user" value="delete">
+                <button type="submit" class="btn btn-danger">Sim, eliminar utilizador</button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+
+
     <!-- Modal de confirmação de logout -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -184,6 +308,7 @@ $title = ' - user';
         </div>
       </div>
     </div>
+
   </div>
 
 </body>
