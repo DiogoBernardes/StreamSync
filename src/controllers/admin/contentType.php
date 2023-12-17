@@ -7,7 +7,13 @@ require_once __DIR__ . '/../../validations/session.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['contentType'])) {
     if ($_POST['contentType'] == 'create') {
-      create_content($_POST);
+      $success = createContentType($_POST);
+
+      if ($success) {
+        $_SESSION['success_message'] = 'Tipo de conteúdo adicionado com sucesso!';
+      } else {
+        $_SESSION['error_message'] = 'Erro ao adicionar tipo de conteúdo. Por favor, tente novamente.';
+      }
     }
 
     if ($_POST['contentType'] == 'update') {
@@ -24,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
       if ($success) {
         $_SESSION['success'] = 'Content Type deleted successfully!';
-        header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+        header('location: /StreamSync/src/views/secure/admin/management.php');
       }
     }
   }
@@ -37,7 +43,7 @@ function create_contentType($req)
   if (isset($data['invalid'])) {
     $_SESSION['errors'] = $data['invalid'];
     $params = '?' . http_build_query($req);
-    header('location: /StreamSync/src/views/secure/user/Content.php' . $params);
+    header('location: /StreamSync/src/views/secure/admin/management.php' . $params);
     return false;
   }
 
@@ -45,7 +51,7 @@ function create_contentType($req)
 
   if ($success) {
     $_SESSION['success'] = 'Content Type created successfully!';
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+    header('location: /StreamSync/src/views/secure/admin/management.php');
   }
 }
 

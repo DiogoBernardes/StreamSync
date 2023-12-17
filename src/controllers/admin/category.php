@@ -7,11 +7,17 @@ require_once __DIR__ . '/../../validations/session.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['category'])) {
     if ($_POST['category'] == 'create') {
-      create_content($_POST);
+      $success = createCategory($_POST);
+
+      if ($success) {
+        $_SESSION['success_message'] = 'Categoria adicionada com sucesso!';
+      } else {
+        $_SESSION['error_message'] = 'Erro ao adicionar categoria. Por favor, tente novamente.';
+      }
     }
 
     if ($_POST['category'] == 'update') {
-      update($_POST);
+      update_category($_POST);
     }
   }
 }
@@ -24,20 +30,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
       if ($success) {
         $_SESSION['success'] = 'Category deleted successfully!';
-        header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+        header('location: /StreamSync/src/views/secure/admin/management.php');
       }
     }
   }
 }
 
-function create_categorycontent($req)
+function create_category($req)
 {
   $data = validateCategory($req);
 
   if (isset($data['invalid'])) {
     $_SESSION['errors'] = $data['invalid'];
     $params = '?' . http_build_query($req);
-    header('location: /StreamSync/src/views/secure/user/Content.php' . $params);
+    header('location: /StreamSync/src/views/secure/admin/management.php' . $params);
     return false;
   }
 
@@ -45,7 +51,7 @@ function create_categorycontent($req)
 
   if ($success) {
     $_SESSION['success'] = 'Category created successfully!';
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+    header('location: /StreamSync/src/views/secure/admin/management.php');
   }
 }
 

@@ -6,6 +6,8 @@ require_once __DIR__ . '/../../../repositories/reviewsRepository.php';
 require_once __DIR__ . '/../../../repositories/shareRepository.php';
 require_once __DIR__ . '/../../../infrastructure/middlewares/middleware-administrator.php';
 require_once __DIR__ . '/../../../templates/header.php';
+@require_once __DIR__ . '/../../../validations/session.php';
+
 $user = user();
 $userCountsByMonth = getUsersCountByMonth();
 $deletedUsersCountByMonth = getDeletedUsersCountByMonth();
@@ -28,13 +30,13 @@ $title = 'Admin management';
           </div>
           <ul class="nav nav-pills d-flex flex-column mb-sm-auto mb-0 align-items-sm-start align-items-center mt-5" id="menu">
             <li class="nav-item">
-              <a href="/StreamSync/src/views/secure/user/Dashboard.php" class="nav-link align-middle px-0 transition">
-                <i class="fs-4 bi-house text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Home</span>
+              <a href="/StreamSync/src/views/secure/admin/index.php" class="nav-link align-middle px-0 transition">
+                <i class="fs-4 bi-house text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Dashboard</span>
               </a>
             </li>
             <li>
-              <a href="javascript:void(0)" class="nav-link px-0 align-middle transition" onclick="loadContent('Lists')">
-                <i class="fs-4 bi-people text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Utilizadores</span>
+              <a href="/StreamSync/src/views/secure/admin/management.php" class="nav-link px-0 align-middle transition">
+                <i class="fs-4 bi-person-fill-gear text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Gestão</span>
               </a>
             </li>
             <li>
@@ -65,8 +67,8 @@ $title = 'Admin management';
 
       <!-- Content -->
       <div id="content" class="col d-flex flex-column justify-content-center align-items-center bg-color overflow-auto h-100 py-3">
-        <div class="row w-100 d-flex justify-content-center align-items-center mb-5 mt-5">
-          <div class="col-3 mb-3">
+        <div class="row w-100 justify-content-center align-items-center mb-5 mt-5">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
             <div class="card text-white bg-primary">
               <div class="card-body">
                 <h5 class="card-title">Média de Idades</h5>
@@ -79,7 +81,7 @@ $title = 'Admin management';
               </div>
             </div>
           </div>
-          <div class="col-3 mb-3">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
             <div class="card text-white bg-secondary">
               <div class="card-body">
                 <h5 class="card-title">Média de Conteúdos Diários</h5>
@@ -92,7 +94,7 @@ $title = 'Admin management';
               </div>
             </div>
           </div>
-          <div class="col-3 mb-3">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
             <div class="card text-white bg-success">
               <div class="card-body">
                 <h5 class="card-title">Média de Compartilhamentos Diários</h5>
@@ -109,7 +111,7 @@ $title = 'Admin management';
               </div>
             </div>
           </div>
-          <div class="col-3 mb-3">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
             <div class="card text-white bg-warning">
               <div class="card-body">
                 <h5 class="card-title">Média de Avaliações Diárias</h5>
@@ -127,6 +129,7 @@ $title = 'Admin management';
             </div>
           </div>
         </div>
+
         <div class="row w-100 d-flex justify-content-center align-items-center mb-5">
           <div class="col-6 ">
             <canvas id="lineChart"></canvas>
