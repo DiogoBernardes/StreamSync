@@ -7,17 +7,23 @@ require_once __DIR__ . '/../../validations/session.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['category'])) {
     if ($_POST['category'] == 'create') {
-      $success = createCategory($_POST);
+      $data = validateCategory($_POST);
+      
+      if (isset($data['invalid'])) {
+        $_SESSION['errors'] = $data['invalid'];
+        header('location: /StreamSync/src/views/secure/admin/management.php');
+        exit;
+      }
+
+      $success = createCategory($data);
 
       if ($success) {
         $_SESSION['success_message'] = 'Categoria adicionada com sucesso!';
       } else {
-        $_SESSION['error_message'] = 'Erro ao adicionar categoria. Por favor, tente novamente.';
+        $_SESSION['error_message'] = 'Erro ao adicionar categoria.';
       }
-    }
-
-    if ($_POST['category'] == 'update') {
-      update_category($_POST);
+      header('location: /StreamSync/src/views/secure/admin/management.php');
+      exit;
     }
   }
 }

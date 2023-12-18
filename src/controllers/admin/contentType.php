@@ -7,17 +7,23 @@ require_once __DIR__ . '/../../validations/session.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['contentType'])) {
     if ($_POST['contentType'] == 'create') {
-      $success = createContentType($_POST);
+      $data = validateContentType($_POST);
+
+      if (isset($data['invalid'])) {
+        $_SESSION['errors'] = $data['invalid'];
+        header('location: /StreamSync/src/views/secure/admin/management.php');
+        exit;
+      }
+
+      $success = createContentType($data);
 
       if ($success) {
         $_SESSION['success_message'] = 'Tipo de conteúdo adicionado com sucesso!';
       } else {
-        $_SESSION['error_message'] = 'Erro ao adicionar tipo de conteúdo. Por favor, tente novamente.';
+        $_SESSION['error_message'] = 'Erro ao adicionar tipo de conteúdo.';
       }
-    }
-
-    if ($_POST['contentType'] == 'update') {
-      update($_POST);
+      header('location: /StreamSync/src/views/secure/admin/management.php');
+      exit;
     }
   }
 }
