@@ -28,15 +28,16 @@ if (isset($_POST['user'])) {
         changePassword($_POST);
     }
     if ($_POST['user'] == 'delete') {
-        $user = getById($_GET['id']);
+        $userIdToDelete = $_POST['user_id'];
+        $user = getById($userIdToDelete);
         if ($user['role_id'] == 1) {
             $_SESSION['errors'] = ['This user cannot be deleted!'];
             header('location: /StreamSync/src/views/secure/admin/management.php');
             return false;
         }
-
-        $success = delete_user($user);
-
+    
+        $success = delete_user($userIdToDelete);
+    
         if ($success) {
             $_SESSION['success'] = 'User deleted successfully!';
             header('location: /StreamSync/src/views/secure/admin/management.php');
@@ -149,30 +150,30 @@ function changePassword($req)
         exit;
     }
 }
-function delete_user()
+function delete_user($userId) 
 {
-    $userId = $_SESSION['id'];
-
     deleteSharesByUserId($userId);
-
     $userLists = getAllLists($userId);
     foreach ($userLists as $list) {
         delete_list($list['id'], $userId);
     }
 
     deleteReviewsByUserId($userId);
-
     $success = softDeleteUser($userId);
 
     if ($success) {
-        $_SESSION['success'] = 'User deleted successfully!';
-        session_unset();
-        session_destroy();
-        setcookie('id', '', time() - 3600, "/");
-        setcookie('first_name', '', time() - 3600, "/");
-        header('location: /StreamSync/');
-        exit();
+        if ($_SESSION['id'] == $userId) {
+            session_unset();
+            session_destroy();
+            setcookie('id', '', time() - 3600, "/");
+            setcookie('first_name', '', time() - 3600, "/");
+            header('location: /StreamSync/');
+            exit();
+        } else {
+            return true;
+        }
     } else {
         $_SESSION['errors'] = ['Failed to delete user.'];
+        return false;
     }
 }

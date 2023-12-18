@@ -168,7 +168,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user']) && $_POST['us
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <form id="deleteForm" enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/user.php" method="post">
-            <button type="submit" name="user" value="delete" class="btn btn-danger">Sim, encerrar a sessão</button>
+            <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+            <button type="submit" name="user" value="delete" class="btn btn-danger">Sim, eliminar a conta</button>
           </form>
         </div>
       </div>

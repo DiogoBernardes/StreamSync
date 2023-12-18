@@ -259,16 +259,16 @@ $title = ' - user';
     </div>
 
     <!-- Modal de confirmação de delete -->
-    <?php foreach ($users as $user) : ?>
-      <div class="modal fade" id="deleteModal<?= $user['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $user['id']; ?>" aria-hidden="true">
+    <?php foreach ($users as $currentUser) : ?>
+      <div class="modal fade" id="deleteModal<?= $currentUser['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $currentUser['id']; ?>" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel<?= $user['id']; ?>">Eliminar utilizador</h5>
+              <h5 class="modal-title" id="deleteModalLabel<?= $currentUser['id']; ?>">Eliminar utilizador</h5>
             </div>
             <div class="modal-body">
               <p class="card-title">
-                Tem certeza de que deseja eliminar o utilizador <?= $user['username']; ?>?
+                Tem certeza de que deseja eliminar o utilizador <?= $currentUser['username']; ?>?
               </p>
               <br>
               <p>Não poderá recuperar a mesma posteriormente.</p>
@@ -276,11 +276,10 @@ $title = ' - user';
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
               <form action="/StreamSync/src/controllers/admin/user.php" method="post">
-                <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                <input type="hidden" name="user_id" value="<?= $currentUser['id'] ?>">
                 <input type="hidden" name="user" value="delete">
                 <button type="submit" class="btn btn-danger">Sim, eliminar utilizador</button>
               </form>
-
             </div>
           </div>
         </div>
