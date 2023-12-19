@@ -82,6 +82,7 @@ CREATE TABLE listContent (
 );
 
 CREATE TABLE reviews (
+  id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   content_id INT NOT NULL,
   rating INT NOT NULL,
@@ -89,7 +90,7 @@ CREATE TABLE reviews (
   review_date TIMESTAMP NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (user_id, content_id),
+  PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (content_id) REFERENCES content(id)
 );

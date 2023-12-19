@@ -19,12 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   if (isset($_GET['review'])) {
     if ($_GET['review'] == 'delete') {
-      $review = getReviewById($_GET['user_id'], $_GET['content_id']);
-      $success = delete_review($review['user_id'], $review['content_id']);
+      $success = delete_review($_GET['review_id']);
 
       if ($success) {
         $_SESSION['success'] = 'Review deleted successfully!';
-        header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+        header('location: /StreamSync/src/views/secure/user/infoContent.php?content_id=' . $_GET['content_id']);
       }
     }
   }
@@ -37,7 +36,7 @@ function create_review($req)
   if (isset($data['invalid'])) {
     $_SESSION['errors'] = $data['invalid'];
     $params = '?' . http_build_query($req);
-    header('location: /StreamSync/src/views/secure/user/Content.php' . $params);
+    header('location: /StreamSync/src/views/secure/user/infoContent.php?content_id=' . $_POST['content_id']);
     return false;
   }
 
@@ -45,12 +44,12 @@ function create_review($req)
 
   if ($success) {
     $_SESSION['success'] = 'Review created successfully!';
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+    header('location: /StreamSync/src/views/secure/user/infoContent.php?content_id=' . $_POST['content_id']);
     return true;
   }
 
   $_SESSION['errors'] = 'Failed to create review.';
-  header('location: /StreamSync/src/views/secure/user/Content.php');
+  header('location: /StreamSync/src/views/secure/user/infoContent.php?content_id=' . $_POST['content_id']);
   return false;
 }
 
@@ -73,8 +72,8 @@ function update_review($req)
   }
 }
 
-function delete_review($user_id, $content_id)
+function delete_review($id)
 {
-  $data = deleteReview($user_id, $content_id);
+  $data = deleteReview($id);
   return $data;
 }

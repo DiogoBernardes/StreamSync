@@ -30,11 +30,10 @@ function createReview($review)
   ]);
 }
 
-function getReviewById($user_id, $content_id)
+function getReviewById($id)
 {
-  $PDOStatement = $GLOBALS['pdo']->prepare('SELECT * FROM reviews WHERE user_id = ? AND content_id = ?;');
-  $PDOStatement->bindValue(1, $user_id, PDO::PARAM_INT);
-  $PDOStatement->bindValue(2, $content_id, PDO::PARAM_INT);
+  $PDOStatement = $GLOBALS['pdo']->prepare('SELECT * FROM reviews WHERE id = ?;');
+  $PDOStatement->bindValue(1, $id, PDO::PARAM_INT);
   $PDOStatement->execute();
 
   return $PDOStatement->fetch();
@@ -93,20 +92,11 @@ function updateReview($review)
   ]);
 }
 
-function deleteReview($user_id, $content_id)
+function deleteReview($id)
 {
-  $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM reviews WHERE user_id = ? AND content_id = ?;');
-  $PDOStatement->bindValue(1, $user_id, PDO::PARAM_INT);
-  $PDOStatement->bindValue(2, $content_id, PDO::PARAM_INT);
-
+  $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM reviews WHERE id = ?;');
+  $PDOStatement->bindValue(1, $id, PDO::PARAM_INT);
   return $PDOStatement->execute();
-}
-
-function deleteReviewsByContentId($contentId)
-{
-  $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM reviews WHERE content_id = ?;');
-  $PDOStatement->bindValue(1, $contentId, PDO::PARAM_INT);
-  $PDOStatement->execute();
 }
 
 function deleteReviewsByUserId($userId)

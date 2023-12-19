@@ -85,7 +85,11 @@ function getYoutubeVideoId($url)
               <input type="hidden" name="user_id" value="<?= $user['id']; ?>">
               <input type="hidden" name="content_id" value="<?= $contentDetails['id']; ?>">
               <div class="d-flex flex-row mt-4 mb-4">
-                <img class="img-fluid img-responsive rounded-circle mr-2" src="data:image/png;base64,<?= base64_encode($user['avatar']) ?>" width="38">
+                <?php if ($user['avatar'] !== null) : ?>
+                  <img class="img-fluid img-responsive rounded-circle mr-2" src="data:image/png;base64,<?= base64_encode($user['avatar']) ?>" style="width: 42px; height: 42px;">
+                <?php else : ?>
+                  <img src="https://static-00.iconduck.com/assets.00/avatar-default-icon-2048x2048-h6w375ur.png" alt="Default Avatar" class="rounded-circle" style="width: 42px; height: 42px;">
+                <?php endif; ?>
                 <textarea class="form-control mr-3 ms-2" name="comment" placeholder="Add comment" rows="1"></textarea>
                 <input type="text" class="form-control mr-3 ms-2 w-12" name="rating" placeholder="0/10 Rating" pattern="[0-9]|10(\.[0-9])?" title="0/10 Rate">
                 <button class="btn btn-outline-success ms-2" type="submit" name="review" value="create">Comment</button>
@@ -98,11 +102,16 @@ function getYoutubeVideoId($url)
               $rating = $review['rating'];
               $wholeStars = floor($rating);
               $halfStar = ($rating - $wholeStars) >= 0.5;
+              $loggedInUserReview = $review['user_id'] == $user['id'];
             ?>
               <div class="mt-2 border border-secondary rounded">
                 <div class="d-flex flex-column ms-2 mt-2 mb-3">
                   <div class="d-flex align-items-center">
-                    <img class="img-fluid img-responsive rounded-circle mr-2" src="data:image/png;base64,<?= base64_encode($reviewer['avatar']) ?>" width="38">
+                    <?php if ($reviewer['avatar'] !== null) : ?>
+                      <img class="img-fluid img-responsive rounded-circle mr-2" src="data:image/png;base64,<?= base64_encode($reviewer['avatar']) ?>" style="width: 42px; height: 42px;">
+                    <?php else : ?>
+                      <img src="https://static-00.iconduck.com/assets.00/avatar-default-icon-2048x2048-h6w375ur.png" alt="Default Avatar" class="rounded-circle" style="width: 42px; height: 42px;">
+                    <?php endif; ?>
                     <div>
                       <h5 class="ms-2 mb-0"><?= $reviewer['first_name']; ?> <?= $reviewer['last_name']; ?></h5>
                       <p class="ms-2 mb-0 text-size-10"><?= $reviewer['email']; ?></p>
@@ -125,8 +134,17 @@ function getYoutubeVideoId($url)
                 <div class="comment-text-sm ms-2 mb-2">
                   <span><?= $review['comment']; ?></span>
                 </div>
-                <div class="reply-section ms-2 mb-2 text-size-10">
-                  <i class="bi bi-calendar me-1"></i><?= date('d/m/Y', strtotime($review['review_date'])); ?>
+                <div class="d-flex justify-content-between">
+                  <div class="reply-section ms-2 mb-2 text-size-10">
+                    <i class="bi bi-calendar me-1"></i><?= date('d/m/Y', strtotime($review['review_date'])); ?>
+                  </div>
+                  <div class="me-2">
+                    <?php
+                    if ($loggedInUserReview) {
+                      echo '<i class="bi bi-trash pointer" data-bs-toggle="modal" data-bs-target="#deleteModal' . $review['id'] . '"></i>';
+                    }
+                    ?>
+                  </div>
                 </div>
               </div>
             <?php
@@ -136,10 +154,6 @@ function getYoutubeVideoId($url)
         </div>
       </div>
     </section>
-
-
-
-
 
   </div>
 
@@ -161,6 +175,35 @@ function getYoutubeVideoId($url)
     </div>
   </div>
 
+  <!-- Modal Eliminar review -->
+  <?php foreach ($reviews as $review) : ?>
+    <div class="modal fade" id="deleteModal<?= $review['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $review['id']; ?>" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel<?= $list['id']; ?>">Eliminar Review</h5>
+          </div>
+          <div class="modal-body">
+            <p class="card-title">
+              Tem certeza de que deseja eliminar a Review?
+            </p>
+            <br>
+            <p>Não poderá recuperar a mesma posteriormente.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <form action="/StreamSync/src/controllers/admin/reviews.php" method="get">
+              <input type="hidden" name="review_id" value="<?= $review['id'] ?>">
+              <input type="hidden" name="content_id" value="<?= $review['content_id'] ?>">
+              <input type="hidden" name="review" value="delete">
+              <button type="submit" class="btn btn-danger">Sim, eliminar a review</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endforeach; ?>
 </body>
 
 </html>
