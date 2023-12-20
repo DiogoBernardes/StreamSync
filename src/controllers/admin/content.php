@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($_POST['content'] == 'update') {
-      update_content($_POST);
+      update_content($_POST, $_POST['list_id']);
     }
   }
 }
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if ($_GET['content'] == 'delete') {
       $content = getContentById($_GET['id']);
-      $success = delete_content($content['id']);
+      $success = delete_content($content['id'], $_GET['list_id']);
 
       if ($success) {
         $_SESSION['success'] = 'Content deleted successfully!';
@@ -55,24 +55,24 @@ function create_content($req, $listId)
 
   if ($success) {
     $_SESSION['success'] = 'Content created successfully!';
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+    header('location: /StreamSync/src/views/secure/user/listContent.php?list_id=' . $listId);
     return true;
   }
 
   $_SESSION['errors'] = 'Failed to create content.';
-  header('location: /StreamSync/src/views/secure/user/Content.php');
+  header('location: /StreamSync/src/views/secure/user/listContent.php?list_id=' . $listId);
   return false;
 }
 
 
-function update_content($req)
+function update_content($req, $listId)
 {
   $data = validateContent($req);
 
   if (isset($data['invalid'])) {
     $_SESSION['errors'] = $data['invalid'];
     $_SESSION['action'] = 'update';
-    $params = '?' . http_build_query($req);
+    $params = '?list_id=' . $listId . '&' . http_build_query($req);
     header('location: /StreamSync/src/views/secure/user/Dashboard.php' . $params);
     return false;
   }
@@ -82,12 +82,12 @@ function update_content($req)
   if ($success) {
     $_SESSION['success'] = 'Content successfully updated!';
     $data['action'] = 'update';
-    $params = '?' . http_build_query($data);
+    $params = '?list_id=' . $listId . '&' . http_build_query($data);
     header('location: /StreamSync/src/views/secure/user/Dashboard.php' . $params);
   }
 }
 
-function delete_content($contentId)
+function delete_content($contentId, $listId)
 {
   deleteListContentAssociations($contentId);
   deleteReviewsByContentId($contentId);
@@ -96,9 +96,9 @@ function delete_content($contentId)
 
   if ($success) {
     $_SESSION['success'] = 'Content deleted successfully!';
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+    header('location: /StreamSync/src/views/secure/user/Dashboard.php?list_id=' . $listId);
   } else {
     $_SESSION['errors'] = 'Error deleting content.';
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+    header('location: /StreamSync/src/views/secure/user/Dashboard.php?list_id=' . $listId);
   }
 }

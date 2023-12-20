@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/src/infrastructure/db/setupDatabase.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 

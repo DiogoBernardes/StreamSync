@@ -13,7 +13,6 @@ require_once __DIR__ . '/Content.php';
 $user = user();
 
 $listId = isset($_GET['list_id']) ? $_GET['list_id'] : null;
-error_log("listId definido como: $listId");
 $list = getListById($listId, $user['id']);
 $listContent = getAllListContent($listId);
 $isListOwner = is_array($list) && $list['user_id'] == $user['id'];
@@ -41,14 +40,14 @@ $listContent = getFilteredContentByCategory($listId, $categoryFilter);
             <?php
             $categories = getAllCategories();
             foreach ($categories as $category) {
-                echo "<option value='" . htmlspecialchars($category['id']) . "'";
-                if (isset($_GET['category']) && $_GET['category'] == $category['id']) {
-                    echo " selected";
-                }
-                echo ">" . htmlspecialchars($category['name']) . "</option>";
+              echo "<option value='" . htmlspecialchars($category['id']) . "'";
+              if (isset($_GET['category']) && $_GET['category'] == $category['id']) {
+                echo " selected";
+              }
+              echo ">" . htmlspecialchars($category['name']) . "</option>";
             }
-            ?>  
-        </select>
+            ?>
+          </select>
         </form>
       </div>
       <div>
@@ -237,7 +236,7 @@ $listContent = getFilteredContentByCategory($listId, $categoryFilter);
                       </div>
                     </div>
                     <input type="hidden" name="id" value="<?= $content['content_id']; ?>">
-
+                    <input type="hidden" name="list_id" value="<?= $listId; ?>">
 
                     <div class="row">
                       <div class="text-right">
@@ -272,6 +271,7 @@ $listContent = getFilteredContentByCategory($listId, $categoryFilter);
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                   <form action="/StreamSync/src/controllers/admin/content.php" method="get">
                     <input type="hidden" name="id" value="<?= $content['content_id']; ?>">
+                    <input type="hidden" name="list_id" value="<?= $listId; ?>">
                     <input type="hidden" name="content" value="delete">
                     <button type="submit" class="btn btn-danger">Sim, eliminar o conteúdo</button>
                   </form>
