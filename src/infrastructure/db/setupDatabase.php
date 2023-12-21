@@ -142,33 +142,34 @@ try {
   $hashedAdminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
 
   $pdo->exec('
-        INSERT INTO roles (roleName) VALUES ("Administrador");
-        INSERT INTO roles (roleName) VALUES ("Utilizador");
+        INSERT INTO roles (roleName) SELECT * FROM (SELECT "Administrador") AS tmp WHERE NOT EXISTS (SELECT roleName FROM roles WHERE roleName = "Administrador") LIMIT 1;
+        INSERT INTO roles (roleName) SELECT * FROM (SELECT "Utilizador") AS tmp WHERE NOT EXISTS (SELECT roleName FROM roles WHERE roleName = "Utilizador") LIMIT 1;
 
         INSERT INTO users (first_name, last_name, birthdate, email, password, username, role_id) 
-        VALUES ("Admin", "Admin", "2023-12-05", "admin@ipvc.pt", "' . $hashedAdminPassword . '", "admin", 1);
-        
-        INSERT INTO content_type (name) VALUES ("Filmes");
-        INSERT INTO content_type (name) VALUES ("Séries");
-        INSERT INTO content_type (name) VALUES ("Documentários");
-        INSERT INTO content_type (name) VALUES ("Talk Show");
-        INSERT INTO content_type (name) VALUES ("Curta-Metragem");
+        SELECT * FROM (SELECT "Admin", "Admin", "2023-12-05", "admin@ipvc.pt", "' . $hashedAdminPassword . '", "admin", 1) AS tmp 
+        WHERE NOT EXISTS (SELECT username FROM users WHERE username = "admin") LIMIT 1;
 
-        INSERT INTO category_type (name) VALUES ("Comédia");
-        INSERT INTO category_type (name) VALUES ("Policial");
-        INSERT INTO category_type (name) VALUES ("Guerra");
-        INSERT INTO category_type (name) VALUES ("Mistério");
-        INSERT INTO category_type (name) VALUES ("Familía");
-        INSERT INTO category_type (name) VALUES ("Animação");
-        INSERT INTO category_type (name) VALUES ("Ação");
-        INSERT INTO category_type (name) VALUES ("Drama");
-        INSERT INTO category_type (name) VALUES ("Aventura");
-        INSERT INTO category_type (name) VALUES ("Romance");
-        INSERT INTO category_type (name) VALUES ("Terror");
-        INSERT INTO category_type (name) VALUES ("Documentário");
-        INSERT INTO category_type (name) VALUES ("Suspense");
-        INSERT INTO category_type (name) VALUES ("Musical");
-        INSERT INTO category_type (name) VALUES ("Ficção Científica");
+        INSERT INTO content_type (name) SELECT * FROM (SELECT "Filmes") AS tmp WHERE NOT EXISTS (SELECT name FROM content_type WHERE name = "Filmes") LIMIT 1;
+        INSERT INTO content_type (name) SELECT * FROM (SELECT "Séries") AS tmp WHERE NOT EXISTS (SELECT name FROM content_type WHERE name = "Séries") LIMIT 1;
+        INSERT INTO content_type (name) SELECT * FROM (SELECT "Documentários") AS tmp WHERE NOT EXISTS (SELECT name FROM content_type WHERE name = "Documentários") LIMIT 1;
+        INSERT INTO content_type (name) SELECT * FROM (SELECT "Talk Show") AS tmp WHERE NOT EXISTS (SELECT name FROM content_type WHERE name = "Talk Show") LIMIT 1;
+        INSERT INTO content_type (name) SELECT * FROM (SELECT "Curta-Metragem") AS tmp WHERE NOT EXISTS (SELECT name FROM content_type WHERE name = "Curta-Metragem") LIMIT 1;
+
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Comédia") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Comédia") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Policial") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Policial") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Guerra") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Guerra") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Mistério") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Mistério") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Familía") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Familía") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Animação") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Animação") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Ação") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Ação") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Drama") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Drama") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Aventura") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Aventura") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Romance") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Romance") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Terror") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Terror") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Documentário") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Documentário") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Suspense") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Suspense") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Musical") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Musical") LIMIT 1;
+        INSERT INTO category_type (name) SELECT * FROM (SELECT "Ficção Científica") AS tmp WHERE NOT EXISTS (SELECT name FROM category_type WHERE name = "Ficção Científica") LIMIT 1;
     ');
 } catch (PDOException $e) {
   die("Error: " . $e->getMessage());
