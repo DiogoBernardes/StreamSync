@@ -137,17 +137,23 @@ try {
     ');
 
 
-  # INSERT DEFAULT DATA
-  $adminPassword = 'admin123';  // Change this to the desired password
-  $hashedAdminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
-
   $pdo->exec('
         INSERT INTO roles (roleName) SELECT * FROM (SELECT "Administrador") AS tmp WHERE NOT EXISTS (SELECT roleName FROM roles WHERE roleName = "Administrador") LIMIT 1;
         INSERT INTO roles (roleName) SELECT * FROM (SELECT "Utilizador") AS tmp WHERE NOT EXISTS (SELECT roleName FROM roles WHERE roleName = "Utilizador") LIMIT 1;
+  ');
 
-        INSERT INTO users (first_name, last_name, birthdate, email, password, username, role_id) 
-        SELECT * FROM (SELECT "Admin", "Admin", "2023-12-05", "admin@ipvc.pt", "' . $hashedAdminPassword . '", "admin", 1) AS tmp 
-        WHERE NOT EXISTS (SELECT username FROM users WHERE username = "admin") LIMIT 1;
+  # Verificar se o usuário Admin já existe
+  $stmt = $pdo->query("SELECT COUNT(*) FROM users WHERE username = 'admin'");
+  $adminExists = $stmt->fetchColumn() > 0;
+
+  if (!$adminExists) {
+      $adminPassword = 'admin123';  // Altere para a senha desejada
+      $hashedAdminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
+
+      $pdo->exec("INSERT INTO users (first_name, last_name, birthdate, email, password, username, role_id) VALUES ('Admin', 'Admin', '2023-12-05', 'admin@ipvc.pt', '$hashedAdminPassword', 'admin', 1)");
+  }
+
+  $pdo->exec('
 
         INSERT INTO content_type (name) SELECT * FROM (SELECT "Filmes") AS tmp WHERE NOT EXISTS (SELECT name FROM content_type WHERE name = "Filmes") LIMIT 1;
         INSERT INTO content_type (name) SELECT * FROM (SELECT "Séries") AS tmp WHERE NOT EXISTS (SELECT name FROM content_type WHERE name = "Séries") LIMIT 1;
