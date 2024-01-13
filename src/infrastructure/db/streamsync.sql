@@ -105,7 +105,7 @@ CREATE TABLE shares (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY(id),
   FOREIGN KEY (origin_user_id) REFERENCES users(id),
-  FOREIGN KEY (destination_user_id) REFERENCES users(id)
+  FOREIGN KEY (destination_user_id) REFERENCES users(id),
   FOREIGN KEY (list_id) REFERENCES lists(id)
 );
 
@@ -115,8 +115,11 @@ VALUES ('Administrador');
 INSERT INTO roles (roleName) 
 VALUES ('Utilizador');
 
-INSERT INTO users (first_name, last_name, birthdate, email, password, username, role_id) 
-VALUES ('Admin', 'Admin', '2023-12-05', 'admin@ipvc.pt', 'admin', 'admin', 1);
+SET @hashed_password = PASSWORD_BCRYPT('admin');
+
+-- Insert the user with the hashed password
+INSERT INTO users (first_name, last_name, birthdate, email, password, username, role_id)
+VALUES ('Admin', 'Admin', '2023-12-05', 'admin@ipvc.pt', @hashed_password, 'admin', 1);
 
 INSERT INTO content_type (name) 
 VALUES ('Filmes');

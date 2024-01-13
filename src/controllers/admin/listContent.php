@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../repositories/listContentRepository.php';
+require_once __DIR__ . '/../../repositories/contentRepository.php';
 require_once __DIR__ . '/../../validations/admin/validate-list-content.php';
 require_once __DIR__ . '/../../validations/session.php';
 
@@ -26,6 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $_SESSION['success'] = 'List content deleted successfully!';
         header('location: /StreamSync/src/views/secure/user/Dashboard.php');
       }
+    }
+    if ($_GET['listContent'] == 'deleteAssociation') {
+      $content = getContentById($_GET['id']);
+      $success = delete_contentAssociations($content['id'], $_GET['list_id']);
     }
   }
 }
@@ -75,4 +80,17 @@ function delete_listContent($listContent)
 {
   $data = deleteListContent($listContent['id']);
   return $data;
+}
+
+function delete_contentAssociations($contentId, $listId)
+{
+  $success = deleteListContentAssociations($contentId, $listId);
+
+  if ($success) {
+    $_SESSION['success'] = 'Content deleted successfully!';
+    header('location: /StreamSync/src/views/secure/user/Dashboard.php?list_id=' . $listId);
+  } else {
+    $_SESSION['errors'] = 'Error deleting content.';
+    header('location: /StreamSync/src/views/secure/user/Dashboard.php?list_id=' . $listId);
+  }
 }

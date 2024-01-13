@@ -53,18 +53,19 @@ function getAllListContent($listId = null)
   return $listContentList;
 }
 
-function getFilteredContentByCategory($listId, $categoryFilter = null) {
+function getFilteredContentByCategory($listId, $categoryFilter = null)
+{
   $sql = 'SELECT lc.*, c.* FROM listContent lc INNER JOIN content c ON lc.content_id = c.id WHERE lc.list_id = :list_id';
 
   if ($categoryFilter) {
-      $sql .= ' AND c.category_id = :category_id';
+    $sql .= ' AND c.category_id = :category_id';
   }
 
   $PDOStatement = $GLOBALS['pdo']->prepare($sql);
   $PDOStatement->bindValue(':list_id', $listId, PDO::PARAM_INT);
 
   if ($categoryFilter) {
-      $PDOStatement->bindValue(':category_id', $categoryFilter, PDO::PARAM_INT);
+    $PDOStatement->bindValue(':category_id', $categoryFilter, PDO::PARAM_INT);
   }
 
   $PDOStatement->execute();
@@ -97,9 +98,46 @@ function deleteListContent($id)
   return $PDOStatement->execute();
 }
 
-function deleteListContentAssociations($contentId)
+function deleteListContentAssociations($contentId, $listId)
 {
-  $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM listContent WHERE content_id = ?;');
+  $PDOStatement = $GLOBALS['pdo']->prepare('DELETE FROM listContent WHERE content_id = ? AND list_id= ?;');
   $PDOStatement->bindValue(1, $contentId, PDO::PARAM_INT);
+  $PDOStatement->bindValue(2, $listId, PDO::PARAM_INT);
   $PDOStatement->execute();
+}
+
+function addContentToSharedList($contentId, $listId)
+{
+  $existingContent = getListContentByContentAndListId($contentId, $listId);
+
+  if ($existingContent) {
+    return false;
+  }
+
+  $sqlCreate = "INSERT INTO 
+        listContent (
+            list_id, 
+            content_id
+        ) 
+        VALUES (
+            :list_id, 
+            :content_id
+        )";
+
+  $PDOStatement = $GLOBALS['pdo']->prepare($sqlCreate);
+
+  return $PDOStatement->execute([
+    ':list_id' => $listId,
+    ':content_id' => $contentId
+  ]);
+}
+
+function getListContentByContentAndListId($contentId, $listId)
+{
+  $PDOStatement = $GLOBALS['pdo']->prepare('SELECT * FROM listContent WHERE content_id = :content_id AND list_id = :list_id;');
+  $PDOStatement->bindValue(':content_id', $contentId, PDO::PARAM_INT);
+  $PDOStatement->bindValue(':list_id', $listId, PDO::PARAM_INT);
+  $PDOStatement->execute();
+
+  return $PDOStatement->fetch();
 }

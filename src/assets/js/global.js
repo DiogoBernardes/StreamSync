@@ -10,6 +10,13 @@ function hideAlerts() {
 
 document.addEventListener("DOMContentLoaded", function () {
   hideAlerts();
+
+  let location = window.location.hash;
+  if (location) {
+    loadContent(location.replace("#", ""));
+    return;
+  }
+  //loadContent("calendar");
 });
 
 //Adicionar o conteúdo na mesma página

@@ -14,6 +14,7 @@ $user = user();
 
 $listId = isset($_GET['list_id']) ? $_GET['list_id'] : null;
 $list = getListById($listId, $user['id']);
+$lists = getAllLists($user['id']);
 $listContent = getAllListContent($listId);
 $isListOwner = is_array($list) && $list['user_id'] == $user['id'];
 $isListSharedWithUser = checkIfListIsSharedWithUser($listId, $user['id']);
@@ -105,11 +106,43 @@ $listContent = getFilteredContentByCategory($listId, $categoryFilter);
                   $origin_user = getShareByOriginUserId($user['id']);
                   if ($isListOwner) :
                   ?>
+                    <button type="button" class="btn btn-outline-primary ms-2" data-toggle="modal" data-target="#shareContentModal<?= $content['content_id']; ?>">
+                      <i class="bi bi-share pointer transition"></i>
+                    </button>
+                    <!-- Modal de compartilhamento -->
+                    <div class="modal fade" id="shareContentModal<?= $content['content_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="shareContentModalLabel<?= $content['content_id']; ?>" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content text-dark">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="shareContentModalLabel<?= $content['content_id']; ?>">Partilhar Conteúdo</h5>
+                          </div>
+                          <div class="modal-body">
+                            <form enctype="multipart/form-data" action="/StreamSync/src/controllers/admin/listContent.php" method="post" class="form-control py-3 border-0">
+                              <div class="form-group">
+                                <label for="list_id">Selecione a Lista:</label>
+                                <select class="form-control" name="list_id" required>
+                                  <?php foreach ($lists as $listOption) : ?>
+                                    <?php if ($listOption['id'] != $listId) : ?>
+                                      <option value="<?= $listOption['id']; ?>"><?= $listOption['name']; ?></option>
+                                    <?php endif; ?>
+                                  <?php endforeach; ?>
+                                </select>
+                              </div>
+                              <input type="hidden" name="content_id" value="<?= $content['content_id']; ?>">
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                <button type="submit" id="submit" name="listContent" value="create" class="btn btn-primary">Compartilhar</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <button type="button" class="btn btn-outline-info ms-2" data-toggle="modal" data-target="#updateContentModal<?= $content['content_id']; ?>">
-                      <i class="bi bi-pen pointer transition">Atualizar</i>
+                      <i class="bi bi-pen pointer transition"></i>
                     </button>
                     <button type="button" class="btn btn-outline-danger ms-2" data-toggle="modal" data-target="#deleteContentModal<?= $content['content_id']; ?>">
-                      <i class="bi bi-trash delete-icon ms-2 pointer transition">Remover</i>
+                      <i class="bi bi-trash delete-icon  pointer transition"></i>
                     </button>
                   <?php endif; ?>
                 </div>
@@ -268,11 +301,11 @@ $listContent = getFilteredContentByCategory($listId, $categoryFilter);
                   <p>Não poderá recuperar a mesma posteriormente.</p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <form action="/StreamSync/src/controllers/admin/content.php" method="get">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                  <form action="/StreamSync/src/controllers/admin/listContent.php" method="get">
                     <input type="hidden" name="id" value="<?= $content['content_id']; ?>">
                     <input type="hidden" name="list_id" value="<?= $listId; ?>">
-                    <input type="hidden" name="content" value="delete">
+                    <input type="hidden" name="listContent" value="deleteAssociation">
                     <button type="submit" class="btn btn-danger">Sim, eliminar o conteúdo</button>
                   </form>
 
@@ -281,6 +314,7 @@ $listContent = getFilteredContentByCategory($listId, $categoryFilter);
             </div>
           </div>
         <?php endforeach; ?>
+
       </div>
     </section>
 

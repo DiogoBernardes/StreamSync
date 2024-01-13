@@ -67,7 +67,7 @@ $title = 'Admin management';
 
       <!-- Content -->
       <div id="content" class="col d-flex flex-column justify-content-center align-items-center bg-color overflow-auto h-100 py-3 pt-5">
-        <div class="row w-100 justify-content-center align-items-center mb-5 mt-5">
+        <div class="row w-100 justify-content-center align-items-center mt-5">
           <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mt-5">
             <div class="card text-white bg-primary mt-5">
               <div class="card-body">

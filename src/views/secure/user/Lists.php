@@ -66,9 +66,12 @@ $totalPages = ceil($totalItems / $itemsPerPage);
                           endforeach;
                           ?>
                           <?php if (!empty($randomImage)) : ?>
-                            <img class="chart-canvas rounded w-100 mt-less40 h-200px" src="data:image/jpeg;base64,<?= base64_encode($randomImage); ?>" alt="<?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?>" />
+                            <a href="listContent.php?list_id=<?= $list['id']; ?>"> <img class="chart-canvas rounded w-100 mt-less40 h-200px" src="data:image/jpeg;base64,<?= base64_encode($randomImage); ?>" alt="<?= isset($contentDetails['title']) ? $contentDetails['title'] : 'Title Not Available'; ?>" />
+                            </a>
                           <?php else : ?>
-                            <img class="chart-canvas rounded w-100 mt-less40 h-200px" src="https://motoxpert.pt/sh_website_category_page/static/src/img/default.png" alt="Default Image" />
+                            <a href="listContent.php?list_id=<?= $list['id']; ?>">
+                              <img class="chart-canvas rounded w-100 mt-less40 h-200px" src="https://motoxpert.pt/sh_website_category_page/static/src/img/default.png" alt="Default Image" />
+                            </a>
                           <?php endif; ?>
                         </div>
                       </div>

@@ -73,7 +73,7 @@ function update_content($req, $listId)
     $_SESSION['errors'] = $data['invalid'];
     $_SESSION['action'] = 'update';
     $params = '?list_id=' . $listId . '&' . http_build_query($req);
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php' . $params);
+    header('location: /StreamSync/src/views/secure/user/listContent.php?list_id=' . $params);
     return false;
   }
 
@@ -83,13 +83,13 @@ function update_content($req, $listId)
     $_SESSION['success'] = 'Content successfully updated!';
     $data['action'] = 'update';
     $params = '?list_id=' . $listId . '&' . http_build_query($data);
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php' . $params);
+    header('location: /StreamSync/src/views/secure/user/listContent.php?list_id=' . $params);
   }
 }
 
 function delete_content($contentId, $listId)
 {
-  deleteListContentAssociations($contentId);
+  deleteListContentAssociations($contentId, $listId);
   deleteReviewsByContentId($contentId);
 
   $success = deleteContent($contentId);

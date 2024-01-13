@@ -65,7 +65,7 @@ function update_list($req, $userId)
     $_SESSION['success'] = 'List successfully updated!';
     $data['action'] = 'update';
     $params = '?' . http_build_query($data);
-    header('location: /StreamSync/src/views/secure/user/Dashboard.php#Lists' . $params);
+    header('location: /StreamSync/src/views/secure/user/Dashboard.php#Lists');
   } else {
     $_SESSION['errors'] = 'Failed to update list.';
     header('location: /StreamSync/src/views/secure/user/Dashboard.php');
@@ -74,33 +74,33 @@ function update_list($req, $userId)
 
 
 
-function delete_list($listId, $userId) 
+function delete_list($listId, $userId)
 {
   $list = getListById($listId, $userId);
 
-    if ($list) {
-      deleteSharesByListId($listId);
+  if ($list) {
+    deleteSharesByListId($listId);
 
-      $listContents = getAllListContent($listId);
-      foreach ($listContents as $listContent) {
-          deleteListContent($listContent['id']);
+    $listContents = getAllListContent($listId);
+    foreach ($listContents as $listContent) {
+      deleteListContent($listContent['id']);
 
-          deleteReviewsByContentId($listContent['content_id']);
+      deleteReviewsByContentId($listContent['content_id']);
 
-          deleteContent($listContent['content_id']);
-      }
+      deleteContent($listContent['content_id']);
+    }
 
-      $success = deleteList($listId, $userId);
+    $success = deleteList($listId, $userId);
 
-      if ($success) {
-          $_SESSION['success'] = 'List deleted successfully!';
-          header('location: /StreamSync/src/views/secure/user/Dashboard.php');
-      } else {
-          $_SESSION['errors'] = 'Error deleting list.';
-          header('location: /StreamSync/src/views/secure/user/Dashboard.php');
-      }
-  } else {
-      $_SESSION['errors'] = 'List not found';
+    if ($success) {
+      $_SESSION['success'] = 'List deleted successfully!';
       header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+    } else {
+      $_SESSION['errors'] = 'Error deleting list.';
+      header('location: /StreamSync/src/views/secure/user/Dashboard.php');
+    }
+  } else {
+    $_SESSION['errors'] = 'List not found';
+    header('location: /StreamSync/src/views/secure/user/Dashboard.php');
   }
 }

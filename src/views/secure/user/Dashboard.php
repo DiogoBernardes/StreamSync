@@ -69,9 +69,7 @@ $watchedEvents = getWatchedDatesForCalendar($user['id']);
       <div id="content" class="col d-flex flex-column justify-content-center align-items-center bg-color overflow-auto h-100 py-3">
         <div id='calendar' class="col-12 col-md-10 col-lg-8 p-3 mx-auto mt-3 mt-md-0 bg-light">
         </div>
-
       </div>
-
     </div>
 
     <!-- Modal de confirmação de logout -->

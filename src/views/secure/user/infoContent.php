@@ -178,7 +178,7 @@ function getYoutubeVideoId($url)
   <!-- Modal Eliminar review -->
   <?php foreach ($reviews as $review) : ?>
     <div class="modal fade" id="deleteModal<?= $review['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $review['id']; ?>" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog text-dark">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="deleteModalLabel<?= $list['id']; ?>">Eliminar Review</h5>
