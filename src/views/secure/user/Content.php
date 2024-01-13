@@ -106,7 +106,7 @@ $listId = isset($_GET['list_id']) ? $_GET['list_id'] : null;
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
               <div class="form-group">
                 <label for="season">Nº Temporadas</label>
-                <input type="text" class="form-control" name="number_seasons" placeholder="Número temporadas" maxlength="100" size="100">
+                <input type="number" class="form-control" name="number_seasons" placeholder="Número temporadas" maxlength="100" size="100">
               </div>
             </div>
           </div>

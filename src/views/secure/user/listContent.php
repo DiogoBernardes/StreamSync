@@ -244,13 +244,13 @@ $listContent = getFilteredContentByCategory($listId, $categoryFilter);
                       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div class="form-group">
                           <label for="duration">Duração</label>
-                          <input type="text" class="form-control" name="duration" value="<?= $contentDetails['duration']; ?>" placeholder="Duração" maxlength="100" size="100">
+                          <input type="number" class="form-control" name="duration" value="<?= $contentDetails['duration']; ?>" placeholder="Duração" maxlength="100" size="100">
                         </div>
                       </div>
                       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div class="form-group">
                           <label for="season">Nº Temporadas</label>
-                          <input type="text" class="form-control" name="number_seasons" value="<?= $contentDetails['number_seasons']; ?>" placeholder="Número temporadas" maxlength="100" size="100">
+                          <input type="number" class="form-control" name="number_seasons" value="<?= $contentDetails['number_seasons']; ?>" placeholder="Número temporadas" maxlength="100" size="100">
                         </div>
                       </div>
                     </div>
