@@ -160,7 +160,7 @@ function uploadPoster($file)
 }
 function getWatchedDatesForCalendar($userId)
 {
-  $sql = "SELECT c.title, c.watched_date
+  $sql = "SELECT c.id, c.title, c.watched_date
           FROM content c
           JOIN listContent lc ON c.id = lc.content_id
           JOIN lists l ON lc.list_id = l.id
@@ -170,15 +170,22 @@ function getWatchedDatesForCalendar($userId)
   $PDOStatement->bindParam(':user_id', $userId, PDO::PARAM_INT);
   $PDOStatement->execute();
 
+  $processedContentIds = [];
   $events = [];
 
   while ($content = $PDOStatement->fetch()) {
-    $start = date('Y-m-d', strtotime($content['watched_date']));
+    $contentId = $content['id'];
 
-    $events[] = [
-      'title' => $content['title'],
-      'start' => $start,
-    ];
+    if (!in_array($contentId, $processedContentIds)) {
+      $start = date('Y-m-d', strtotime($content['watched_date']));
+
+      $events[] = [
+        'title' => $content['title'],
+        'start' => $start,
+      ];
+
+      $processedContentIds[] = $contentId;
+    }
   }
 
   return $events;
