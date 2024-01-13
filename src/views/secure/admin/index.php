@@ -66,10 +66,10 @@ $title = 'Admin management';
 
 
       <!-- Content -->
-      <div id="content" class="col d-flex flex-column justify-content-center align-items-center bg-color overflow-auto h-100 py-3 pt-5">
-        <div class="row w-100 justify-content-center align-items-center mt-5">
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mt-5">
-            <div class="card text-white bg-primary mt-5">
+      <div id="content" class="col d-flex flex-column align-items-center bg-color overflow-auto h-100 ">
+        <div class="row w-100 align-items-center">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mt-2">
+            <div class="card text-white bg-primary mt-2">
               <div class="card-body">
                 <h5 class="card-title">Média de Idades</h5>
                 <p class="card-text">
@@ -81,8 +81,8 @@ $title = 'Admin management';
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mt-5">
-            <div class="card text-white bg-secondary mt-5">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mt-2">
+            <div class="card text-white bg-secondary mt-2">
               <div class="card-body">
                 <h5 class="card-title">Média de Conteúdos Diários</h5>
                 <p class="card-text">
@@ -94,8 +94,8 @@ $title = 'Admin management';
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mt-5">
-            <div class="card text-white bg-success mt-5">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mt-2">
+            <div class="card text-white bg-success mt-2">
               <div class="card-body">
                 <h5 class="card-title">Média de Compartilhamentos Diários</h5>
                 <p class="card-text">
@@ -111,8 +111,8 @@ $title = 'Admin management';
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mt-5">
-            <div class="card text-white bg-warning mt-5">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mt-2">
+            <div class="card text-white bg-warning mt-2">
               <div class="card-body">
                 <h5 class="card-title">Média de Avaliações Diárias</h5>
                 <p class="card-text">
@@ -130,19 +130,19 @@ $title = 'Admin management';
           </div>
         </div>
 
-        <div class="row w-100 d-flex justify-content-center align-items-center mb-5">
-          <div class="col-6 ">
+        <div class="row w-100 d-flex justify-content-center align-items-center">
+          <div class="col-md-6 mb-5 mt-5">
             <canvas id="lineChart"></canvas>
           </div>
-          <div class="col-6">
+          <div class="col-md-6">
             <canvas id="doughnutChart"></canvas>
           </div>
         </div>
-        <div class="row w-100 d-flex justify-content-center align-items-center mt-5">
-          <div class="col-6 ">
+        <div class="row w-100 d-flex justify-content-center align-items-center">
+          <div class="col-md-6 mb-5">
             <canvas id="barChart"></canvas>
           </div>
-          <div class="col-6">
+          <div class="col-md-6">
             <canvas id="polarAreaChart"></canvas>
           </div>
         </div>

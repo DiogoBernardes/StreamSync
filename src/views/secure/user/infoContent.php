@@ -77,14 +77,15 @@ function getYoutubeVideoId($url)
     </section>
 
 
-    <section id="reviews" class="position-relative">
+    <section id="reviews" class="position-relative mt-5">
       <div class="container mt-5 mb-5">
         <div class="d-flex justify-content-start row px-5">
           <div class="d-flex flex-column col-md-8 w-100">
             <form enctype="multipart/form-data" method="post" action="/StreamSync/src/controllers/admin/reviews.php">
               <input type="hidden" name="user_id" value="<?= $user['id']; ?>">
               <input type="hidden" name="content_id" value="<?= $contentDetails['id']; ?>">
-              <div class="d-flex flex-row mt-4 mb-4">
+
+              <div class="d-none d-sm-flex flex-row mt-4 mb-4">
                 <?php if ($user['avatar'] !== null) : ?>
                   <img class="img-fluid img-responsive rounded-circle mr-2" src="data:image/png;base64,<?= base64_encode($user['avatar']) ?>" style="width: 42px; height: 42px;">
                 <?php else : ?>
@@ -94,7 +95,23 @@ function getYoutubeVideoId($url)
                 <input type="text" class="form-control mr-3 ms-2 w-12" name="rating" placeholder="0/10 Rating" pattern="[0-9]|10(\.[0-9])?" title="0/10 Rate">
                 <button class="btn btn-outline-success ms-2" type="submit" name="review" value="create">Comment</button>
               </div>
+
+              <div class="d-sm-none flex-column">
+                <div class="d-flex flex-row align-items-center mb-2">
+                  <?php if ($user['avatar'] !== null) : ?>
+                    <img class="img-fluid img-responsive rounded-circle mr-2" src="data:image/png;base64,<?= base64_encode($user['avatar']) ?>" style="width: 42px; height: 42px;">
+                  <?php else : ?>
+                    <img src="https://static-00.iconduck.com/assets.00/avatar-default-icon-2048x2048-h6w375ur.png" alt="Default Avatar" class="rounded-circle" style="width: 42px; height: 42px;">
+                  <?php endif; ?>
+                  <textarea class="form-control mr-3 ms-2" name="comment" placeholder="Add comment" rows="1"></textarea>
+                </div>
+                <div class="d-flex flex-row align-items-center">
+                  <input type="text" class="form-control w-50 mr-3 ms-2 mb-2 mt-1" name="rating" placeholder="0/10 Rating" pattern="[0-9]|10(\.[0-9])?" title="0/10 Rate">
+                  <button class="btn btn-outline-success w-50 ms-2 mb-2" type="submit" name="review" value="create">Comment</button>
+                </div>
+              </div>
             </form>
+
             <?php
             $reviews = getReviewsForContent($contentDetails['id']);
             foreach ($reviews as $review) {
